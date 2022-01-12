@@ -1,3 +1,12 @@
-import TestComponent from "./TestComponent";
+// =============================================================================
+// IMPORT
+// =============================================================================
+// Components
+import Button from './components/button/button';
+import Input from './components/input/input';
+import Modal from './components/modal/modal';
 
-export { TestComponent };
+// =============================================================================
+// EXPORT
+// =============================================================================
+export { Button, Input, Modal };

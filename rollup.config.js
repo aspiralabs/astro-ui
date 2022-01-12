@@ -1,45 +1,46 @@
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "rollup-plugin-typescript2";
-import postcss from "rollup-plugin-postcss";
-import copy from "rollup-plugin-copy";
-
-const packageJson = require("./package.json");
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
+import { terser } from 'rollup-plugin-terser';
+import typescript from 'rollup-plugin-typescript2';
+import pkg from './package.json';
+const tailwindcss = require('tailwindcss');
 
 export default {
-  input: "src/index.ts",
-  output: [
-    {
-      file: packageJson.main,
-      format: "cjs",
-      sourcemap: true
-    },
-    {
-      file: packageJson.module,
-      format: "esm",
-      sourcemap: true
-    }
-  ],
-  plugins: [
-    peerDepsExternal(),
-    resolve(),
-    commonjs(),
-    typescript({ useTsconfigDeclarationDir: true }),
-    postcss(),
-    copy({
-      targets: [
+    input: 'src/index.ts',
+    output: [
         {
-          src: "src/variables.scss",
-          dest: "build",
-          rename: "variables.scss"
+            file: pkg.main,
+            format: 'cjs',
+            sourcemap: true,
         },
         {
-          src: "src/typography.scss",
-          dest: "build",
-          rename: "typography.scss"
-        }
-      ]
-    })
-  ]
+            file: pkg.module,
+            format: 'es',
+            sourcemap: true,
+        },
+    ],
+    external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {}), 'react'],
+    plugins: [
+        peerDepsExternal(),
+        postcss({
+            plugins: [
+                tailwindcss('./tailwind.config.js'),
+                require('autoprefixer'),
+                require('cssnano')({ preset: 'default' }),
+            ],
+        }),
+        resolve(),
+        typescript({
+            useTsconfigDeclarationDir: true,
+            rollupCommonJSResolveHack: true,
+            exclude: ['**/__tests__/**', '**/*.stories.tsx'],
+            clean: true,
+        }),
+        commonjs({
+            include: ['node_modules/**'],
+        }),
+        terser(),
+    ],
 };
