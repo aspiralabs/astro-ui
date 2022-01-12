@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import DropdownMenu from './dropdown_menu';
 import Button from '../button/button';
 import { IDropdownEntry } from './dropdown_menu.types';
+import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
 
 export default {
     title: 'dropdown_menu',
