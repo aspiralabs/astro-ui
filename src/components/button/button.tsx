@@ -59,7 +59,7 @@ const Button: React.FC<ButtonProps> = props => {
     }
 
     // FINAL CLASS
-    let calculatedClass = `${buttonStyles} ${calcSize} transition ${rounded} ${className} flex gap-2 text-sm items-center justify-center`;
+    let calculatedClass = `${buttonStyles} ${calcSize} transition ${rounded} ${className} flex gap-2 text-sm items-center justify-center relative`;
 
     // RENDER
     return (
