@@ -1,6 +1,6 @@
 // Generated with util/create-component.js
 import React, { ReactElement, useState } from 'react';
-import { Input } from '../..';
+import Input from '../input/input';
 import Select from '../select/select';
 
 import { IFormDataStructure, IFormErrors, IFormProps, IFormSectionProps } from './form.types';

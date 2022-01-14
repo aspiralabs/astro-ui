@@ -1,6 +1,6 @@
 // Generated with util/create-component.js
 import React, { useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { DropdownMenuProps, IDropdownEntry } from './dropdown_menu.types';
 import Text from '../text/text';
 

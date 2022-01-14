@@ -1,11 +1,19 @@
 // Generated with util/create-component.js
-import React from "react";
-import input from "./input";
+import React, { useState } from 'react';
+import Input from './input';
 
 export default {
-    title: "input"
+    title: 'input',
 };
 
-export const WithBar = () => <input foo="bar" />;
+export const BasicInput = () => {
+    const [inputValue, setInputValue] = useState('');
 
-export const WithBaz = () => <input foo="baz" />;
+    return (
+        <section className="flex flex-col gap-4">
+            <Input value={inputValue} setter={setInputValue} />
+            <Input value={inputValue} setter={setInputValue} placeholder="Placeholder Example" />
+            <Input value={inputValue} setter={setInputValue} label="Label Example" />
+        </section>
+    );
+};

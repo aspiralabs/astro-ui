@@ -3,7 +3,7 @@
 // =============================================================================
 import React from 'react';
 import { ButtonProps } from './Button.types';
-import { useAstro } from '../astro/astro';
+// import { useAstro } from '../astro/astro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // =============================================================================
@@ -14,14 +14,15 @@ const Button: React.FC<ButtonProps> = props => {
     // PROPS
     // =========================================================================
     let { children, icon, onClick, variant, size = 'normal', outlined = false, disabled = false, className } = props;
-    let { AstroConfig } = useAstro();
+    // let { AstroConfig } = useAstro();
 
     // =========================================================================
     // STATICS
     // =========================================================================
     let calcSize = '';
     let buttonStyles = '';
-    let rounded = `${AstroConfig.rounded && 'rounded'}`;
+    // let rounded = `${AstroConfig.rounded && 'rounded'}`;
+    const rounded = '';
 
     // Calculate Size
     switch (size) {
@@ -60,6 +61,8 @@ const Button: React.FC<ButtonProps> = props => {
 
     // FINAL CLASS
     let calculatedClass = `${buttonStyles} ${calcSize} transition ${rounded} ${className} flex gap-2 text-sm items-center justify-center relative`;
+
+    console.log('calculated class', calculatedClass);
 
     // RENDER
     return (

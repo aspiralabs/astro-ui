@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import Text from '../text/text';
-import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { SelectOptionsEntry, SelectProps } from './select.types';
 import { Input } from '../..';

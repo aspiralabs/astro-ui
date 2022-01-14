@@ -6,4 +6,10 @@ export default {
     title: 'card',
 };
 
-export const BasicCard = () => <Card>Hello World</Card>;
+export const BasicCard = () => (
+    <section className="bg-gray p-8">
+        <Card>
+            <p>This is a card</p>
+        </Card>
+    </section>
+);

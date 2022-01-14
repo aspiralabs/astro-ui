@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BadgeProps } from './badge.types';
 
-const Badge: React.FC<BadgeProps> = ({ children, variant = 'primary', className }: IBadgeProps) => {
+const Badge: React.FC<BadgeProps> = ({ children, variant = 'primary', className }: BadgeProps) => {
     return (
         <div className={`bg-${variant} inline-flex x rounded-full px-3 bg-opacity-60 py-0.5 ${className} `}>
             <span className={`font-body text-xs text-${variant}-active`}>{children}</span>
