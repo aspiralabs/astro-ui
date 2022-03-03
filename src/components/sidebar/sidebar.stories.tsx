@@ -1,11 +1,20 @@
 // Generated with util/create-component.js
-import React from "react";
-import sidebar from "./sidebar";
+import React from 'react';
+import Sidebar from './sidebar';
+import Button from '../button/button';
 
 export default {
-    title: "sidebar"
+    title: 'Sidebar',
 };
 
-export const WithBar = () => <sidebar foo="bar" />;
-
-export const WithBaz = () => <sidebar foo="baz" />;
+export const BasicSidebar = () => {
+    const [sidebarOpen, setSidebarOpen] = React.useState(false);
+    return (
+        <div>
+            <Button onClick={() => setSidebarOpen(true)}>Click To Open Sidebar</Button>
+            <Sidebar open={sidebarOpen} setter={setSidebarOpen}>
+                Sidebar Content
+            </Sidebar>
+        </div>
+    );
+};

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Input from './input';
 
 export default {
-    title: 'input',
+    title: 'Input',
 };
 
 export const BasicInput = () => {

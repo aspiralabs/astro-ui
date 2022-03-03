@@ -1,10 +1,11 @@
 // Generated with util/create-component.js
 import React, { useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { DropdownMenuProps, IDropdownEntry } from './dropdown_menu.types';
+import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
+import { DropdownMenuProps, DropdownEntry } from './menu.types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Text from '../text/text';
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ open, setter, schema, right = false }) => {
+const Menu = ({ open, setter, schema, right = false }: DropdownMenuProps) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ref = useRef<any>(null);
 
@@ -48,14 +49,14 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ open, setter, schema, right
                         right ? 'right-0' : 'left-0'
                     } bg-white shadow-lg mt-1 w-48 text-left font-proxima text-sm z-50`}
                 >
-                    {schema.map((entry: IDropdownEntry) => {
+                    {schema.map((entry: DropdownEntry) => {
                         return (
                             <li
-                                className="bg-white flex gap-2 items-center p-3 text-body transition hover:bg-panel"
+                                className="bg-white flex gap-2 items-center p-3 text-body transition hover:bg-surface"
                                 onClick={entry.action}
                                 key={entry.title}
                             >
-                                <i className={entry?.icon} />
+                                {entry?.icon && <FontAwesomeIcon icon={entry.icon} />}
                                 <Text>{entry.title}</Text>
                             </li>
                         );
@@ -66,4 +67,4 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ open, setter, schema, right
     );
 };
 
-export default DropdownMenu;
+export default Menu;

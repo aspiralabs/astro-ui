@@ -1,15 +1,14 @@
 // Generated with util/create-component.js
 import React, { useState } from 'react';
-import DropdownMenu from './dropdown_menu';
+import DropdownMenu from './menu';
 import Button from '../button/button';
-import { IDropdownEntry } from './dropdown_menu.types';
-import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
+import { DropdownEntry } from './menu.types';
 
 export default {
-    title: 'dropdown_menu',
+    title: 'Menu',
 };
 
-export const BasicDropdown = () => {
+export const BasicMenu = () => {
     const [userDropwdownOpen, setUserDropdownOpen] = useState(false);
 
     const handleClick = () => {
@@ -17,16 +16,14 @@ export const BasicDropdown = () => {
         setUserDropdownOpen(true);
     };
 
-    const userDropwdownSchema: IDropdownEntry[] = [
+    const userDropwdownSchema: DropdownEntry[] = [
         {
             title: 'My Profile',
-            icon: 'fa-light fa-user',
             action: () => alert('clicked'),
         },
         {
             title: 'Logout',
-            icon: 'fa-light fa-power-off',
-            action: () => alert('cliceked'),
+            action: () => alert('clicked'),
         },
     ];
 

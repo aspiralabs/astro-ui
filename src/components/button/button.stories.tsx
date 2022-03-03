@@ -1,7 +1,7 @@
 // Generated with util/create-component.js
+import { faBackspace, faUser } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import Button from './button';
-import { faBackpack, faUser } from '@fortawesome/pro-regular-svg-icons';
 
 export default {
     title: 'Button',
@@ -25,9 +25,6 @@ export const ButtonSizes = () => {
     return (
         <div>
             <div className="flex gap-4 items-end">
-                <Button variant="primary" size="xs">
-                    Button
-                </Button>
                 <Button variant="primary" size="sm">
                     Button
                 </Button>
@@ -39,9 +36,7 @@ export const ButtonSizes = () => {
                 </Button>
             </div>
             <div className="flex gap-4 items-end mt-8">
-                <Button variant="primary" size="xs" outlined>
-                    Button
-                </Button>
+               
                 <Button variant="primary" size="sm" outlined>
                     Button
                 </Button>
@@ -62,7 +57,7 @@ export const ButtonIcons = () => {
             <Button variant="primary" icon={faUser}>
                 Icons
             </Button>
-            <Button variant="primary" outlined icon={faBackpack}>
+            <Button variant="primary" outlined icon={faBackspace}>
                 Outlined
             </Button>
         </div>

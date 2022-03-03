@@ -1,9 +1,8 @@
 // Generated with util/create-component.js
 import React from 'react';
+import { TooltipProps } from './tooltip.types';
 
-import { TooltipTypes } from './tooltip.types';
-
-const Tooltip: React.FC<TooltipTypes> = ({ children, text, position = 'bottom-center' }) => {
+const Tooltip = ({ children, text, position = 'bottom-center' }: TooltipProps) => {
     let calculatedPosition = '';
 
     switch (position) {
@@ -52,7 +51,7 @@ const Tooltip: React.FC<TooltipTypes> = ({ children, text, position = 'bottom-ce
             {children}
 
             <div
-                className={`${calculatedPosition} bg-gray-text text-center justify-center items-center absolute px-2 py-1 rounded bg-opacity-75 hidden group-hover:inline-flex`}
+                className={`${calculatedPosition} bg-heading text-center justify-center items-center absolute px-2 py-1 rounded bg-opacity-75 hidden group-hover:inline-flex`}
             >
                 <span className="text-xs text-white">{text}</span>
             </div>

@@ -17,18 +17,18 @@ export interface FormAction {
     ): void;
 }
 
-export interface IFormProps {
+export interface FormProps {
     children?: React.ReactNode;
-    defaultValues: IFormDataStructure;
+    defaultValues: FormDataStructure;
     action: FormAction;
     validation?: AnyObjectSchema;
     className?: string;
 }
-export interface IFormSectionProps {
+export interface FormSectionProps {
     children: React.ReactNode;
     className?: string;
 }
 
-export interface IFormDataStructure {
+export interface FormDataStructure {
     [key: string]: string | number | boolean;
 }

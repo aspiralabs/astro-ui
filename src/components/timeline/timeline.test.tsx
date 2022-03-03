@@ -2,11 +2,11 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import modal from "./modal";
-import { modalProps } from "./modal.types";
+import sidebar from "./sidebar";
+import { sidebarProps } from "./sidebar.types";
 
 describe("Test Component", () => {
-  let props: modalProps;
+  let props: sidebarProps;
 
   beforeEach(() => {
     props = {
@@ -14,13 +14,13 @@ describe("Test Component", () => {
     };
   });
 
-  const renderComponent = () => render(<modal {...props} />);
+  const renderComponent = () => render(<sidebar {...props} />);
 
   it("should render foo text correctly", () => {
     props.foo = "harvey was here";
     const { getByTestId } = renderComponent();
 
-    const component = getByTestId("modal");
+    const component = getByTestId("sidebar");
 
     expect(component).toHaveTextContent("harvey was here");
   });

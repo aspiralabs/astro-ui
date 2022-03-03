@@ -4,6 +4,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import cleaner from 'rollup-plugin-cleaner';
+import { terser } from 'rollup-plugin-terser';
 
 import packageJson from './package.json';
 const tailwindcss = require('tailwindcss');
@@ -34,6 +35,7 @@ export default {
         }),
         resolve(),
         commonjs(),
+        terser(),
         typescript({
             exclude: ['**/*.stories.tsx', '**/*.test.tsx'],
         }),

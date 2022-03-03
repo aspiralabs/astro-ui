@@ -1,13 +1,18 @@
 import { MouseEventHandler } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
+export type ButtonSize = 'sm' | 'normal' | 'lg';
 export interface ButtonProps {
-    children?: any;
-    onClick?: MouseEventHandler<HTMLButtonElement>;
+    children?: React.ReactNode;
     variant?: string;
-    outlined?: boolean;
-    disabled?: boolean;
-    className?: string;
-    size?: 'xs' | 'sm' | 'normal' | 'lg';
+    onClick?: any;
     icon?: IconProp;
+    className?: string;
+    disabled?: boolean;
+    size?: ButtonSize;
+    outlined?: boolean;
+    loading?: boolean;
+    dropdown?: boolean;
+    type?: 'button' | 'submit' | 'reset' | undefined;
+    active?: boolean;
 }

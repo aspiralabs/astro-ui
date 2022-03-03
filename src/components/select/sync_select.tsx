@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { faChevronDown, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
+// Generated with util/create-component.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useRef, useState } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import Text from '../text/text';
-import Input from '../input/input';
 import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import React from 'react';
-import { SelectOptionsEntry, SelectProps } from './select.types';
 
+import { SelectOptionsEntry, SelectProps } from './select.types';
+import { Input } from '../..';
 // =============================================================================
 // ANIMATION SETTINGS
 // =============================================================================
@@ -22,10 +20,7 @@ const animation = {
     exit: { opacity: 0, height: 0, transition },
 };
 
-// =============================================================================
-// DROPDOWN
-// =============================================================================
-const Select = ({
+const Select: React.FC<SelectProps> = ({
     required = false,
     label,
     value = '',
@@ -35,8 +30,7 @@ const Select = ({
     options,
     optionLabel = 'label',
     optionValue = 'value',
-    placeholder,
-}: SelectProps) => {
+}) => {
     // =========================================================================
     // STATES
     // =========================================================================
@@ -99,9 +93,9 @@ const Select = ({
             if (message?.type === 'error') color += 'border-danger';
             if (message?.type === 'success') color += 'border-success';
 
-            setBorderColor(color + 'border-surface-dark');
+            setBorderColor(color);
         } else {
-            setBorderColor('border border-surface-dark');
+            setBorderColor('border');
         }
     }, [message]);
 
@@ -153,19 +147,15 @@ const Select = ({
                 onClick={handleBoxClick}
                 className={`flex justify-between main-dropdown-container border ${
                     open ? 'border-primary' : borderColor
-                } bg-white cursor-pointer relative rounded-sm font-body text-sm   w-full items-center h-12 font-light tracking-wide`}
+                } cursor-pointer relative rounded-sm font-body text-sm   w-full items-center h-12 font-light tracking-wide`}
             >
                 {/* TEXT AREA */}
                 <div className="px-4">
-                    {selectedOptionLabel ? (
-                        <Text>{selectedOptionLabel}</Text>
-                    ) : (
-                        <Text className="text-body-light">{placeholder}</Text>
-                    )}
+                    <Text>{selectedOptionLabel}</Text>
                 </div>
 
                 {/* ICON AREA */}
-                <div className="flex h-full items-center justify-center w-8">
+                {/* <div className="flex h-full items-center justify-center w-8">
                     {!selectedValue && (
                         <FontAwesomeIcon
                             icon={faChevronDown}
@@ -179,7 +169,7 @@ const Select = ({
                             onClick={() => handleOptionClick({ value: '' })}
                         />
                     )}
-                </div>
+                </div> */}
             </div>
 
             {/* DROPDOWN */}
@@ -194,16 +184,16 @@ const Select = ({
                     >
                         {searchable && (
                             <div className="border-b p-2">
-                                <Input value={searchTerm} setter={setSearchTerm} icon={faSearch} />
+                                <Input value={searchTerm} setter={setSearchTerm} />
                             </div>
                         )}
-                        <ul className="divide-surface divide-y max-h-48 overflow-y-auto">
+                        <ul className="divide-pagebg divide-y max-h-48 overflow-y-auto">
                             {results.map((option: SelectOptionsEntry, index: number) => {
                                 return (
                                     <li
                                         onClick={() => handleOptionClick(option)}
                                         key={index}
-                                        className="cursor-pointer px-4 py-3 hover:bg-surface"
+                                        className="cursor-pointer px-4 py-3 hover:bg-pagebg"
                                     >
                                         <Text>{option && option[optionLabel]}</Text>
                                     </li>
@@ -215,7 +205,7 @@ const Select = ({
             </AnimatePresence>
 
             {/* MESSAGE BOX */}
-            <div className="flex items-center">
+            <div className="flex gap-1 items-center py-1">
                 {message?.message && (
                     <React.Fragment>
                         {message?.type === 'error' && (

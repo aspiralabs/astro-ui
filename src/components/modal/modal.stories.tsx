@@ -1,11 +1,25 @@
 // Generated with util/create-component.js
-import React from "react";
-import modal from "./modal";
+import React from 'react';
+import { Button } from '../..';
+import { useAstro } from '../astro/astro';
+import DemoModal from './demo_modal';
 
 export default {
-    title: "modal"
+    title: 'Modal',
 };
 
-export const WithBar = () => <modal foo="bar" />;
+export const BasicModal = () => {
+    const { Modal } = useAstro();
 
-export const WithBaz = () => <modal foo="baz" />;
+    const handleSuccessClick = () => {
+        Modal.show(DemoModal, {});
+    };
+
+    return (
+        <section className="flex gap-4">
+            <Button variant="success" onClick={handleSuccessClick}>
+                Show Modal
+            </Button>
+        </section>
+    );
+};

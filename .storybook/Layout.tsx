@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { AstroProvider } from '../src/components/astro/astro';
+import AstroProvider from '../src/components/astro/astro';
 import '../src/styles/index.css';
 
 interface Props {
@@ -10,7 +10,7 @@ const Layout = ({ children }: Props) => {
     const settingOverride = { rounded: false };
 
     return (
-        <AstroProvider settings={settingOverride}>
+        <AstroProvider>
             <div className="px-20 py-10">{children}</div>
         </AstroProvider>
     );

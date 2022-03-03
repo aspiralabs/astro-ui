@@ -1,12 +1,17 @@
 // Generated with util/create-component.js
 import React, { ReactElement, useState } from 'react';
+import Checkbox from '../checkbox/checkbox';
+import DatePicker from '../date_picker/date_picker';
 import Input from '../input/input';
-import Select from '../select/select';
+import Menu from '../menu/menu';
 
-import { IFormDataStructure, IFormErrors, IFormProps, IFormSectionProps } from './form.types';
+import { FormDataStructure, IFormErrors, FormProps, FormSectionProps } from './form.types';
 
-const Form: React.FC<IFormProps> = ({ children, defaultValues, action, validation, className }) => {
-    const [formData, setFormData] = useState<IFormDataStructure>(defaultValues);
+// =============================================================================
+// MAIN FORM
+// =============================================================================
+const Form = ({ children, defaultValues, action, validation, className }: FormProps) => {
+    const [formData, setFormData] = useState<FormDataStructure>(defaultValues);
     const [formErrors, setFormErrors] = useState<IFormErrors>({});
     const [loading, setLoading] = useState(false);
 
@@ -51,17 +56,22 @@ const Form: React.FC<IFormProps> = ({ children, defaultValues, action, validatio
     // CONSTRUCT PROPS
     // =========================================================================
     const isValidFormElement = (item: ReactElement) => {
-        if (item.type === Input || item.type === Select) return true;
+        if (!item.type) return false;
+
+        if (item.type === Input || item.type === Menu || item.type === Checkbox || item.type === DatePicker)
+            return true;
         else return false;
     };
 
     // Process All Children
     const processChildren = (child: any) => {
         const item = child as ReactElement;
-        const name = child.props?.name;
+        const name = child?.props?.name;
+
+        if (!item) return;
 
         // // If an element has children
-        if (child.props?.children) {
+        if (child?.props?.children) {
             // If A Form Section
             if (item.type === FormSection) {
                 const subChildren: any = React.Children.map(child.props.children, child => {
@@ -82,11 +92,13 @@ const Form: React.FC<IFormProps> = ({ children, defaultValues, action, validatio
             if (isValidFormElement(item)) {
                 return React.cloneElement(child, {
                     key: name,
-                    value: formData[name],
+                    value: item.props.value ? item.props.value : formData[name],
                     disabled: loading,
                     message: formErrors[name],
                     loading,
-                    setter: (value: any) => setFormData({ ...formData, [name]: value }),
+                    setter: item.props.setter
+                        ? item.props.setter
+                        : (value: any) => setFormData({ ...formData, [name]: value }),
                 });
             }
 
@@ -118,7 +130,7 @@ const Form: React.FC<IFormProps> = ({ children, defaultValues, action, validatio
 // =============================================================================
 // FORM SECTION
 // =============================================================================
-const FormSection = ({ children, className }: IFormSectionProps) => (
+const FormSection = ({ children, className }: FormSectionProps) => (
     <section className={`${className}`}>{children}</section>
 );
 

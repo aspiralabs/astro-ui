@@ -3,7 +3,7 @@ import React from 'react';
 import Text from './text';
 
 export default {
-    title: 'text',
+    title: 'Text',
 };
 
 export const TextTypography = () => (

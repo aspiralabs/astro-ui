@@ -4,7 +4,7 @@ import Button from '../button/button';
 import Tooltip from './tooltip';
 
 export default {
-    title: 'tooltip',
+    title: 'Tooltip',
 };
 
 export const ToolTipButton = () => {

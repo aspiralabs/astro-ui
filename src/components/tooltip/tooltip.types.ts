@@ -1,5 +1,5 @@
 // Generated with util/create-component.js
-export interface TooltipTypes {
+export interface TooltipProps {
     children?: any;
     text: string;
     position?: string;

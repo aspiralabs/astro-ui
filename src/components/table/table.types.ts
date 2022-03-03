@@ -1,12 +1,12 @@
 // Generated with util/create-component.js
-export interface ITableHeader {
+export interface TableHeader {
     header: string;
     accessor: string;
     width?: string;
 }
 
-export interface ITableDataObject {
-    header: ITableHeader[];
+export interface TableDataObject {
+    header: TableHeader[];
     rows: object[];
 }
 
@@ -14,17 +14,19 @@ export interface TableProps {
     exportable?: boolean;
     searchable?: boolean;
     paginated?: boolean;
-    data: ITableDataObject;
+    data: TableDataObject;
     headerComponent?: React.ReactNode;
+    footerComponent?: React.ReactNode;
+    loading?: boolean;
 }
 
-export interface DatalessTable {
-    data: ITableDataObject;
+export interface DatalessTableProps {
+    data: TableDataObject;
     headerComponent: React.ReactNode;
 }
 
 export interface TableRenderProps {
-    data: ITableDataObject;
+    data: TableDataObject;
     headerComponent: React.ReactNode;
     exportable: boolean;
     searchable: boolean;

@@ -1,6 +1,8 @@
 // Generated with util/create-component.js
 
 import React from 'react';
+import { ModalMethods } from '../modal/modal.types';
+import { ToastMethods } from '../toast/toast';
 
 // Props for the Provider
 export interface AstroProvider {
@@ -15,7 +17,9 @@ export interface AstroConfig {
 
 export interface AstroContextValue {
     AstroConfig?: AstroConfig;
-    Toast: Toast;
+    Toast: ToastMethods;
+    Modal: ModalMethods;
+    test: string;
 }
 
 // =============================================================================
@@ -44,34 +48,4 @@ export interface ToastObject {
     message: string;
     type: string;
     id: string;
-}
-
-// =============================================================================
-// MODAL
-// =============================================================================
-export interface Modal {
-    show: (object: React.FC<any>, props: object) => void;
-    hide: (id: string) => void;
-}
-
-export interface BaseModalProps {
-    id: string;
-}
-export interface ModalWrapperProps {
-    children: React.ReactNode;
-}
-
-export interface ModalPlaceholderProps {
-    modals: ModalObject[];
-}
-
-export interface ModalObject {
-    component: React.FC<any>;
-    props: object;
-    id: string;
-}
-
-export interface IBaseModalProps {
-    id: string;
-    key: string;
 }

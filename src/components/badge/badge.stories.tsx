@@ -3,7 +3,7 @@ import React from 'react';
 import Badge from './badge';
 
 export default {
-    title: 'badge',
+    title: 'Badge',
 };
 
 export const BasicBage = () => {
@@ -14,7 +14,6 @@ export const BasicBage = () => {
             <Badge variant="success">Badge Primary</Badge>
             <Badge variant="warning">Badge Primary</Badge>
             <Badge variant="danger">Badge Primary</Badge>
-            <Badge variant="gray">Badge Primary</Badge>
         </div>
     );
 };

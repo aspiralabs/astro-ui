@@ -1,29 +1,28 @@
 // Generated with util/create-component.js
 import React from 'react';
 import { Button } from '../..';
-import { useAstro, useModal, useToast } from '../astro/astro';
+import { useAstro } from '../astro/astro';
 
 export default {
-    title: 'toast',
+    title: 'Toast',
 };
 
 export const BasicToast = () => {
-    const { Toast } = useToast();
-    const { Modal } = useModal();
-    const { AstroConfig } = useAstro();
-
-    const handleSuccessClick = () => {
-        console.log(useToast);
-        console.log(Toast);
-        console.log(Modal);
-        console.log(AstroConfig);
-        // Toast.success('This is a Success Message!');
-    };
+    const { Toast } = useAstro();
 
     return (
         <section className="flex gap-4">
-            <Button variant="success" onClick={handleSuccessClick}>
+            <Button variant="success" onClick={() => Toast.success('Success')}>
                 Success Toast
+            </Button>
+            <Button variant="danger" onClick={() => Toast.error('Error')}>
+                Error Toast
+            </Button>
+            <Button variant="warning" onClick={() => Toast.warning('Warning')}>
+                Warning Toast
+            </Button>
+            <Button variant="info" onClick={() => Toast.info('Info')}>
+                Info Toast
             </Button>
         </section>
     );

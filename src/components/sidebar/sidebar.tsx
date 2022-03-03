@@ -1,10 +1,11 @@
 // Generated with util/create-component.js
 import React from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-
+import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
 import { SidebarProps } from './sidebar.types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Sidebar: React.FC<SidebarProps> = ({ open, setter, children, width = '360px' }) => {
+const Sidebar = ({ open, setter, children, width = '360px' }: SidebarProps) => {
     const menuStates = {
         initial: { right: `-${width}`, width: `${width}` },
         open: {
@@ -47,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setter, children, width = '360p
                         className="absolute bg-white h-screen overflow-y-auto p-8 right-0"
                     >
                         <button className="absolute right-4 top-4" onClick={() => setter(false)}>
-                            <i className="fa-regular fa-xmark" />
+                            <FontAwesomeIcon icon={faXmark} />
                         </button>
 
                         {children}

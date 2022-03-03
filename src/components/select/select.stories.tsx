@@ -1,11 +1,32 @@
 // Generated with util/create-component.js
-import React from "react";
-import select from "./select";
+import React from 'react';
+import Select from './select';
+import { SelectOptionsEntry } from './select.types';
+import SyncSelect from './sync_select';
 
 export default {
-    title: "select"
+    title: 'Select',
 };
 
-export const WithBar = () => <select foo="bar" />;
+export const WithSelect = () => {
+    const options: SelectOptionsEntry[] = [
+        {
+            value: 1,
+            label: 'Option One',
+        },
+        {
+            value: 2,
+            label: 'Option Two',
+        },
+        {
+            value: 3,
+            label: 'Option Three',
+        },
+    ];
 
-export const WithBaz = () => <select foo="baz" />;
+    return (
+        <div>
+            <Select options={options} />
+        </div>
+    );
+};

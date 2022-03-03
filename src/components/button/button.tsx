@@ -1,74 +1,68 @@
-// =============================================================================
-// IMPORTS
-// =============================================================================
 import React from 'react';
-import { ButtonProps } from './Button.types';
-// import { useAstro } from '../astro/astro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonProps } from './button.types';
+import { faChevronDown, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
-// =============================================================================
-// RENDER
-// =============================================================================
-const Button: React.FC<ButtonProps> = props => {
+const Button = ({
+    children,
+    variant = 'primary',
+    onClick,
+    icon,
+    className,
+    disabled = false,
+    size = 'normal',
+    outlined = false,
+    loading = false,
+    dropdown = false,
+    type,
+    active,
+}: ButtonProps) => {
     // =========================================================================
-    // PROPS
-    // =========================================================================
-    let { children, icon, onClick, variant, size = 'normal', outlined = false, disabled = false, className } = props;
-    // let { AstroConfig } = useAstro();
-
-    // =========================================================================
-    // STATICS
+    // COMPUTATIONS
     // =========================================================================
     let calcSize = '';
     let buttonStyles = '';
-    // let rounded = `${AstroConfig.rounded && 'rounded'}`;
-    const rounded = '';
+    let color = 'white';
+    let bg = variant;
 
-    // Calculate Size
     switch (size) {
-        case 'xs':
-            calcSize = 'px-2 py-2 text-xs';
+        case 'normal':
+            calcSize = 'px-4 py-3';
             break;
         case 'sm':
-            calcSize = 'px-3 py-2 text-sm';
-            break;
-        case 'normal':
-            calcSize = 'px-6 py-3';
-            break;
-        case 'lg':
-            calcSize = 'px-8 py-4';
+            calcSize = 'px-3 py-2';
             break;
         default:
-            calcSize = 'px-6 py-3';
+            calcSize = 'px-4 py-3';
     }
 
-    // =========================================================================
-    // OUTLINED AND DISABLED CALCULATE
-    // =========================================================================
+    if (variant === 'panel') {
+        color = 'body';
+    }
+
+    if (active) {
+        bg = `${variant}-dark`;
+    }
+
     if (outlined) {
-        if (disabled) {
-            buttonStyles = `border border-${variant}-disabled text-${variant} cursor-not-allowed`;
-        } else {
-            buttonStyles = `border border-${variant} text-${variant} hover:border-${variant}-active hover:text-${variant}-active`;
-        }
+        buttonStyles = `border border-${bg} text-${variant} ${disabled && 'opacity-75'}`;
     } else {
-        if (disabled) {
-            buttonStyles = `bg-${variant}-disabled  text-${variant}-text cursor-not-allowed`;
-        } else {
-            buttonStyles = `bg-${variant} hover:bg-${variant}-hover active:bg-${variant}-active text-${variant}-text`;
-        }
+        buttonStyles = `bg-${bg} hover:bg-${variant}-light active:bg-${variant}-dark disabled:bg-${variant}-disabled text-${variant}-text ${
+            disabled && 'bg-opacity-75'
+        }`;
     }
 
-    // FINAL CLASS
-    let calculatedClass = `${buttonStyles} ${calcSize} transition ${rounded} ${className} flex gap-2 text-sm items-center justify-center relative`;
+    const finalClasses = `${calcSize} ${buttonStyles} font-body relative transition font-light capitalize  rounded-sm cursor-pointer flex gap-2 items-center text-sm justify-center ${className}`;
 
-    console.log('calculated class', calculatedClass);
-
+    // =========================================================================
     // RENDER
+    // =========================================================================
     return (
-        <button onClick={onClick} data-testid="Button" className={calculatedClass} disabled={disabled}>
-            {children}
+        <button className={finalClasses} onClick={onClick} disabled={disabled || loading} type={type}>
+            {!loading && children}
+            {loading && <FontAwesomeIcon icon={faCircleNotch} />}
             {icon && <FontAwesomeIcon icon={icon} />}
+            {dropdown && <FontAwesomeIcon icon={faChevronDown} />}
         </button>
     );
 };

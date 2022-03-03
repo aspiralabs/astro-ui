@@ -1,5 +1,5 @@
 // Generated with util/create-component.js
-export interface ITabContentProps {
+export interface TabContentProps {
     children: React.ReactElement;
     index: number;
     title: string;
@@ -9,5 +9,5 @@ export interface ITabContentProps {
 export interface TabbedNavigationProps {
     current: number;
     setter: React.Dispatch<React.SetStateAction<number>>;
-    children: React.ReactElement<ITabContentProps>[];
+    children: React.ReactElement<TabContentProps>[];
 }

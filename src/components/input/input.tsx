@@ -1,10 +1,11 @@
 // Generated with util/create-component.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
-
+import Cleave from 'cleave.js/react';
 import { InputProps } from './input.types';
+import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
-const Input: React.FC<InputProps> = ({
+const Input = ({
     value,
     setter,
     label,
@@ -16,7 +17,12 @@ const Input: React.FC<InputProps> = ({
     className,
     name,
     message,
-}) => {
+    cleaveOptions = {
+        blocks: [99999],
+        delimiter: '',
+    },
+    cleaveFormatted = false,
+}: InputProps) => {
     const [borderColor, setBorderColor] = useState('');
     const disabledInput = `border border-disabled bg-disabled`;
     const field = useRef(null);
@@ -26,11 +32,12 @@ const Input: React.FC<InputProps> = ({
             let color = 'border ';
 
             if (message?.type === 'error') color += 'border-danger';
-            if (message?.type === 'success') color += 'border-success';
+            else if (message?.type === 'success') color += 'border-success';
+            else color += 'border-surface-dark';
 
             setBorderColor(color);
         } else {
-            setBorderColor('border');
+            setBorderColor('border border-surface-dark');
         }
     }, [message]);
 
@@ -44,18 +51,19 @@ const Input: React.FC<InputProps> = ({
             )}
 
             <div className="relative">
-                <input
+                <Cleave
+                    options={cleaveOptions}
                     ref={field}
                     name={name}
                     placeholder={placeholder}
                     disabled={disabled}
                     required={required}
                     value={value}
-                    onChange={e => setter(e.target.value)}
+                    onChange={e => setter(cleaveFormatted ? e.target.value : e.target.rawValue)}
                     type={type}
                     className={` ${
                         disabled ? disabledInput : borderColor
-                    } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide`}
+                    } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-11 font-light tracking-wide`}
                 />
                 {icon && (
                     <FontAwesomeIcon
@@ -69,9 +77,11 @@ const Input: React.FC<InputProps> = ({
                 <div className="flex gap-1 items-center py-1">
                     <React.Fragment>
                         {message?.type === 'error' && (
-                            <i className="fa-circle-exclamation fa-regular mr-2 text-danger" />
+                            <FontAwesomeIcon icon={faExclamation} className="mr-2 text-danger" />
                         )}
-                        {message?.type === 'success' && <i className="fa-circle-check fa-regular mr-2 text-success" />}
+                        {message?.type === 'success' && (
+                            <FontAwesomeIcon icon={faCheck} className="mr-2 text-success" />
+                        )}
                         <p
                             className={`text-sm font-body ${
                                 message?.type === 'error' ? 'text-danger' : 'text-success'

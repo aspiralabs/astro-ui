@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 
 import Text from '../text/text';
-import { TabbedNavigationProps, ITabContentProps } from './tabbed_navigation.types';
+import { TabbedNavigationProps, TabContentProps } from './tabbed_navigation.types';
 
-export const TabbedNavigation = ({ current, setter, children }: TabbedNavigationProps) => {
+export const TabNavigation = ({ current, setter, children }: TabbedNavigationProps) => {
     const [activeTab, setActiveTab] = useState(children[current]);
 
     const handleClick = (index: number) => {
@@ -20,13 +20,15 @@ export const TabbedNavigation = ({ current, setter, children }: TabbedNavigation
 
     return (
         <div>
-            <nav className="border-b border-panel flex">
+            <nav className="border-b border-surface flex">
                 {children.map((child, index: number) => {
                     const active = index === current ? true : false;
 
                     return (
                         <div
-                            className={`p-4 ${active ? 'bg-panel' : ''} transition cursor-pointer hover:bg-panel-hover`}
+                            className={`py-3 px-4 ${
+                                active ? ' border-b-4 border-primary' : ''
+                            } transition cursor-pointer hover:bg-surface-light`}
                             onClick={() => handleClick(index)}
                             key={index}
                         >
@@ -48,7 +50,7 @@ export const TabbedNavigation = ({ current, setter, children }: TabbedNavigation
  * @param onMount a callback that fires when a tab is mounted
  * @returns children
  */
-export const TabContent = ({ children, onMount }: ITabContentProps) => {
+export const TabContent = ({ children, onMount }: TabContentProps) => {
     useEffect(() => {
         if (onMount) {
             onMount();

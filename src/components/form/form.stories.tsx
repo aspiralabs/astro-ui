@@ -6,7 +6,7 @@ import Button from '../button/button';
 import { FormAction } from './form.types';
 
 export default {
-    title: 'form',
+    title: 'Form',
 };
 
 export const BasicForm = () => {
