@@ -3,12 +3,15 @@ import { Button, useAstro } from '../..';
 import { BaseModalProps } from './modal.types';
 import Text from '../text/text';
 
-interface TestModalProps extends BaseModalProps {}
+export interface TestModalProps extends BaseModalProps {
+    test: string;
+}
 
-const DemoModal = ({ id }: TestModalProps) => {
+const DemoModal = ({ id, test }: TestModalProps) => {
     const { Modal } = useAstro();
 
     const handleClick = () => {
+        console.log(id);
         Modal.hide(id);
     };
 

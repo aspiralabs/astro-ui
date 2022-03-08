@@ -47,8 +47,11 @@ const Sidebar = ({ open, setter, children, width = '360px' }: SidebarProps) => {
                         exit={menuStates.exit}
                         className="absolute bg-white h-screen overflow-y-auto p-8 right-0"
                     >
-                        <button className="absolute right-4 top-4" onClick={() => setter(false)}>
-                            <FontAwesomeIcon icon={faXmark} />
+                        <button
+                            className="absolute bg-surface w-6 h-6 rounded-full flex items-center justify-center right-4 top-4 opacity-50 hover:opacity-100 transition"
+                            onClick={() => setter(false)}
+                        >
+                            <FontAwesomeIcon icon={faXmark} className="text-body text-sm" />
                         </button>
 
                         {children}

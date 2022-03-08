@@ -7,7 +7,7 @@ const deepMerge = require('deepmerge');
 const baseColors = {
     primary: { DEFAULT: '#4299E1', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED', text: '#fff' },
     secondary: { DEFAULT: '#9381FF', light: '#7a63ff', dark: '#4d38c7', disabled: '#c4bee6', text: '#fff' },
-    danger: { DEFAULT: '#FE4A49', light: '#db2a2a', dark: '#a12727', disabled: '#FE7171', text: '#fff' },
+    error: { DEFAULT: '#FE4A49', light: '#db2a2a', dark: '#a12727', disabled: '#FE7171', text: '#fff' },
     warning: { DEFAULT: '#f5aa31', light: '#ffa617', dark: '#804f00', disabled: '#fac878', text: '#fff' },
     success: { DEFAULT: '#26bf82', light: '#05ad6a', dark: '#00693f', disabled: '#71bfa0', text: '#fff' },
     info: { DEFAULT: '#d2d6d9', light: '#aaafb3', dark: '#60666b', disabled: '#ebf2f7', text: '#fff' },

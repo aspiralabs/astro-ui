@@ -19,6 +19,10 @@
     @apply py-0 px-4;
 }
 
+.ProseMirror p {
+    @apply text-base;
+}
+
 .ProseMirror h1,
 .ProseMirror h2,
 .ProseMirror h3,
@@ -29,35 +33,21 @@
 }
 
 .ProseMirror code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
+    @apply bg-surface text-body p-1 text-xs font-mono;
 }
 
 .ProseMirror pre {
-    background: #0d0d0d;
-    color: #fff;
-    font-family: 'JetBrainsMono', monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-}
-
-.ProseMirror pre code {
-    color: inherit;
-    padding: 0;
-    background: none;
-    font-size: 0.8rem;
+    @apply rounded px-2 py-3 bg-surface text-body font-mono text-sm;
 }
 
 .ProseMirror img {
-    max-width: 100%;
-    height: auto;
+    @apply h-auto max-w-full;
 }
 
 .ProseMirror hr {
-    margin: 1rem 0;
+    @apply my-4;
 }
 
 .ProseMirror blockquote {
-    padding-left: 1rem;
-    border-left: 2px solid rgba(#0d0d0d, 0.1);
+    @apply pl-4 border-l-4 bg-surface-light py-1;
 }

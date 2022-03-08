@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '../..';
 import { useAstro } from '../astro/astro';
-import DemoModal from './demo_modal';
+import DemoModal, { TestModalProps } from './demo_modal';
 
 export default {
     title: 'Modal',
@@ -12,7 +12,7 @@ export const BasicModal = () => {
     const { Modal } = useAstro();
 
     const handleSuccessClick = () => {
-        Modal.show(DemoModal, {});
+        Modal.show<TestModalProps>(DemoModal, { test: 'world' });
     };
 
     return (

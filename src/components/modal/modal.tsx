@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
-import React, { Attributes, createContext, useContext, useEffect, useState } from 'react';
+import React, { Attributes, createContext, FC, useContext, useEffect, useState } from 'react';
 import { useAstro } from '../..';
 import { BaseModalProps, ModalPlaceholderProps } from './modal.types';
 
@@ -8,8 +8,6 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        console.log(modals);
-
         if (modals.length > 0) {
             setIsOpen(true);
         } else {
@@ -33,6 +31,8 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                                 ...modal.props,
                             };
 
+                            console.log(props);
+
                             return (
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.8 }}
@@ -50,7 +50,7 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                                     className="pointer-events-auto"
                                     key={index}
                                 >
-                                    {React.createElement(modal.component, {})}
+                                    {React.createElement<BaseModalProps>(modal.component, props)}
                                 </motion.div>
                             );
                         })}

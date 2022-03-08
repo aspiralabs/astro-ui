@@ -9,5 +9,5 @@ export interface TabContentProps {
 export interface TabbedNavigationProps {
     current: number;
     setter: React.Dispatch<React.SetStateAction<number>>;
-    children: React.ReactElement<TabContentProps>[];
+    children?: React.ReactElement<TabContentProps>[];
 }

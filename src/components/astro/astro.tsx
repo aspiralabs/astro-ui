@@ -1,11 +1,12 @@
 // Generated with util/create-component.js
 import React, { useContext, useEffect, useState } from 'react';
 import { uid } from 'uid';
-import { ToastMethods, ToastPlaceholder } from '../toast/toast';
-import { AstroContextValue, ToastObject } from './astro.types';
+import { ToastPlaceholder } from '../toast/toast';
+import { AstroContextValue } from './astro.types';
 import { ModalMethods, ModalObject } from '../modal/modal.types';
 import { ModalPlaceholder } from '../modal/modal';
 import { AnimatePresence } from 'framer-motion/dist/framer-motion';
+import { ToastMethods, ToastOptions, ToastObject } from '../toast/toast.types';
 
 // Create the Context
 export const AstroContext = React.createContext<AstroContextValue>({} as AstroContextValue);
@@ -23,20 +24,22 @@ const AstroProvider = ({ children }) => {
     // TOASTS
     // =========================================================================
     const Toast: ToastMethods = {
-        success: message => addToast(message, 'success'),
-        warning: message => addToast(message, 'warning'),
-        error: message => addToast(message, 'error'),
-        info: message => addToast(message, 'info'),
+        success: (message, options) => addToast(message, 'success', options),
+        warning: (message, options) => addToast(message, 'warning', options),
+        error: (message, options) => addToast(message, 'error', options),
+        info: (message, options) => addToast(message, 'info', options),
+        custom: (message, options) => addToast(message, 'custom', options),
         remove: id => removeToast(id),
     };
 
     // GENERAL ADD TOAST METHOD
     const addToast = React.useCallback(
-        (message: string, type: string) => {
+        (message: string, type: string, options: ToastOptions) => {
             const newToastObject: ToastObject = {
                 message,
                 type,
                 id: uid(),
+                options,
             };
 
             setToasts(toasts => [...toasts, newToastObject]);

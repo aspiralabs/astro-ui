@@ -90,7 +90,7 @@ const Select: React.FC<SelectProps> = ({
         if (message?.message) {
             let color = 'border ';
 
-            if (message?.type === 'error') color += 'border-danger';
+            if (message?.type === 'error') color += 'border-error';
             if (message?.type === 'success') color += 'border-success';
 
             setBorderColor(color);
@@ -209,12 +209,12 @@ const Select: React.FC<SelectProps> = ({
                 {message?.message && (
                     <React.Fragment>
                         {message?.type === 'error' && (
-                            <i className="fa-circle-exclamation fa-regular mr-2 text-danger" />
+                            <i className="fa-circle-exclamation fa-regular mr-2 text-error" />
                         )}
                         {message?.type === 'success' && <i className="fa-circle-check fa-regular mr-2 text-success" />}
                         <p
                             className={`text-sm font-body ${
-                                message?.type === 'error' ? 'text-danger' : 'text-success'
+                                message?.type === 'error' ? 'text-error' : 'text-success'
                             } `}
                         >
                             {message?.message}

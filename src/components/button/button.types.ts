@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-export type ButtonSize = 'sm' | 'normal' | 'lg';
+export type ButtonSize = 'xs' | 'sm' | 'normal' | 'lg';
 export interface ButtonProps {
     children?: React.ReactNode;
     variant?: string;

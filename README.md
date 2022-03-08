@@ -1,13 +1,72 @@
 # Astro UI
 
 Astro UI is a React UI library based on TailwindCSS.
-
-Astro UI is still a work-in-progress until a major release is published.
+Astro UI is still a work-in-progress and no major release has been published.
 
 ## Install Astro UI
 
-```cli
-npm install @astro/ui
+Install using your prefered package manager.
+
+```bash
+yarn add @aspiralabs/astro-ui
+```
+
+```bash
+npm i @aspiralabs/astro-ui
+```
+
+## Usage
+
+### Step One:
+
+Wrap your `tailwind.config.js` in the included Astro Configuration
+
+```javascript
+const AstroUI = require('@aspiralabs/astro-ui/config');
+
+module.export = AstroUI({
+    content: [],
+    ... // Rest of your tailwind config
+});
+```
+
+### Step Two:
+
+Wrap your React app with the `AstroProvider` at the highest level
+
+**Next.js Example:**
+
+```javascript
+// pages/_app.tsx
+
+import { AstroProvider } from '@aspiralabs/astro-ui';
+import { AppProps } from 'next/app';
+import React from 'react';
+
+import '../styles/globals.css';
+
+function MyApp({ Component, pageProps }: AppProps) {
+    return (
+        <AstroProvider>
+            <Component {...pageProps} />
+        </AstroProvider>
+    );
+}
+
+export default MyApp;
+```
+
+**CRA Example:**
+
+```javascript
+// index.tsx
+
+import { AstroProvider } from '@aspiralabs/astro-ui';
+const App = () => {
+    return <AstroProvider>... Rest of Code</AstroProvider>;
+};
+
+export default App;
 ```
 
 ## Roadmap
@@ -17,21 +76,21 @@ This roadmap is subject to change.
 _General_
 
 -   [x] Button
--   [ ] Typography
--   [ ] Icon
+-   [x] Typography
+-   [x] Icon
 
 _Data Input_
 
--   [ ] Input
--   [ ] Select (custom select wip)
--   [ ] Checkbox
+-   [x] Input
+-   [x] Select (custom select wip)
+-   [x] Checkbox
 -   [ ] Radio
 -   [ ] Toggle
 -   [ ] Upload
 -   [ ] Slider
--   [ ] Date picker
+-   [x] Date picker
 -   [ ] Time picker
--   [ ] Form
+-   [x] Form
 
 _Layout_
 
@@ -40,39 +99,33 @@ _Layout_
 
 _Display_
 
--   [ ] Card
--   [ ] Avatar
+-   [x] Card
 -   [ ] Accordion
--   [ ] Alert
--   [ ] Badge
--   [ ] Menu
--   [ ] Tooltips
--   [ ] Tables
--   [ ] Code block
+-   [x] Badge
+-   [x] Tooltips
+-   [x] Tables
 
 _Navigation_
 
--   [ ] Tabs
+-   [x] Tabs
 -   [ ] Breadcrumb
--   [ ] Dropdown
--   [ ] Menu
--   [ ] Page Header
--   [ ] Sidebar
--   [ ] Flyout menu
--   [ ] Steps
+-   [x] Menu
+-   [x] Sidebar
+-   [x] Timeline
 
 _Overlay_
 
--   [ ] Modal
--   [ ] Context Menu
--   [ ] Drawer / SidePanel
--   [ ] Toast messages / Notification
--   [ ] Progress
--   [ ] Feeds / Timeline
+-   [x] Modal
+-   [x] Toast messages / Notification
+-   [x] Timeline
 
 _Utility_
 
--   [ ] Loading
+-   [x] BlockUI
+
+_Hooks_
+
+-   [x] Debounce
 
 _Misc_
 

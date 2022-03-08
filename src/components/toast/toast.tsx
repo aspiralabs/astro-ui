@@ -1,44 +1,20 @@
 import { faCheckCircle, faXmarkCircle, faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { uid } from 'uid';
 import { useAstro } from '../..';
+import { ToastPlaceholderProps, ToastContextValue, ToastMessageProps } from './toast.types';
 
 // =============================================================================
 // TYPES
 // =============================================================================
-interface ToastWrapperProps {
-    children: React.ReactNode;
-}
 
-interface ToastPlaceholderProps {
-    toasts: ToastObject[];
-}
-interface ToastMessageProps {
-    toast: ToastObject;
-}
-
-interface ToastObject {
-    message: string;
-    type: string;
-    id: string;
-}
-export interface ToastMethods {
-    success: (message: string) => void;
-    warning: (message: string) => void;
-    error: (message: string) => void;
-    info: (message: string) => void;
-    remove: any;
-}
-
-interface ToastContext {
-    Toast: ToastMethods;
-}
 // =============================================================================
 // CREATE CONTEXT
 // =============================================================================
-export const ToastContext = createContext<ToastContext>({} as ToastContext);
+export const ToastContext = createContext<ToastContextValue>({} as ToastContextValue);
 
 // =============================================================================
 // MODAL PLACEHOLDER
@@ -63,42 +39,34 @@ export const ToastPlaceholder: React.FC<ToastPlaceholderProps> = ({ toasts }) =>
 // =============================================================================
 // TOAST MESSAGE
 // =============================================================================
-const ToastMessage: React.FC<ToastMessageProps> = ({ toast }) => {
+const ToastMessage = ({ toast }: ToastMessageProps) => {
     const { Toast } = useAstro();
 
-    // Calculated Styles
-    let toastStyles = '';
-    let icon = null;
+    const bg = toast.options?.variant || null;
+    const variant = bg || toast.type;
+    let toastStyles = `bg-${variant} text-${variant}-dark bg-opacity-20`;
+    let icon = toast.options?.icon || null;
+
     switch (toast.type) {
         case 'success':
-            toastStyles = 'bg-success text-success-dark bg-opacity-20';
-            icon = faCheckCircle;
+            icon = toast.options?.icon || faCheckCircle;
             break;
         case 'error':
-            toastStyles = 'bg-danger text-danger-dark bg-opacity-20';
-            icon = faXmarkCircle;
-
+            icon = toast.options?.icon || faXmarkCircle;
             break;
         case 'warning':
-            toastStyles = 'bg-warning text-warning-dark bg-opacity-20';
-            icon = faCircleQuestion;
-
+            icon = toast.options?.icon || faExclamationCircle;
             break;
         case 'info':
-            toastStyles = 'bg-info text-info-dark bg-opacity-20';
-            icon = faCircleQuestion;
-
+            icon = toast.options?.icon || faCircleQuestion;
             break;
-        default:
-            toastStyles = 'bg-info text-info-dark bg-opacity-20';
-            icon = faCircleQuestion;
     }
 
     // Timer Effect
     useEffect(() => {
         const timer = setTimeout(() => {
             Toast.remove(toast.id);
-        }, 3000);
+        }, toast.options?.timeout || 3000);
         return () => {
             clearTimeout(timer);
         };
@@ -129,17 +97,4 @@ const ToastMessage: React.FC<ToastMessageProps> = ({ toast }) => {
             <div>{toast.message}</div>
         </motion.div>
     );
-};
-// =============================================================================
-// HOOK FOR TAPPING INTO CONTEXT
-// =============================================================================
-const useToast = () => {
-    const context = useContext(ToastContext);
-
-    // if `undefined`, throw an error
-    if (context === undefined) {
-        throw new Error('useUserContext was used outside of its Provider');
-    }
-
-    return context;
 };

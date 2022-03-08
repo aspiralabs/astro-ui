@@ -13,7 +13,7 @@ export const BasicBage = () => {
             <Badge variant="secondary">Badge Primary</Badge>
             <Badge variant="success">Badge Primary</Badge>
             <Badge variant="warning">Badge Primary</Badge>
-            <Badge variant="danger">Badge Primary</Badge>
+            <Badge variant="error">Badge Primary</Badge>
         </div>
     );
 };

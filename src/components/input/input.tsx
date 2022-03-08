@@ -31,7 +31,7 @@ const Input = ({
         if (message?.message) {
             let color = 'border ';
 
-            if (message?.type === 'error') color += 'border-danger';
+            if (message?.type === 'error') color += 'border-error';
             else if (message?.type === 'success') color += 'border-success';
             else color += 'border-surface-dark';
 
@@ -77,14 +77,14 @@ const Input = ({
                 <div className="flex gap-1 items-center py-1">
                     <React.Fragment>
                         {message?.type === 'error' && (
-                            <FontAwesomeIcon icon={faExclamation} className="mr-2 text-danger" />
+                            <FontAwesomeIcon icon={faExclamation} className="mr-2 text-error" />
                         )}
                         {message?.type === 'success' && (
                             <FontAwesomeIcon icon={faCheck} className="mr-2 text-success" />
                         )}
                         <p
                             className={`text-sm font-body ${
-                                message?.type === 'error' ? 'text-danger' : 'text-success'
+                                message?.type === 'error' ? 'text-error' : 'text-success'
                             } `}
                         >
                             {message?.message}

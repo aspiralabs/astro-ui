@@ -52,11 +52,7 @@ export const TabNavigation = ({ current, setter, children }: TabbedNavigationPro
  */
 export const TabContent = ({ children, onMount }: TabContentProps) => {
     useEffect(() => {
-        if (onMount) {
-            onMount();
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        onMount && onMount();
     }, []);
-    return children;
+    return children ? children : null;
 };

@@ -1,43 +1,36 @@
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import cleaner from 'rollup-plugin-cleaner';
 import { terser } from 'rollup-plugin-terser';
+import resolve from '@rollup/plugin-node-resolve';
 
-import packageJson from './package.json';
-const tailwindcss = require('tailwindcss');
+export default [
+    {
+        input: 'src/index.ts',
+        output: [
+            {
+                dir: 'build',
+                format: 'esm',
+                sourcemap: true,
+            },
+        ],
+        external: ['react', 'react-dom', 'tailwindcss'],
 
-export default {
-    input: 'src/index.ts',
-    output: [
-        {
-            file: packageJson.main,
-            format: 'cjs',
-            sourcemap: true,
-        },
-        {
-            file: packageJson.module,
-            format: 'esm',
-            sourcemap: true,
-        },
-    ],
-    plugins: [
-        cleaner({ targets: ['./build'] }),
-        peerDepsExternal(),
-        postcss({
-            plugins: [
-                tailwindcss('./tailwind.config.js'),
-                require('autoprefixer'),
-                require('cssnano')({ preset: 'default' }),
-            ],
-        }),
-        resolve(),
-        commonjs(),
-        terser(),
-        typescript({
-            exclude: ['**/*.stories.tsx', '**/*.test.tsx'],
-        }),
-    ],
-};
+        plugins: [
+            cleaner({ targets: ['./build'] }),
+            resolve(),
+            commonjs(),
+            terser(),
+            typescript({ exclude: ['**/*.stories.tsx', '**/*.test.tsx'] }),
+        ],
+    },
+    {
+        input: 'config.js',
+        output: [
+            {
+                file: 'build/config.js',
+                format: 'cjs',
+            },
+        ],
+    },
+];

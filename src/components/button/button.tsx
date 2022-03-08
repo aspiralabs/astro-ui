@@ -22,22 +22,23 @@ const Button = ({
     // =========================================================================
     let calcSize = '';
     let buttonStyles = '';
-    let color = 'white';
     let bg = variant;
 
     switch (size) {
+        case 'lg':
+            calcSize = 'px-6 py-3';
+            break;
         case 'normal':
-            calcSize = 'px-4 py-3';
+            calcSize = 'px-4 py-3 text-sm';
             break;
         case 'sm':
-            calcSize = 'px-3 py-2';
+            calcSize = 'px-3 py-2 text-sm';
+            break;
+        case 'xs':
+            calcSize = 'px-2 py-1 text-xs';
             break;
         default:
-            calcSize = 'px-4 py-3';
-    }
-
-    if (variant === 'panel') {
-        color = 'body';
+            calcSize = '';
     }
 
     if (active) {
@@ -45,14 +46,16 @@ const Button = ({
     }
 
     if (outlined) {
-        buttonStyles = `border border-${bg} text-${variant} ${disabled && 'opacity-75'}`;
+        buttonStyles = `border border-${bg} hover:border-${variant}-light hover:text-${variant}-light text-${variant} ${
+            disabled && `border-${variant}-disabled hover:border-${variant}-disabled cursor-not-allowed`
+        }`;
     } else {
-        buttonStyles = `bg-${bg} hover:bg-${variant}-light active:bg-${variant}-dark disabled:bg-${variant}-disabled text-${variant}-text ${
-            disabled && 'bg-opacity-75'
+        buttonStyles = `bg-${bg} hover:bg-${variant}-light active:bg-${variant}-dark text-${variant}-text ${
+            disabled && `bg-${variant}-disabled hover:bg-${variant}-disabled cursor-not-allowed`
         }`;
     }
 
-    const finalClasses = `${calcSize} ${buttonStyles} font-body relative transition font-light capitalize  rounded-sm cursor-pointer flex gap-2 items-center text-sm justify-center ${className}`;
+    const finalClasses = `${calcSize} ${buttonStyles} font-body relative transition font-light capitalize  rounded-sm cursor-pointer flex gap-2 items-center  justify-center ${className}`;
 
     // =========================================================================
     // RENDER

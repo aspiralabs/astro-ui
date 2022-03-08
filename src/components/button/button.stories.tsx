@@ -8,9 +8,15 @@ export default {
 };
 
 export const BasicButton = () => {
+    const handleClick = () => {
+        alert('click');
+    };
+
     return (
         <div className="flex gap-4">
-            <Button variant="primary">Primary Button</Button>
+            <Button variant="primary" onClick={handleClick}>
+                Primary Button
+            </Button>
             <Button variant="primary" outlined>
                 Outlined Button
             </Button>
@@ -25,6 +31,9 @@ export const ButtonSizes = () => {
     return (
         <div>
             <div className="flex gap-4 items-end">
+                <Button variant="primary" size="xs">
+                    Button
+                </Button>
                 <Button variant="primary" size="sm">
                     Button
                 </Button>
@@ -34,9 +43,14 @@ export const ButtonSizes = () => {
                 <Button variant="primary" size="lg">
                     Button
                 </Button>
+                <Button variant="primary" className="px-24 py-4">
+                    Custom Size
+                </Button>
             </div>
             <div className="flex gap-4 items-end mt-8">
-               
+                <Button variant="primary" size="xs" outlined>
+                    Button
+                </Button>
                 <Button variant="primary" size="sm" outlined>
                     Button
                 </Button>
@@ -121,11 +135,11 @@ export const ButtonPalette = () => {
             <div>
                 <h2 className="text-xl font-semibold my-4">Danger</h2>
                 <div className="flex gap-4">
-                    <Button variant="danger">Button</Button>
-                    <Button variant="danger" outlined>
+                    <Button variant="error">Button</Button>
+                    <Button variant="error" outlined>
                         Outlined
                     </Button>
-                    <Button variant="danger" disabled>
+                    <Button variant="error" disabled>
                         Disabled
                     </Button>
                 </div>
