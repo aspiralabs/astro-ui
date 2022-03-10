@@ -6,7 +6,7 @@ import { CleaveOptions } from 'cleave.js/options';
 // Generated with util/create-component.js
 export interface InputProps {
     value?: string | number;
-    setter?: Dispatch<SetStateAction<string>>;
+    setter?: Dispatch<SetStateAction<string>> | Dispatch<SetStateAction<number>>;
     label?: string;
     required?: boolean;
     icon?: IconProp;
@@ -18,4 +18,5 @@ export interface InputProps {
     message?: IFormMessage;
     cleaveOptions?: CleaveOptions;
     cleaveFormatted?: boolean;
+    number?: boolean;
 }

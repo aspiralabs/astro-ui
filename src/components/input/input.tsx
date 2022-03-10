@@ -41,6 +41,14 @@ const Input = ({
         }
     }, [message]);
 
+    const handleInputChange = e => {
+        if (cleaveOptions?.numeral === true) {
+            setter(Number(e.target.rawValue) as any);
+        } else {
+            setter(e.target.rawValue);
+        }
+    };
+
     if (!setter) return <p></p>;
     return (
         <fieldset className={`relative w-full ${className}`}>
@@ -59,7 +67,7 @@ const Input = ({
                     disabled={disabled}
                     required={required}
                     value={value}
-                    onChange={e => setter(cleaveFormatted ? e.target.value : e.target.rawValue)}
+                    onChange={handleInputChange}
                     type={type}
                     className={` ${
                         disabled ? disabledInput : borderColor

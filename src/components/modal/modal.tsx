@@ -50,7 +50,7 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                                     className="pointer-events-auto"
                                     key={index}
                                 >
-                                    {React.createElement<BaseModalProps>(modal.component, props)}
+                                    {React.createElement<any>(modal.component, props)}
                                 </motion.div>
                             );
                         })}
