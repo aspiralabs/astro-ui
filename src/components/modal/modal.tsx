@@ -1,3 +1,5 @@
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import React, { Attributes, createContext, FC, useContext, useEffect, useState } from 'react';
 import { useAstro } from '../..';
@@ -6,6 +8,10 @@ import { BaseModalProps, ModalPlaceholderProps } from './modal.types';
 export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
     const { Modal } = useAstro();
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleCloseModal = (id: string) => {
+        Modal.hide(id);
+    };
 
     useEffect(() => {
         if (modals.length > 0) {
@@ -50,7 +56,22 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                                     className="pointer-events-auto"
                                     key={index}
                                 >
-                                    {React.createElement<any>(modal.component, props)}
+                                    <div className="relative ">
+                                        {modal.props?.closeIcon && (
+                                            <div
+                                                className="absolute top-3 right-3 cursor-pointer"
+                                                style={{ zIndex: 10000 }}
+                                                onClick={() => handleCloseModal(modal.id)}
+                                            >
+                                                <FontAwesomeIcon
+                                                    className="text-body text-opacity-50 hover:text-opacity-100 transition"
+                                                    icon={faXmark}
+                                                />
+                                            </div>
+                                        )}
+
+                                        {React.createElement<any>(modal.component, props)}
+                                    </div>
                                 </motion.div>
                             );
                         })}

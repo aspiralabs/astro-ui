@@ -3,6 +3,7 @@ import { TestModalProps } from './demo_modal';
 
 export interface BaseModalProps {
     id?: string;
+    closeIcon?: boolean;
 }
 export interface ModalWrapperProps {
     children: React.ReactNode;

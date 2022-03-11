@@ -12,7 +12,7 @@ export const BasicModal = () => {
     const { Modal } = useAstro();
 
     const handleSuccessClick = () => {
-        Modal.show<TestModalProps>(DemoModal, { test: 'world' });
+        Modal.show<TestModalProps>(DemoModal, { test: 'world', closeIcon: true });
     };
 
     return (
