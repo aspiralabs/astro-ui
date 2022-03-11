@@ -10,4 +10,5 @@ export interface EditorProps {
     onChange?: any;
     minHeight?: number | string;
     maxHeight?: number | string;
+    className?: string;
 }

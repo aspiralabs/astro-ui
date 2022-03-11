@@ -136,7 +136,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
 // =============================================================================
 // MAIN EDITOR
 // =============================================================================
-const AstroEditor = ({ content, name, onChange, minHeight = 100, maxHeight = 'auto' }: EditorProps) => {
+const AstroEditor = ({ className, content, name, onChange, minHeight = 100, maxHeight = 'auto' }: EditorProps) => {
     const mainEditor = useEditor({
         extensions: [
             StarterKit,
@@ -151,7 +151,7 @@ const AstroEditor = ({ content, name, onChange, minHeight = 100, maxHeight = 'au
 
     return (
         <React.Fragment>
-            <div className="bg-surface-light  flex flex-col p-3 rounded shadow-sm">
+            <div className={`bg-surface-light  flex flex-col p-3 rounded shadow-sm ${className}`}>
                 {mainEditor && <MenuBar editor={mainEditor} />}
                 <EditorContent
                     name={name}
