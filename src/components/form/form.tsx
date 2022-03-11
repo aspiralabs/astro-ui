@@ -4,6 +4,7 @@ import Checkbox from '../checkbox/checkbox';
 import DatePicker from '../date_picker/date_picker';
 import Input from '../input/input';
 import Menu from '../menu/menu';
+import Select from '../select/select';
 
 import { FormDataStructure, IFormErrors, FormProps, FormSectionProps } from './form.types';
 
@@ -58,7 +59,13 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
     const isValidFormElement = (item: ReactElement) => {
         if (!item.type) return false;
 
-        if (item.type === Input || item.type === Menu || item.type === Checkbox || item.type === DatePicker)
+        if (
+            item.type === Input ||
+            item.type === Menu ||
+            item.type === Checkbox ||
+            item.type === DatePicker ||
+            item.type === Select
+        )
             return true;
         else return false;
     };

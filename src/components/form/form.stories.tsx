@@ -4,6 +4,7 @@ import { Input } from '../..';
 import { Form, FormSection } from './form';
 import Button from '../button/button';
 import { FormAction } from './form.types';
+import Select from '../select/select';
 
 export default {
     title: 'Form',
@@ -16,6 +17,21 @@ export const BasicForm = () => {
         setOutput(JSON.stringify(values));
     };
 
+    const generOptions = [
+        {
+            value: 'male',
+            label: 'Male',
+        },
+        {
+            value: 'female',
+            label: 'Female',
+        },
+        {
+            value: 'nonbinary',
+            label: 'Non Binary',
+        },
+    ];
+
     const defaultValues = {
         firstName: '',
         lastName: '',
@@ -27,6 +43,8 @@ export const BasicForm = () => {
     return (
         <section className="bg-gray p-8">
             <Form defaultValues={defaultValues} action={handleSubmit} className="flex flex-col gap-4">
+                <Select options={generOptions} name="testSelect" label="Select Gender" />
+
                 <Input name="firstName" label="First Name" />
                 <Input name="lastName" label="Last Name" />
 
