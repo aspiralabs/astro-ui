@@ -4,6 +4,7 @@ import Checkbox from '../checkbox/checkbox';
 import DatePicker from '../date_picker/date_picker';
 import Input from '../input/input';
 import Menu from '../menu/menu';
+import Radio, { RadioGroup } from '../radio/radio';
 import Select from '../select/select';
 
 import { FormDataStructure, IFormErrors, FormProps, FormSectionProps } from './form.types';
@@ -64,7 +65,9 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
             item.type === Menu ||
             item.type === Checkbox ||
             item.type === DatePicker ||
-            item.type === Select
+            item.type === Select ||
+            item.type === Radio ||
+            item.type === RadioGroup
         )
             return true;
         else return false;
@@ -88,6 +91,20 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
                 return React.createElement('section', { className: child.props.className }, subChildren);
             }
 
+            // If It is a Radio Group
+            else if (item.type === RadioGroup) {
+                return React.cloneElement(child, {
+                    key: name,
+                    value: item.props.value ? item.props.value : formData[name],
+                    disabled: loading,
+                    message: formErrors[name],
+                    loading,
+                    setter: item.props.setter
+                        ? item.props.setter
+                        : (value: any) => setFormData({ ...formData, [name]: value }),
+                });
+            }
+
             // If Child is just a regular element just return it
             else {
                 return React.cloneElement(child);
@@ -97,6 +114,8 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
         else {
             // Check if If Element is Form Element  and pass proper props
             if (isValidFormElement(item)) {
+                console.log('is valid form element');
+
                 return React.cloneElement(child, {
                     key: name,
                     value: item.props.value ? item.props.value : formData[name],
