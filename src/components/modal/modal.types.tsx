@@ -13,12 +13,12 @@ export interface ModalPlaceholderProps {
 }
 
 export interface ModalObject {
-    component: React.FC<{ id: string; [key: string]: any }>;
+    component: React.FC<any>;
     props: { [key: string]: any };
     id: string;
 }
 
 export interface ModalMethods {
-    show: <Type>(object: React.FC<{ id: string; [key: string]: any }>, props?: Type) => void;
+    show: <Type>(object: React.FC<Type>, props?: Type) => void;
     hide: (id: string) => void;
 }
