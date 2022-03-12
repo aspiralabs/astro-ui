@@ -3,6 +3,8 @@
 Astro UI is a React UI library based on TailwindCSS.
 Astro UI is still a work-in-progress and no major release has been published.
 
+A temporary storybook demo can be found at [https://aspiralabs.github.io/astro-ui](https://aspiralabs.github.io/astro-ui)
+
 ## Install Astro UI
 
 Install using your prefered package manager.
