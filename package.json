@@ -9,7 +9,7 @@
     "description": "An Opiniated TailwindCSS + React Library",
     "scripts": {
         "start:storybook": "start-storybook -p 6006",
-        "build:storybook": "yarn build-storybook -o ./.docs",
+        "build:storybook": "yarn build-storybook -o ./docs",
         "build:tailwind": "postcss src/styles/tailwind.css -o src/styles/index.css",
         "build:rollup": "rm -rf build && rollup -c rollup.config.js",
         "watch:tailwind": "postcss --watch src/styles/tailwind.css -o src/styles/index.css",
