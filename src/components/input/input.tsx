@@ -21,7 +21,6 @@ const Input = ({
         blocks: [99999],
         delimiter: '',
     },
-    cleaveFormatted = false,
 }: InputProps) => {
     const [borderColor, setBorderColor] = useState('');
     const disabledInput = `border border-disabled bg-disabled`;
@@ -42,12 +41,22 @@ const Input = ({
     }, [message]);
 
     const handleInputChange = e => {
+        console.log('input triggered');
+
+        console.log('value', value);
+        console.log('raw val', e.target.rawValue);
+        console.log(e);
+
         if (cleaveOptions?.numeral === true) {
             setter(Number(e.target.rawValue) as any);
         } else {
             setter(e.target.rawValue);
         }
     };
+
+    useEffect(() => {
+        console.log('trigger');
+    }, [value]);
 
     if (!setter) return <p></p>;
     return (

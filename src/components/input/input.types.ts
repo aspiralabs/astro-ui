@@ -17,6 +17,5 @@ export interface InputProps {
     name?: string;
     message?: IFormMessage;
     cleaveOptions?: CleaveOptions;
-    cleaveFormatted?: boolean;
     number?: boolean;
 }

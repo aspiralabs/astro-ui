@@ -16,6 +16,7 @@ const Button = ({
     dropdown = false,
     type,
     active,
+    id,
 }: ButtonProps) => {
     // =========================================================================
     // COMPUTATIONS
@@ -61,7 +62,7 @@ const Button = ({
     // RENDER
     // =========================================================================
     return (
-        <button className={finalClasses} onClick={onClick} disabled={disabled || loading} type={type}>
+        <button className={finalClasses} onClick={onClick} disabled={disabled || loading} type={type} id={id}>
             {!loading && children}
             {loading && <FontAwesomeIcon icon={faCircleNotch} />}
             {icon && <FontAwesomeIcon icon={icon} />}

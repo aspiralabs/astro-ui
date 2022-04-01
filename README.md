@@ -7,7 +7,7 @@ A temporary storybook demo can be found at [https://aspiralabs.github.io/astro-u
 
 ## Install Astro UI
 
-Install using your prefered package manager.
+Install using your prefered package manager. (Must have NPM Permissions)
 
 ```bash
 yarn add @aspiralabs/astro-ui

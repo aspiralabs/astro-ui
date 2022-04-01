@@ -473,6 +473,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .top-0 {
   top: 0px;
 }
+.top-3 {
+  top: 0.75rem;
+}
+.right-3 {
+  right: 0.75rem;
+}
 .top-4 {
   top: 1rem;
 }
@@ -493,12 +499,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .right-full {
   right: 100%;
-}
-.top-3 {
-  top: 0.75rem;
-}
-.right-3 {
-  right: 0.75rem;
 }
 .z-10 {
   z-index: 10;
@@ -603,17 +603,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-screen {
   height: 100vh;
 }
+.h-2 {
+  height: 0.5rem;
+}
 .h-full {
   height: 100%;
 }
 .h-2\.5 {
   height: 0.625rem;
-}
-.h-2 {
-  height: 0.5rem;
-}
-.h-3 {
-  height: 0.75rem;
 }
 .max-h-48 {
   max-height: 12rem;
@@ -642,20 +639,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-screen {
   width: 100vw;
 }
+.w-2 {
+  width: 0.5rem;
+}
 .w-8 {
   width: 2rem;
 }
 .w-2\.5 {
   width: 0.625rem;
 }
-.w-2 {
-  width: 0.5rem;
-}
 .w-32 {
   width: 8rem;
-}
-.w-3 {
-  width: 0.75rem;
 }
 .max-w-full {
   max-width: 100%;

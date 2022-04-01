@@ -15,4 +15,5 @@ export interface ButtonProps {
     dropdown?: boolean;
     type?: 'button' | 'submit' | 'reset' | undefined;
     active?: boolean;
+    id?: string;
 }
