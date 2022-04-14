@@ -33,7 +33,7 @@ export const BasicForm = () => {
     ];
 
     const defaultValues = {
-        firstName: '',
+        firstName: 'asdfas',
         lastName: '',
         address: '',
         city: '',
@@ -45,7 +45,7 @@ export const BasicForm = () => {
             <Form defaultValues={defaultValues} action={handleSubmit} className="flex flex-col gap-4">
                 <Select options={generOptions} name="testSelect" label="Select Gender" />
 
-                <Input name="firstName" label="First Name" />
+                <Input name="firstName" label="First Name" disabled={true} />
                 <Input name="lastName" label="Last Name" />
 
                 <FormSection className="flex gap-4">

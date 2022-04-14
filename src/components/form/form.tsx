@@ -94,9 +94,10 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
             // If It is a Radio Group
             else if (item.type === RadioGroup) {
                 return React.cloneElement(child, {
+                    ...item.props,
                     key: name,
                     value: item.props.value ? item.props.value : formData[name],
-                    disabled: loading,
+                    disabled: loading || item.props?.disabled,
                     message: formErrors[name],
                     loading,
                     setter: item.props.setter
@@ -117,9 +118,10 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
                 console.log('is valid form element');
 
                 return React.cloneElement(child, {
+                    ...item.props,
                     key: name,
                     value: item.props.value ? item.props.value : formData[name],
-                    disabled: loading,
+                    disabled: loading || item.props?.disabled,
                     message: formErrors[name],
                     loading,
                     setter: item.props.setter
