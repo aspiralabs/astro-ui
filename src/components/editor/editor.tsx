@@ -7,9 +7,13 @@ import {
     faAlignLeft,
     faAlignRight,
     faBold,
+    faCode,
+    faHighlighter,
     faItalic,
+    faListCheck,
     faListOl,
     faListUl,
+    faMarker,
     faRotateLeft,
     faRotateRight,
     faStrikethrough,
@@ -20,7 +24,11 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
-
+import Highlight from '@tiptap/extension-highlight';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import { lowlight } from 'lowlight/lib/common.js';
 // ASTRO UI STUFF
 import Button from '../button/button';
 import { EditorMenuBarProps, EditorProps } from './editor.types';
@@ -38,7 +46,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive('bold')}
             >
                 <FontAwesomeIcon icon={faBold} />
@@ -47,7 +55,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().toggleItalic().run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive('italic')}
             >
                 <FontAwesomeIcon icon={faItalic} />
@@ -56,7 +64,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().toggleUnderline().run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive('underline')}
             >
                 <FontAwesomeIcon icon={faUnderline} />
@@ -64,10 +72,18 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().toggleStrike().run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive('strike')}
             >
                 <FontAwesomeIcon icon={faStrikethrough} />
+            </Button>
+            <Button
+                onClick={() => editor.chain().focus().toggleHighlight().run()}
+                size="sm"
+                variant="surface"
+                active={editor.isActive('highlight')}
+            >
+                <FontAwesomeIcon icon={faHighlighter} />
             </Button>
 
             {/* ========================================================= */}
@@ -77,7 +93,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().setTextAlign('left').run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive({ textAlign: 'left' })}
             >
                 <FontAwesomeIcon icon={faAlignLeft} />
@@ -86,7 +102,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().setTextAlign('center').run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive({ textAlign: 'center' })}
             >
                 <FontAwesomeIcon icon={faAlignCenter} />
@@ -95,10 +111,19 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().setTextAlign('right').run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive({ textAlign: 'right' })}
             >
                 <FontAwesomeIcon icon={faAlignRight} />
+            </Button>
+
+            <Button
+                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                size="sm"
+                variant="surface"
+                active={editor.isActive('codeBlock')}
+            >
+                <FontAwesomeIcon icon={faCode} />
             </Button>
 
             {/* ========================================================= */}
@@ -108,7 +133,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive('bulletList')}
             >
                 <FontAwesomeIcon icon={faListUl} />
@@ -116,17 +141,26 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
             <Button
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
                 size="sm"
-                variant="panel"
+                variant="surface"
                 active={editor.isActive('orderedList')}
             >
                 <FontAwesomeIcon icon={faListOl} />
             </Button>
 
-            <Button onClick={() => editor.chain().focus().undo().run()} size="sm" variant="panel">
+            <Button
+                onClick={() => editor.chain().focus().toggleTaskList().run()}
+                size="sm"
+                variant="surface"
+                active={editor.isActive('taskList')}
+            >
+                <FontAwesomeIcon icon={faListCheck} />
+            </Button>
+
+            <Button onClick={() => editor.chain().focus().undo().run()} size="sm" variant="surface">
                 <FontAwesomeIcon icon={faRotateLeft} />
             </Button>
 
-            <Button onClick={() => editor.chain().focus().redo().run()} size="sm" variant="panel">
+            <Button onClick={() => editor.chain().focus().redo().run()} size="sm" variant="surface">
                 <FontAwesomeIcon icon={faRotateRight} />
             </Button>
         </nav>
@@ -141,8 +175,16 @@ const AstroEditor = ({ className, content, name, onChange, minHeight = 100, maxH
         extensions: [
             StarterKit,
             Underline,
+            Highlight,
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
+            }),
+            CodeBlockLowlight.configure({
+                lowlight,
+            }),
+            TaskList,
+            TaskItem.configure({
+                nested: true,
             }),
         ],
         content: content || '',
@@ -173,8 +215,10 @@ const Divider = () => <div className="bg-surface-dark h-100 mx-1 w-px"></div>;
 // CONTENT VIEWER
 // =============================================================================
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const AstroEditorContentViewer = ({ content }: any) => {
-    return <div className="astro-editor-content-viewer" dangerouslySetInnerHTML={{ __html: content }} />;
+export const AstroEditorContentViewer = ({ content }: { content: string }) => {
+    return (
+        <div className="astro-editor-content-viewer ProseMirror w-full" dangerouslySetInnerHTML={{ __html: content }} />
+    );
 };
 
 export default AstroEditor;

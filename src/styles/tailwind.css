@@ -7,7 +7,7 @@
 ============================================================================= */
 
 .ProseMirror {
-    @apply p-4 overflow-y-auto font-sans;
+    @apply p-4 overflow-y-auto font-sans text-body;
 }
 
 .ProseMirror-focused {
@@ -17,6 +17,14 @@
 .ProseMirror ul,
 .ProseMirror ol {
     @apply py-0 px-4;
+}
+
+.ProseMirror ul {
+    @apply list-disc;
+}
+
+.ProseMirror ol {
+    @apply list-decimal;
 }
 
 .ProseMirror p {
@@ -33,11 +41,11 @@
 }
 
 .ProseMirror code {
-    @apply bg-surface text-body p-1 text-xs font-mono;
+    @apply bg-surface  p-1 text-xs font-mono;
 }
 
 .ProseMirror pre {
-    @apply rounded px-2 py-3 bg-surface text-body font-mono text-sm;
+    @apply rounded px-2 py-3 bg-surface  font-mono text-sm;
 }
 
 .ProseMirror img {
@@ -50,4 +58,22 @@
 
 .ProseMirror blockquote {
     @apply pl-4 border-l-4 bg-surface-light py-1;
+}
+
+.ProseMirror ul[data-type='taskList'] {
+    @apply list-none p-0;
+}
+
+.ProseMirror ul[data-type='taskList'] p {
+    @apply m-0;
+}
+.ProseMirror ul[data-type='taskList'] li {
+    @apply flex;
+}
+
+.ProseMirror ul[data-type='taskList'] li > label {
+    @apply flex-0 mr-2 select-none;
+}
+.ProseMirror ul[data-type='taskList'] li > div {
+    @apply flex-1;
 }
