@@ -11,7 +11,7 @@ const baseColors = {
     warning: { DEFAULT: '#f5aa31', light: '#ffa617', dark: '#804f00', disabled: '#fac878', text: '#fff' },
     success: { DEFAULT: '#26bf82', light: '#05ad6a', dark: '#00693f', disabled: '#71bfa0', text: '#fff' },
     info: { DEFAULT: '#d2d6d9', light: '#aaafb3', dark: '#60666b', disabled: '#ebf2f7', text: '#fff' },
-    surface: { DEFAULT: '#f0f3f5', light: '#dce2e6', dark: '#d5dee3', disabled: '#ebeced', text: '#fff' },
+    surface: { DEFAULT: '#f0f3f5', light: '#dce2e6', dark: '#d5dee3', disabled: '#fafbfc', text: '#fff' },
     heading: { DEFAULT: '#2d3748', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED' },
     body: { DEFAULT: '#646C7D', light: '#767e91', dark: '#646C7D', disabled: '#63B3ED' },
     white: '#fff',

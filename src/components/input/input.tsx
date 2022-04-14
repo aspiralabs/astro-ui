@@ -23,7 +23,7 @@ const Input = ({
     },
 }: InputProps) => {
     const [borderColor, setBorderColor] = useState('');
-    const disabledInput = `border border-disabled bg-disabled`;
+    const disabledInput = `border border-surface-dark bg-surface-disabled`;
     const field = useRef(null);
     const [labelIsFloating, setLabelIsFloating] = useState(false);
 

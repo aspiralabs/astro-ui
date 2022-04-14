@@ -461,17 +461,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-4 {
   right: 1rem;
 }
-.top-full {
-  top: 100%;
-}
-.right-0 {
-  right: 0px;
-}
 .left-0 {
   left: 0px;
 }
 .top-0 {
   top: 0px;
+}
+.-top-2 {
+  top: -0.5rem;
+}
+.top-full {
+  top: 100%;
+}
+.right-0 {
+  right: 0px;
 }
 .top-3 {
   top: 0.75rem;
@@ -499,27 +502,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .right-full {
   right: 100%;
-}
-.top-1\/4 {
-  top: 25%;
-}
-.-top-1\.5 {
-  top: -0.375rem;
-}
-.-top-1 {
-  top: -0.25rem;
-}
-.-top-2 {
-  top: -0.5rem;
-}
-.-top-2\.5 {
-  top: -0.625rem;
-}
-.-top-3 {
-  top: -0.75rem;
-}
-.-top-5 {
-  top: -1.25rem;
 }
 .z-10 {
   z-index: 10;
@@ -621,20 +603,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-11 {
   height: 2.75rem;
 }
+.h-full {
+  height: 100%;
+}
+.h-auto {
+  height: auto;
+}
 .h-screen {
   height: 100vh;
 }
 .h-2 {
   height: 0.5rem;
 }
-.h-full {
-  height: 100%;
-}
 .h-2\.5 {
   height: 0.625rem;
-}
-.h-auto {
-  height: auto;
 }
 .max-h-48 {
   max-height: 12rem;
@@ -951,7 +933,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .border-surface-disabled {
   --tw-border-opacity: 1;
-  border-color: rgb(235 236 237 / var(--tw-border-opacity));
+  border-color: rgb(250 251 252 / var(--tw-border-opacity));
 }
 .border-surface-text {
   --tw-border-opacity: 1;
@@ -1134,7 +1116,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .bg-surface-disabled {
   --tw-bg-opacity: 1;
-  background-color: rgb(235 236 237 / var(--tw-bg-opacity));
+  background-color: rgb(250 251 252 / var(--tw-bg-opacity));
 }
 .bg-surface-text {
   --tw-bg-opacity: 1;
@@ -1221,9 +1203,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .p-12 {
   padding: 3rem;
-}
-.p-0 {
-  padding: 0px;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -1336,9 +1315,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .italic {
   font-style: italic;
-}
-.leading-10 {
-  line-height: 2.5rem;
 }
 .tracking-wide {
   letter-spacing: 0.025em;
@@ -1477,7 +1453,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .text-surface-disabled {
   --tw-text-opacity: 1;
-  color: rgb(235 236 237 / var(--tw-text-opacity));
+  color: rgb(250 251 252 / var(--tw-text-opacity));
 }
 .text-surface-text {
   --tw-text-opacity: 1;
@@ -1831,7 +1807,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .checked\:border-surface-disabled:checked {
   --tw-border-opacity: 1;
-  border-color: rgb(235 236 237 / var(--tw-border-opacity));
+  border-color: rgb(250 251 252 / var(--tw-border-opacity));
 }
 
 .checked\:border-surface-text:checked {
@@ -2056,7 +2032,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .checked\:bg-surface-disabled:checked {
   --tw-bg-opacity: 1;
-  background-color: rgb(235 236 237 / var(--tw-bg-opacity));
+  background-color: rgb(250 251 252 / var(--tw-bg-opacity));
 }
 
 .checked\:bg-surface-text:checked {
@@ -2281,7 +2257,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .checked\:text-surface-disabled:checked {
   --tw-text-opacity: 1;
-  color: rgb(235 236 237 / var(--tw-text-opacity));
+  color: rgb(250 251 252 / var(--tw-text-opacity));
 }
 
 .checked\:text-surface-text:checked {
@@ -2506,7 +2482,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .hover\:border-surface-disabled:hover {
   --tw-border-opacity: 1;
-  border-color: rgb(235 236 237 / var(--tw-border-opacity));
+  border-color: rgb(250 251 252 / var(--tw-border-opacity));
 }
 
 .hover\:border-surface-text:hover {
@@ -2731,7 +2707,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .hover\:bg-surface-disabled:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(235 236 237 / var(--tw-bg-opacity));
+  background-color: rgb(250 251 252 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-surface-text:hover {
@@ -2956,7 +2932,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .hover\:text-surface-disabled:hover {
   --tw-text-opacity: 1;
-  color: rgb(235 236 237 / var(--tw-text-opacity));
+  color: rgb(250 251 252 / var(--tw-text-opacity));
 }
 
 .hover\:text-surface-text:hover {
@@ -3189,7 +3165,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .focus\:border-surface-disabled:focus {
   --tw-border-opacity: 1;
-  border-color: rgb(235 236 237 / var(--tw-border-opacity));
+  border-color: rgb(250 251 252 / var(--tw-border-opacity));
 }
 
 .focus\:border-surface-text:focus {
@@ -3414,7 +3390,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .focus\:bg-surface-disabled:focus {
   --tw-bg-opacity: 1;
-  background-color: rgb(235 236 237 / var(--tw-bg-opacity));
+  background-color: rgb(250 251 252 / var(--tw-bg-opacity));
 }
 
 .focus\:bg-surface-text:focus {
@@ -3639,7 +3615,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .focus\:text-surface-disabled:focus {
   --tw-text-opacity: 1;
-  color: rgb(235 236 237 / var(--tw-text-opacity));
+  color: rgb(250 251 252 / var(--tw-text-opacity));
 }
 
 .focus\:text-surface-text:focus {
