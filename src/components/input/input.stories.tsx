@@ -9,12 +9,7 @@ export default {
 
 export const BasicInput = () => {
     const [inputValue, setInputValue] = useState('');
-    const [numberInput, setNumberInput] = useState(0);
-
-    const formDefaultValues = {
-        basicInput: '',
-        basicNumber: 0,
-    };
+    const [numberInput, setNumberInput] = useState(3);
 
     const handleFormSubmit = (values: any) => {
         console.log(values);

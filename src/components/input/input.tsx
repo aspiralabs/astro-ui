@@ -25,6 +25,7 @@ const Input = ({
     const [borderColor, setBorderColor] = useState('');
     const disabledInput = `border border-disabled bg-disabled`;
     const field = useRef(null);
+    const [labelIsFloating, setLabelIsFloating] = useState(false);
 
     useEffect(() => {
         if (message?.message) {
@@ -55,24 +56,29 @@ const Input = ({
     };
 
     useEffect(() => {
-        console.log('trigger');
+        if (value || value === 0) {
+            setLabelIsFloating(true);
+        } else {
+            setLabelIsFloating(false);
+        }
     }, [value]);
+
+    const checkLabelStatus = () => {
+        if (!value) {
+            setLabelIsFloating(false);
+        }
+    };
 
     if (!setter) return <p></p>;
     return (
         <fieldset className={`relative w-full ${className}`}>
-            {label && (
-                <label className="block font-body font-light mb-2 text-body text-sm">
-                    {label} {required && <span className="text-red-700">*</span>}
-                </label>
-            )}
-
-            <div className="relative">
+            <div className="relative ">
                 <Cleave
+                    onFocus={() => setLabelIsFloating(true)}
+                    onBlur={checkLabelStatus}
                     options={cleaveOptions}
                     ref={field}
                     name={name}
-                    placeholder={placeholder}
                     disabled={disabled}
                     required={required}
                     value={value}
@@ -82,6 +88,20 @@ const Input = ({
                         disabled ? disabledInput : borderColor
                     } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-11 font-light tracking-wide`}
                 />
+
+                {label && (
+                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
+                        <span
+                            className={`absolute transform transitional-all duration-300 px-2 ${
+                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
+                            } h-auto `}
+                        >
+                            {label}
+                        </span>
+                        {required && <span className="text-red-700">*</span>}
+                    </label>
+                )}
+
                 {icon && (
                     <FontAwesomeIcon
                         icon={icon}

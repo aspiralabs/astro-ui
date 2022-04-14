@@ -500,6 +500,27 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-full {
   right: 100%;
 }
+.top-1\/4 {
+  top: 25%;
+}
+.-top-1\.5 {
+  top: -0.375rem;
+}
+.-top-1 {
+  top: -0.25rem;
+}
+.-top-2 {
+  top: -0.5rem;
+}
+.-top-2\.5 {
+  top: -0.625rem;
+}
+.-top-3 {
+  top: -0.75rem;
+}
+.-top-5 {
+  top: -1.25rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -611,6 +632,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-2\.5 {
   height: 0.625rem;
+}
+.h-auto {
+  height: auto;
 }
 .max-h-48 {
   max-height: 12rem;
@@ -1198,6 +1222,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-12 {
   padding: 3rem;
 }
+.p-0 {
+  padding: 0px;
+}
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1309,6 +1336,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .italic {
   font-style: italic;
+}
+.leading-10 {
+  line-height: 2.5rem;
 }
 .tracking-wide {
   letter-spacing: 0.025em;
@@ -1538,8 +1568,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .duration-100 {
   transition-duration: 100ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
 }
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
