@@ -347,12 +347,12 @@ const TableRender: React.FC<TableRenderProps> = ({
                         </Text>
 
                         <FontAwesomeIcon
-                            icon={faAnglesRight}
+                            icon={faAngleRight}
                             onClick={() => nextPage()}
                             className="cursor-pointer text-xs"
                         />
                         <FontAwesomeIcon
-                            icon={faAngleRight}
+                            icon={faAnglesRight}
                             onClick={() => gotoPage(pageCount - 1)}
                             className="cursor-pointer text-xs"
                         />

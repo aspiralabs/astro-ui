@@ -3,4 +3,5 @@ export interface TooltipProps {
     children?: any;
     text: string;
     position?: string;
+    className?: string;
 }
