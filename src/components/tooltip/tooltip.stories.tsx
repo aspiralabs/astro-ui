@@ -15,7 +15,7 @@ export const ToolTipButton = () => {
                     <Button variant="primary">Primary Button</Button>
                 </Tooltip>
 
-                <Tooltip text="Center" position="bottom-center">
+                <Tooltip text="This is some center text" position="bottom-center">
                     <Button variant="primary">Primary Button</Button>
                 </Tooltip>
 

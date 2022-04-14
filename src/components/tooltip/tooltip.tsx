@@ -2,7 +2,7 @@
 import React from 'react';
 import { TooltipProps } from './tooltip.types';
 
-const Tooltip = ({ children, text, position = 'bottom-center' }: TooltipProps) => {
+const Tooltip = ({ children, text, className, position = 'bottom-center' }: TooltipProps) => {
     let calculatedPosition = '';
 
     switch (position) {
@@ -51,9 +51,9 @@ const Tooltip = ({ children, text, position = 'bottom-center' }: TooltipProps) =
             {children}
 
             <div
-                className={`${calculatedPosition} bg-heading text-center justify-center items-center absolute px-2 py-1 rounded bg-opacity-75 hidden group-hover:inline-flex`}
+                className={`${calculatedPosition} bg-heading text-center justify-center items-center absolute px-2 py-1 rounded bg-opacity-75 hidden group-hover:flex  ${className}`}
             >
-                <span className="text-xs text-white">{text}</span>
+                <p className="text-xs text-white">{text}</p>
             </div>
         </div>
     );

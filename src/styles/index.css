@@ -657,6 +657,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-32 {
   width: 8rem;
 }
+.w-96 {
+  width: 24rem;
+}
+.w-auto {
+  width: auto;
+}
 .max-w-full {
   max-width: 100%;
 }
@@ -3690,6 +3696,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .disabled\:bg-surface:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(240 243 245 / var(--tw-bg-opacity));
+}
+
+.group:hover .group-hover\:flex {
+  display: flex;
 }
 
 .group:hover .group-hover\:inline-flex {
