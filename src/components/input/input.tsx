@@ -64,7 +64,9 @@ const Input = ({
     }, [value]);
 
     const checkLabelStatus = () => {
-        if (!value) {
+        if (value || value === 0) {
+            setLabelIsFloating(true);
+        } else {
             setLabelIsFloating(false);
         }
     };
