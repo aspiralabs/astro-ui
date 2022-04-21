@@ -1,4 +1,3 @@
-// Generated with util/create-component.js
 import React, { useState } from 'react';
 import DropdownMenu from './menu';
 import Button from '../button/button';
@@ -12,14 +11,13 @@ export const BasicMenu = () => {
     const [userDropwdownOpen, setUserDropdownOpen] = useState(false);
 
     const handleClick = () => {
-        console.log('clicked');
         setUserDropdownOpen(true);
     };
 
     const userDropwdownSchema: DropdownEntry[] = [
         {
             title: 'My Profile',
-            action: () => alert('clicked'),
+            action: () => setUserDropdownOpen(false),
         },
         {
             title: 'Logout',
@@ -29,10 +27,9 @@ export const BasicMenu = () => {
 
     return (
         <div>
-            <Button variant="primary" onClick={handleClick} className="relative">
-                Click Me
-                <DropdownMenu open={userDropwdownOpen} setter={setUserDropdownOpen} schema={userDropwdownSchema} />
-            </Button>
+            <DropdownMenu open={userDropwdownOpen} setter={setUserDropdownOpen} schema={userDropwdownSchema}>
+                <Button onClick={handleClick}>Click Me</Button>
+            </DropdownMenu>
         </div>
     );
 };

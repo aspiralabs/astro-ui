@@ -27,3 +27,4 @@ export { TabNavigation, TabContent } from './components/tabbed_navigation/tabbed
 
 // Hook Exports
 export { default as useDebounce } from './hooks/useDebounce';
+export { onClickOutside } from './hooks/onClickOutside';

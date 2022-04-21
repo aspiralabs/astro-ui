@@ -26,7 +26,7 @@ export const WithSelect = () => {
 
     return (
         <div>
-            <Select options={options} />
+            <Select options={options} label="Hello World" />
         </div>
     );
 };

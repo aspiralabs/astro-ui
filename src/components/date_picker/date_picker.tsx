@@ -3,6 +3,7 @@ import { faCalendar, faChevronLeft, faChevronRight } from '@fortawesome/free-sol
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useRef, useState } from 'react';
 import { DatePickerProps } from './date_picker.types';
+import { onClickOutside } from '../../hooks/onClickOutside';
 
 const DatePicker = ({ value, setter, name, label, placeholder = '', className }: DatePickerProps) => {
     // =========================================================================
@@ -14,9 +15,20 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
     const [blankdays, setBlankDays] = useState<number[]>([]);
     const [days, setDays] = useState<number[]>([]);
     const [innerValue, setInnerValue] = useState<Date | null>(null);
+    const [labelIsFloating, setLabelIsFloating] = useState(false);
 
     const field = useRef(null);
+    const dropdownRef = useRef(null);
     const isMobile = false;
+
+    // =========================================================================
+    // HOOK
+    // =========================================================================
+    onClickOutside(dropdownRef, event => {
+        if (!event.target.className.includes('astro_date_picker')) {
+            setMenuOpen(false);
+        }
+    });
 
     // =========================================================================
     // CONSTS
@@ -150,14 +162,25 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
 
     useEffect(() => {
         setter && innerValue && setter(innerValue);
+        if (innerValue) setLabelIsFloating(true);
     }, [innerValue]);
+
+    useEffect(() => {
+        if (menuOpen) {
+            setLabelIsFloating(true);
+        } else {
+            if (!innerValue) {
+                setLabelIsFloating(false);
+            }
+        }
+    }, [menuOpen]);
 
     // =========================================================================
     // RENDER
     // =========================================================================
     return (
         <fieldset className="relative w-full">
-            <label className="block font-body font-light mb-2 text-body text-sm">{label}</label>
+            {/* <label className="block font-body font-light mb-2 text-body text-sm">{label}</label> */}
 
             <div className="relative">
                 {isMobile && (
@@ -165,7 +188,7 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
                         type="date"
                         name={name}
                         placeholder={placeholder}
-                        className={`appearance-none bg-white border border-surface-dark  flex-1 h-12 pr-1 px-4 text-body text-sm w-full ${className}`}
+                        className={`astro_date_picker appearance-none bg-white border border-surface-dark  flex-1 h-12 pr-1 px-4 text-body text-sm w-full ${className}`}
                     ></input>
                 )}
                 {!isMobile && (
@@ -175,10 +198,21 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
                         name={name}
                         placeholder={placeholder}
                         onClick={toggleCalendar}
-                        className={`appearance-none border relative  rounded-sm  text-body border-surface-dark text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide ${className}`}
+                        className={`astro_date_picker appearance-none border relative  rounded-sm  text-body border-surface-dark text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide ${className}`}
                     />
                 )}
 
+                {label && (
+                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
+                        <span
+                            className={`absolute transform transitional-all duration-300 px-2 ${
+                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
+                            } h-auto `}
+                        >
+                            {label}
+                        </span>
+                    </label>
+                )}
                 <FontAwesomeIcon
                     icon={faCalendar}
                     onClick={toggleCalendar}
@@ -187,14 +221,13 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
             </div>
 
             {/* DROP DOWN */}
-
             {menuOpen && (
-                <div className="absolute bg-white mt-2 p-4 rounded shadow-xl w-72 z-50">
+                <div className="absolute bg-white mt-2 p-4 rounded shadow-xl w-72 z-50" ref={dropdownRef}>
                     {/* TOP PART OF CALENDAR PICKER */}
                     <div className="flex items-center justify-between mb-2">
                         <div>
-                            <span className="font-bold text-title text-lg">{MONTH_NAMES[currentMonth]}</span>
-                            <span className="font-normal ml-1 text-title text-lg">{currentYear}</span>
+                            <span className="font-bold text-heading text-lg">{MONTH_NAMES[currentMonth]}</span>
+                            <span className="font-normal ml-1 text-heading text-lg">{currentYear}</span>
                         </div>
                         <div className="flex gap-2">
                             <button
@@ -219,7 +252,7 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
                         {DAYS.map(day => {
                             return (
                                 <div style={{ width: ' 14.26%' }} className="px-1" key={day}>
-                                    <div className="font-medium text-center text-title text-xs">{day}</div>
+                                    <div className="font-medium text-center text-heading text-xs">{day}</div>
                                 </div>
                             );
                         })}

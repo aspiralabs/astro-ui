@@ -49,6 +49,7 @@ const Select = ({
     const [selectedValue, setSelectedValue] = useState<string | number>(value);
     const [selectedOptionLabel, setSelectedOptionLabel] = useState(value);
     const [searchTerm, setSearchTerm] = useState('');
+    const [labelIsFloating, setLabelIsFloating] = useState(false);
 
     // =========================================================================
     // DEBOUNCED TERM
@@ -66,6 +67,9 @@ const Select = ({
             setter(option[optionValue]);
         }
         setOpen(false);
+        if (option.value === '') {
+            setLabelIsFloating(false);
+        }
     };
 
     // =========================================================================
@@ -135,20 +139,22 @@ const Select = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearchTerm]);
 
+    useEffect(() => {
+        if (open) {
+            setLabelIsFloating(true);
+        } else {
+            if (!selectedValue) {
+                setLabelIsFloating(false);
+            }
+        }
+    }, [open]);
+
     // =========================================================================
     // RENDER
     // =========================================================================
     return (
         <fieldset className="relative w-full">
-            {/* LABELS */}
-            {label && (
-                <label className="block font-body font-light mb-2 text-body text-sm">
-                    {label} {required && <span className="text-red-700">*</span>}
-                </label>
-            )}
-
             {/* INPUT BOX */}
-
             <div
                 onClick={handleBoxClick}
                 className={`flex justify-between main-dropdown-container border ${
@@ -156,16 +162,23 @@ const Select = ({
                 } bg-white cursor-pointer relative rounded-sm font-body text-sm   w-full items-center h-12 font-light tracking-wide`}
             >
                 {/* TEXT AREA */}
-                <div className="px-4">
-                    {selectedOptionLabel ? (
-                        <Text>{selectedOptionLabel}</Text>
-                    ) : (
-                        <Text className="text-body-light">{placeholder}</Text>
-                    )}
-                </div>
+                <div className="px-4">{selectedOptionLabel && <Text>{selectedOptionLabel}</Text>}</div>
+
+                {label && (
+                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
+                        <span
+                            className={`absolute transform transitional-all duration-300 px-2 ${
+                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
+                            } h-auto `}
+                        >
+                            {label}
+                        </span>
+                        {required && <span className="text-red-700">*</span>}
+                    </label>
+                )}
 
                 {/* ICON AREA */}
-                <div className="flex h-full items-center justify-center w-8">
+                <div className="flex h-full items-center justify-center w-8 ">
                     {!selectedValue && (
                         <FontAwesomeIcon
                             icon={faChevronDown}
@@ -175,7 +188,7 @@ const Select = ({
                     {selectedValue && (
                         <FontAwesomeIcon
                             icon={faXmark}
-                            className="text-body-light"
+                            className="text-body-light "
                             onClick={() => handleOptionClick({ value: '' })}
                         />
                     )}

@@ -12,4 +12,5 @@ export interface DropdownMenuProps {
     schema: DropdownEntry[];
     right?: boolean;
     setter: React.Dispatch<React.SetStateAction<boolean>>;
+    children: any;
 }
