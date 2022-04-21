@@ -88,13 +88,13 @@ const Input = ({
                     type={type}
                     className={` ${
                         disabled ? disabledInput : borderColor
-                    } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-11 font-light tracking-wide`}
+                    } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide`}
                 />
 
                 {label && (
                     <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
                         <span
-                            className={`absolute transform transitional-all duration-300 px-2 ${
+                            className={`absolute transform transitional-all duration-300 px-1.5 ${
                                 labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
                             } h-auto `}
                         >
