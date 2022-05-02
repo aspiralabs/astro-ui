@@ -175,6 +175,10 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
         }
     }, [menuOpen]);
 
+    const handlePickerFocus = () => {
+        setMenuOpen(true);
+    };
+
     // =========================================================================
     // RENDER
     // =========================================================================
@@ -197,7 +201,8 @@ const DatePicker = ({ value, setter, name, label, placeholder = '', className }:
                         ref={field}
                         name={name}
                         placeholder={placeholder}
-                        onClick={toggleCalendar}
+                        // onClick={toggleCalendar}
+                        onFocus={handlePickerFocus}
                         className={`astro_date_picker appearance-none border relative  rounded-sm  text-body border-surface-dark text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide ${className}`}
                     />
                 )}

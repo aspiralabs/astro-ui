@@ -5,6 +5,7 @@ import { Form, FormSection } from './form';
 import Button from '../button/button';
 import { FormAction } from './form.types';
 import Select from '../select/select';
+import DatePicker from '../date_picker/date_picker';
 
 export default {
     title: 'Form',
@@ -38,13 +39,12 @@ export const BasicForm = () => {
         address: '',
         city: '',
         zip: '',
+        date: null,
     };
 
     return (
         <section className="bg-gray p-8">
             <Form defaultValues={defaultValues} action={handleSubmit} className="flex flex-col gap-4">
-                <Select options={generOptions} name="testSelect" label="Select Gender" />
-
                 <Input name="firstName" label="First Name" disabled={true} />
                 <Input name="lastName" label="Last Name" />
 
@@ -53,6 +53,9 @@ export const BasicForm = () => {
                     <Input name="city" label="City" />
                     <Input name="zip" label="Zip" />
                 </FormSection>
+                <DatePicker name="date" label="Select Date" />
+
+                <Select options={generOptions} name="testSelect" label="Select Gender" />
 
                 <Button variant="secondary">Submit</Button>
             </Form>

@@ -10,6 +10,15 @@ import React from 'react';
 import { SelectOptionsEntry, SelectProps } from './select.types';
 
 // =============================================================================
+// CONST
+// =============================================================================
+const SPACEBAR_KEY_CODE = [0, 32];
+const ENTER_KEY_CODE = 13;
+const DOWN_ARROW_KEY_CODE = 40;
+const UP_ARROW_KEY_CODE = 38;
+const ESCAPE_KEY_CODE = 27;
+
+// =============================================================================
 // ANIMATION SETTINGS
 // =============================================================================
 const transition = {
@@ -42,6 +51,9 @@ const Select = ({
     // =========================================================================
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ref = useRef<any>(null);
+    const selectRef = useRef<any>(null);
+    const selectULRef = useRef<any>(null);
+    const a11yIndexRef = useRef<number>(-1);
     const [borderColor, setBorderColor] = useState('');
     const [open, setOpen] = useState(false);
     const [defaultOptions] = useState(options);
@@ -50,6 +62,7 @@ const Select = ({
     const [selectedOptionLabel, setSelectedOptionLabel] = useState(value);
     const [searchTerm, setSearchTerm] = useState('');
     const [labelIsFloating, setLabelIsFloating] = useState(false);
+    const [a11ySelectedFieldIndex, setA11ySelectedFieldIndex] = useState(-1);
 
     // =========================================================================
     // DEBOUNCED TERM
@@ -63,13 +76,9 @@ const Select = ({
         // Update States
         setSelectedOptionLabel(option[optionLabel]);
         setSelectedValue(option[optionValue]);
-        if (setter) {
-            setter(option[optionValue]);
-        }
+        setter && setter(option[optionValue]);
+        if (option.value === '') setLabelIsFloating(false);
         setOpen(false);
-        if (option.value === '') {
-            setLabelIsFloating(false);
-        }
     };
 
     // =========================================================================
@@ -142,6 +151,7 @@ const Select = ({
     useEffect(() => {
         if (open) {
             setLabelIsFloating(true);
+            selectULRef.current.focus();
         } else {
             if (!selectedValue) {
                 setLabelIsFloating(false);
@@ -150,16 +160,66 @@ const Select = ({
     }, [open]);
 
     // =========================================================================
+    // FUNCTIONS
+    // =========================================================================
+    const handleListKeyDown = e => {
+        switch (e.key) {
+            case 'Escape':
+                e.preventDefault();
+                setOpen(false);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                setA11ySelectedFieldIndex(
+                    a11ySelectedFieldIndex - 1 >= 0 ? a11ySelectedFieldIndex - 1 : results.length - 1,
+                );
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                setA11ySelectedFieldIndex(
+                    a11ySelectedFieldIndex == results.length - 1 ? 0 : a11ySelectedFieldIndex + 1,
+                );
+                break;
+            case 'Enter':
+                if (open) {
+                    handleOptionClick(results[a11ySelectedFieldIndex]);
+                }
+            default:
+                break;
+        }
+    };
+
+    const handleKeyDown = e => {
+        switch (e.key) {
+            case ' ':
+            case 'SpaceBar':
+            case 'Enter':
+                e.preventDefault();
+                handleOptionClick(results[a11ySelectedFieldIndex]);
+                break;
+            default:
+                break;
+        }
+    };
+
+    useEffect(() => {
+        console.log('ally index', a11ySelectedFieldIndex);
+    });
+
+    // =========================================================================
     // RENDER
     // =========================================================================
     return (
         <fieldset className="relative w-full">
             {/* INPUT BOX */}
-            <div
+            <button
+                ref={selectRef}
+                type="button"
                 onClick={handleBoxClick}
-                className={`flex justify-between main-dropdown-container border ${
+                onKeyDown={handleListKeyDown}
+                className={`flex justify-between main-dropdown-container border text-left ${
                     open ? 'border-primary' : borderColor
-                } bg-white cursor-pointer relative rounded-sm font-body text-sm   w-full items-center h-12 font-light tracking-wide`}
+                } bg-white cursor-pointer relative rounded-sm font-body text-sm  w-full items-center h-12 font-light tracking-wide focus:outline focus:outline-1 focus:outline-primary`}
             >
                 {/* TEXT AREA */}
                 <div className="px-4">{selectedOptionLabel && <Text>{selectedOptionLabel}</Text>}</div>
@@ -193,7 +253,7 @@ const Select = ({
                         />
                     )}
                 </div>
-            </div>
+            </button>
 
             {/* DROPDOWN */}
             <AnimatePresence>
@@ -210,13 +270,28 @@ const Select = ({
                                 <Input value={searchTerm} setter={setSearchTerm} icon={faSearch} />
                             </div>
                         )}
-                        <ul className="divide-surface divide-y max-h-48 overflow-y-auto">
+                        <ul
+                            className="divide-surface divide-y max-h-48 overflow-y-auto focus:outline-none"
+                            tabIndex={-1}
+                            onKeyDown={handleListKeyDown}
+                            role="listbox"
+                            ref={selectULRef}
+                            onBlur={() => setOpen(false)}
+                        >
                             {results.map((option: SelectOptionsEntry, index: number) => {
+                                const highlighted = index === a11ySelectedFieldIndex;
+
+                                console.log(highlighted);
+
                                 return (
                                     <li
                                         onClick={() => handleOptionClick(option)}
                                         key={index}
-                                        className="cursor-pointer px-4 py-3 hover:bg-surface"
+                                        role="option"
+                                        onKeyDown={handleKeyDown}
+                                        className={`cursor-pointer px-4 py-3 hover:bg-surface ${
+                                            highlighted ? 'bg-surface' : 'bg-white'
+                                        }`}
                                     >
                                         <Text>{option && option[optionLabel]}</Text>
                                     </li>
