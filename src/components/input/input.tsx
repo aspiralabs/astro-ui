@@ -42,12 +42,6 @@ const Input = ({
     }, [message]);
 
     const handleInputChange = e => {
-        console.log('input triggered');
-
-        console.log('value', value);
-        console.log('raw val', e.target.rawValue);
-        console.log(e);
-
         if (cleaveOptions?.numeral === true) {
             setter(Number(e.target.rawValue) as any);
         } else {

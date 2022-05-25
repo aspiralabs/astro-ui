@@ -202,10 +202,6 @@ const Select = ({
         }
     };
 
-    useEffect(() => {
-        console.log('ally index', a11ySelectedFieldIndex);
-    });
-
     // =========================================================================
     // RENDER
     // =========================================================================
@@ -280,8 +276,6 @@ const Select = ({
                         >
                             {results.map((option: SelectOptionsEntry, index: number) => {
                                 const highlighted = index === a11ySelectedFieldIndex;
-
-                                console.log(highlighted);
 
                                 return (
                                     <li

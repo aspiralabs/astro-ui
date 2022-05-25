@@ -17,7 +17,6 @@ const Checkbox = ({
     const ref = useRef<any>(null);
 
     const handleClick = () => {
-        console.log('click');
         setter && setter(!value);
     };
 

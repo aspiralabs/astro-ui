@@ -37,8 +37,6 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                                 ...modal.props,
                             };
 
-                            console.log(props);
-
                             return (
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.8 }}

@@ -72,7 +72,7 @@
 }
 
 .ProseMirror ul[data-type='taskList'] li > label {
-    @apply flex-0 mr-2 select-none;
+    @apply mr-2 select-none;
 }
 .ProseMirror ul[data-type='taskList'] li > div {
     @apply flex-1;

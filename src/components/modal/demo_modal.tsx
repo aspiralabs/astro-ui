@@ -11,7 +11,6 @@ const DemoModal = ({ id, test }: TestModalProps) => {
     const { Modal } = useAstro();
 
     const handleClick = () => {
-        console.log(id);
         Modal.hide(id);
     };
 

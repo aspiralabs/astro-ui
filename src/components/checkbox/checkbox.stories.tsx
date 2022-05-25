@@ -8,10 +8,6 @@ export default {
 export const BasicCheckbox = () => {
     const [checkboxValue, setCheckboxValue] = React.useState(false);
 
-    React.useEffect(() => {
-        console.log(checkboxValue);
-    }, [checkboxValue]);
-
     return (
         <section className=" p-8">
             <Checkbox value={checkboxValue} setter={setCheckboxValue} label="Check Me" />

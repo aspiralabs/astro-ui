@@ -1,27 +1,23 @@
-const deepMerge = require('deepmerge');
-
 // =============================================================================
 // CONSTS
 // =============================================================================
-// Standard Colors
-const baseColors = {
-    primary: { DEFAULT: '#4299E1', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED', text: '#fff' },
-    secondary: { DEFAULT: '#9381FF', light: '#7a63ff', dark: '#4d38c7', disabled: '#c4bee6', text: '#fff' },
-    error: { DEFAULT: '#FE4A49', light: '#db2a2a', dark: '#a12727', disabled: '#FE7171', text: '#fff' },
-    warning: { DEFAULT: '#f5aa31', light: '#ffa617', dark: '#804f00', disabled: '#fac878', text: '#fff' },
-    success: { DEFAULT: '#26bf82', light: '#05ad6a', dark: '#00693f', disabled: '#71bfa0', text: '#fff' },
-    info: { DEFAULT: '#d2d6d9', light: '#aaafb3', dark: '#60666b', disabled: '#ebf2f7', text: '#fff' },
-    surface: { DEFAULT: '#f0f3f5', light: '#dce2e6', dark: '#d5dee3', disabled: '#fafbfc', text: '#2d3748' },
-    heading: { DEFAULT: '#2d3748', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED' },
-    body: { DEFAULT: '#646C7D', light: '#767e91', dark: '#646C7D', disabled: '#63B3ED' },
-    white: '#fff',
-    black: '#000',
-};
 
 const baseConfig = {
     darkMode: 'class',
     theme: {
-        colors: baseColors,
+        colors: {
+            primary: { DEFAULT: '#4299E1', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED', text: '#fff' },
+            secondary: { DEFAULT: '#9381FF', light: '#7a63ff', dark: '#4d38c7', disabled: '#c4bee6', text: '#fff' },
+            error: { DEFAULT: '#FE4A49', light: '#db2a2a', dark: '#a12727', disabled: '#FE7171', text: '#fff' },
+            warning: { DEFAULT: '#f5aa31', light: '#ffa617', dark: '#804f00', disabled: '#fac878', text: '#fff' },
+            success: { DEFAULT: '#26bf82', light: '#05ad6a', dark: '#00693f', disabled: '#71bfa0', text: '#fff' },
+            info: { DEFAULT: '#d2d6d9', light: '#aaafb3', dark: '#60666b', disabled: '#ebf2f7', text: '#fff' },
+            surface: { DEFAULT: '#f0f3f5', light: '#dce2e6', dark: '#d5dee3', disabled: '#fafbfc', text: '#2d3748' },
+            heading: { DEFAULT: '#2d3748', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED' },
+            body: { DEFAULT: '#646C7D', light: '#767e91', dark: '#646C7D', disabled: '#63B3ED' },
+            white: '#fff',
+            black: '#000',
+        },
     },
     variants: {
         extend: {
@@ -51,6 +47,33 @@ function arrayMergeFn(destinationArray, sourceArray) {
     }, []);
 }
 
+/*
+    Recursively merge properties and return new object
+    obj1 &lt;- obj2 [ &lt;- ... ]
+*/
+function merge() {
+    var dst = {},
+        src,
+        p,
+        args = [].splice.call(arguments, 0);
+    while (args.length > 0) {
+        src = args.splice(0, 1)[0];
+        if (toString.call(src) == '[object Object]') {
+            for (p in src) {
+                if (src.hasOwnProperty(p)) {
+                    if (toString.call(src[p]) == '[object Object]') {
+                        dst[p] = merge(dst[p] || {}, src[p]);
+                    } else {
+                        dst[p] = src[p];
+                    }
+                }
+            }
+        }
+    }
+
+    return dst;
+}
+
 // =============================================================================
 // WRAPPER
 // =============================================================================
@@ -61,10 +84,12 @@ function arrayMergeFn(destinationArray, sourceArray) {
  * @return {object} new config object
  */
 function wrapper(tailwindConfig) {
-    console.log('injecting and merging tailwinds config...');
+    console.log('Setting Up Tailwinds Config');
 
     // Get All Colors from user and base
-    let colorKeys = [...Object.keys(tailwindConfig.theme.colors), ...Object.keys(baseConfig.theme.colors)];
+    let colorKeys = [
+        ...new Set([...Object.keys(tailwindConfig.theme.colors), ...Object.keys(baseConfig.theme.colors)]),
+    ];
 
     // Create Safelist
     let safelist = colorKeys.map(key => {
@@ -76,6 +101,7 @@ function wrapper(tailwindConfig) {
 
     baseConfig.safelist = safelist;
 
+    // Content can be an array of strings or a single string
     let content;
     if (Array.isArray(tailwindConfig.content)) {
         content = {
@@ -89,9 +115,10 @@ function wrapper(tailwindConfig) {
         content = tailwindConfig.content;
     }
 
-    const merge = deepMerge({ ...tailwindConfig, content }, baseConfig, { arrayMerge: arrayMergeFn });
-    console.log(merge);
-    return merge;
+    // Deep Merge
+    // const merge = deepMerge(, baseConfig, { arrayMerge: arrayMergeFn });
+    const final = merge(baseConfig, { ...tailwindConfig, content });
+    return final;
 }
 
 module.exports = wrapper;

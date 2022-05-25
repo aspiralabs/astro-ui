@@ -232,8 +232,6 @@ const TableRender: React.FC<TableRenderProps> = ({
     } = tableInstance;
 
     useEffect(() => {
-        console.log('page index changed');
-
         const TOTAL_ENTRIES = rows.length;
         const CURRENT_INDEX = state.pageIndex;
         const PAGE_SIZE = state.pageSize;

@@ -115,8 +115,6 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
         else {
             // Check if If Element is Form Element  and pass proper props
             if (isValidFormElement(item)) {
-                console.log('is valid form element');
-
                 return React.cloneElement(child, {
                     ...item.props,
                     key: name,
