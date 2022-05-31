@@ -20,6 +20,7 @@ export { default as DatePicker } from './components/date_picker/date_picker';
 export { default as Editor } from './components/editor/editor';
 export { default as Menu } from './components/menu/menu';
 export { default as Timeline } from './components/timeline/timeline';
+export { default as TextArea } from './components/textarea/textarea';
 
 // Named Export
 export { Form, FormSection } from './components/form/form';

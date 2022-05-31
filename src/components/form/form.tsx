@@ -6,6 +6,7 @@ import Input from '../input/input';
 import Menu from '../menu/menu';
 import Radio, { RadioGroup } from '../radio/radio';
 import Select from '../select/select';
+import TextArea from '../textarea/textarea';
 
 import { FormDataStructure, IFormErrors, FormProps, FormSectionProps } from './form.types';
 
@@ -67,7 +68,8 @@ const Form = ({ children, defaultValues, action, validation, className }: FormPr
             item.type === DatePicker ||
             item.type === Select ||
             item.type === Radio ||
-            item.type === RadioGroup
+            item.type === RadioGroup ||
+            item.type == TextArea
         )
             return true;
         else return false;

@@ -503,6 +503,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-full {
   right: 100%;
 }
+.top-6 {
+  top: 1.5rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -584,6 +587,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .table {
   display: table;
+}
+.grid {
+  display: grid;
 }
 .contents {
   display: contents;
@@ -722,6 +728,9 @@ Ensure the default browser behavior of the `hidden` attribute.
      -moz-appearance: none;
           appearance: none;
 }
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .flex-col {
   flex-direction: column;
 }
@@ -748,6 +757,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .gap-1 {
   gap: 0.25rem;
+}
+.gap-8 {
+  gap: 2rem;
 }
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
@@ -798,7 +810,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .border-primary {
   --tw-border-opacity: 1;
-  border-color: rgb(93 215 52 / var(--tw-border-opacity));
+  border-color: rgb(66 153 225 / var(--tw-border-opacity));
 }
 .border-primary-light {
   --tw-border-opacity: 1;
@@ -981,7 +993,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .bg-primary {
   --tw-bg-opacity: 1;
-  background-color: rgb(93 215 52 / var(--tw-bg-opacity));
+  background-color: rgb(66 153 225 / var(--tw-bg-opacity));
 }
 .bg-primary-light {
   --tw-bg-opacity: 1;
@@ -1178,7 +1190,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   fill: #f0f3f5;
 }
 .stroke-primary {
-  stroke: #5DD734;
+  stroke: #4299E1;
 }
 .stroke-info {
   stroke: #d2d6d9;
@@ -1257,6 +1269,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 4rem;
   padding-right: 4rem;
 }
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
 .pr-1 {
   padding-right: 0.25rem;
 }
@@ -1322,7 +1338,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .text-primary {
   --tw-text-opacity: 1;
-  color: rgb(93 215 52 / var(--tw-text-opacity));
+  color: rgb(66 153 225 / var(--tw-text-opacity));
 }
 .text-primary-light {
   --tw-text-opacity: 1;
@@ -1671,7 +1687,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .checked\:border-primary:checked {
   --tw-border-opacity: 1;
-  border-color: rgb(93 215 52 / var(--tw-border-opacity));
+  border-color: rgb(66 153 225 / var(--tw-border-opacity));
 }
 .checked\:border-primary-light:checked {
   --tw-border-opacity: 1;
@@ -1851,7 +1867,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .checked\:bg-primary:checked {
   --tw-bg-opacity: 1;
-  background-color: rgb(93 215 52 / var(--tw-bg-opacity));
+  background-color: rgb(66 153 225 / var(--tw-bg-opacity));
 }
 .checked\:bg-primary-light:checked {
   --tw-bg-opacity: 1;
@@ -2031,7 +2047,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .checked\:text-primary:checked {
   --tw-text-opacity: 1;
-  color: rgb(93 215 52 / var(--tw-text-opacity));
+  color: rgb(66 153 225 / var(--tw-text-opacity));
 }
 .checked\:text-primary-light:checked {
   --tw-text-opacity: 1;
@@ -2211,7 +2227,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .hover\:border-primary:hover {
   --tw-border-opacity: 1;
-  border-color: rgb(93 215 52 / var(--tw-border-opacity));
+  border-color: rgb(66 153 225 / var(--tw-border-opacity));
 }
 .hover\:border-primary-light:hover {
   --tw-border-opacity: 1;
@@ -2391,7 +2407,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .hover\:bg-primary:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(93 215 52 / var(--tw-bg-opacity));
+  background-color: rgb(66 153 225 / var(--tw-bg-opacity));
 }
 .hover\:bg-primary-light:hover {
   --tw-bg-opacity: 1;
@@ -2571,7 +2587,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .hover\:text-primary:hover {
   --tw-text-opacity: 1;
-  color: rgb(93 215 52 / var(--tw-text-opacity));
+  color: rgb(66 153 225 / var(--tw-text-opacity));
 }
 .hover\:text-primary-light:hover {
   --tw-text-opacity: 1;
@@ -2757,7 +2773,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .focus\:border-primary:focus {
   --tw-border-opacity: 1;
-  border-color: rgb(93 215 52 / var(--tw-border-opacity));
+  border-color: rgb(66 153 225 / var(--tw-border-opacity));
 }
 .focus\:border-primary-light:focus {
   --tw-border-opacity: 1;
@@ -2937,7 +2953,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .focus\:bg-primary:focus {
   --tw-bg-opacity: 1;
-  background-color: rgb(93 215 52 / var(--tw-bg-opacity));
+  background-color: rgb(66 153 225 / var(--tw-bg-opacity));
 }
 .focus\:bg-primary-light:focus {
   --tw-bg-opacity: 1;
@@ -3117,7 +3133,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .focus\:text-primary:focus {
   --tw-text-opacity: 1;
-  color: rgb(93 215 52 / var(--tw-text-opacity));
+  color: rgb(66 153 225 / var(--tw-text-opacity));
 }
 .focus\:text-primary-light:focus {
   --tw-text-opacity: 1;
@@ -3306,7 +3322,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   outline-width: 1px;
 }
 .focus\:outline-primary:focus {
-  outline-color: #5DD734;
+  outline-color: #4299E1;
 }
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
