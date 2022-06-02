@@ -17,6 +17,7 @@ const Input = ({
     className,
     name,
     message,
+    iconSide = 'right',
     cleaveOptions = {
         blocks: [99999],
         delimiter: '',
@@ -86,7 +87,11 @@ const Input = ({
                 />
 
                 {label && (
-                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
+                    <label
+                        className={`font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute ${
+                            iconSide === 'left' ? 'left-6' : 'left-0'
+                        } top-0 px-2`}
+                    >
                         <span
                             className={`absolute transform transitional-all duration-300 px-1.5 ${
                                 labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
@@ -101,7 +106,9 @@ const Input = ({
                 {icon && (
                     <FontAwesomeIcon
                         icon={icon}
-                        className="-translate-y-1/2 absolute right-4 text-body top-1/2 transform z-10"
+                        className={`-translate-y-1/2 absolute ${
+                            iconSide === 'left' ? 'left-4' : 'right-4'
+                        } text-body top-1/2 transform z-10`}
                     />
                 )}
             </div>

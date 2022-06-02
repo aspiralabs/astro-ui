@@ -18,4 +18,5 @@ export interface InputProps {
     message?: IFormMessage;
     cleaveOptions?: CleaveOptions;
     number?: boolean;
+    iconSide?: 'right' | 'left';
 }

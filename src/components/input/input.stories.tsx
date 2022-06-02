@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Input from './input';
 import { Form } from '../form/form';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 export default {
     title: 'Input',
@@ -17,7 +18,8 @@ export const BasicInput = () => {
 
     return (
         <section className="flex flex-col gap-4">
-            <Input value={inputValue} setter={setInputValue} label="Basic Input" disabled={true} />
+            <Input icon={faCog} value={inputValue} setter={setInputValue} label="Basic Input" />
+            <Input icon={faCog} iconSide="left" value={inputValue} setter={setInputValue} label="Basic Input" />
             <Input
                 value={numberInput}
                 setter={setNumberInput}
