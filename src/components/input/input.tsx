@@ -23,6 +23,7 @@ const Input = ({
         blocks: [99999],
         delimiter: '',
     },
+    ...rest
 }: InputProps) => {
     const [borderColor, setBorderColor] = useState('');
     const disabledInput = `border border-surface-dark bg-surface-disabled`;
@@ -78,6 +79,7 @@ const Input = ({
         >
             <div className=" flex-1 relative">
                 <Cleave
+                    {...rest}
                     onFocus={() => setLabelIsFloating(true)}
                     onBlur={checkLabelStatus}
                     options={cleaveOptions}

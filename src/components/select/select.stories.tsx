@@ -25,8 +25,9 @@ export const WithSelect = () => {
     ];
 
     return (
-        <div>
-            <Select options={options} label="Hello World" />
+        <div className="flex flex-col gap-8">
+            <Select options={options} label="Hello World" className="h-16 rounded-lg" />
+            <Select options={options} searchable label="Hello World" />
         </div>
     );
 };

@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { SelectOptionsEntry, SelectProps } from './select.types';
+import { overrideTailwindClasses } from 'tailwind-override';
 
 // =============================================================================
 // CONST
@@ -45,6 +46,7 @@ const Select = ({
     optionLabel = 'label',
     optionValue = 'value',
     placeholder,
+    className,
 }: SelectProps) => {
     // =========================================================================
     // STATES
@@ -85,7 +87,10 @@ const Select = ({
     // HANDLE CLICKING OUT OF OPTIONS TO CLOSE BOX
     // =========================================================================
     const handleClickOutside = (event: any) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+        const canClose = event.target.dataset.canClose;
+        console.log(canClose);
+
+        if (canClose === 'true') {
             setOpen(false);
         }
     };
@@ -206,24 +211,28 @@ const Select = ({
     // RENDER
     // =========================================================================
     return (
-        <fieldset className="relative w-full">
+        <div
+            className={overrideTailwindClasses(
+                `relative w-full cursor-pointer rounded-sm font-body text-sm h-12 px-4 ${
+                    open ? 'border border-primary' : borderColor
+                } ${className}`,
+            )}
+        >
             {/* INPUT BOX */}
             <button
                 ref={selectRef}
                 type="button"
                 onClick={handleBoxClick}
                 onKeyDown={handleListKeyDown}
-                className={`flex justify-between main-dropdown-container border text-left ${
-                    open ? 'border-primary' : borderColor
-                } bg-white cursor-pointer relative rounded-sm font-body text-sm  w-full items-center h-12 font-light tracking-wide focus:outline focus:outline-1 focus:outline-primary`}
+                className={`flex justify-between main-dropdown-container text-left relative   w-full items-center h-full font-light tracking-wide `}
             >
                 {/* TEXT AREA */}
-                <div className="px-4">{selectedOptionLabel && <Text>{selectedOptionLabel}</Text>}</div>
+                <div>{selectedOptionLabel && <Text>{selectedOptionLabel}</Text>}</div>
 
                 {label && (
-                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
+                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0">
                         <span
-                            className={`absolute transform transitional-all duration-300 px-1.5 ${
+                            className={`absolute transform transitional-all duration-300 px-1.5 -left-1.5 ${
                                 labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
                             } h-auto `}
                         >
@@ -234,7 +243,7 @@ const Select = ({
                 )}
 
                 {/* ICON AREA */}
-                <div className="flex h-full items-center justify-center w-8 ">
+                <div className="flex h-full items-center justify-center  ">
                     {!selectedValue && (
                         <FontAwesomeIcon
                             icon={faChevronDown}
@@ -259,11 +268,16 @@ const Select = ({
                         initial={animation.initial}
                         animate={animation.animate}
                         exit={animation.exit}
-                        className="absolute bg-white shadow-lg w-full z-50"
+                        className="absolute bg-white shadow-lg w-full z-50 left-0 border-surface top-full mt-2"
                     >
                         {searchable && (
-                            <div className="border-b p-2">
-                                <Input value={searchTerm} setter={setSearchTerm} icon={faSearch} />
+                            <div className="border-b border-surface p-2" data-can-close="false">
+                                <Input
+                                    value={searchTerm}
+                                    setter={setSearchTerm}
+                                    icon={faSearch}
+                                    data-can-close="false"
+                                />
                             </div>
                         )}
                         <ul
@@ -272,7 +286,6 @@ const Select = ({
                             onKeyDown={handleListKeyDown}
                             role="listbox"
                             ref={selectULRef}
-                            onBlur={() => setOpen(false)}
                         >
                             {results.map((option: SelectOptionsEntry, index: number) => {
                                 const highlighted = index === a11ySelectedFieldIndex;
@@ -297,7 +310,7 @@ const Select = ({
             </AnimatePresence>
 
             {/* MESSAGE BOX */}
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
                 {message?.message && (
                     <React.Fragment>
                         {message?.type === 'error' && (
@@ -313,8 +326,8 @@ const Select = ({
                         </p>
                     </React.Fragment>
                 )}
-            </div>
-        </fieldset>
+            </div> */}
+        </div>
     );
 };
 

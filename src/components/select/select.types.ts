@@ -16,4 +16,5 @@ export interface SelectProps {
     optionLabel?: string;
     optionValue?: string | number;
     placeholder?: string;
+    className?: string;
 }

@@ -19,4 +19,5 @@ export interface InputProps {
     cleaveOptions?: CleaveOptions;
     number?: boolean;
     iconSide?: 'right' | 'left';
+    [key: string]: any;
 }
