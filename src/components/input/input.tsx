@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Cleave from 'cleave.js/react';
 import { InputProps } from './input.types';
 import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { overrideTailwindClasses } from 'tailwind-override';
 
 const Input = ({
     value,
@@ -68,8 +69,14 @@ const Input = ({
 
     if (!setter) return <p></p>;
     return (
-        <fieldset className={`relative w-full ${className}`}>
-            <div className="relative ">
+        <div
+            className={overrideTailwindClasses(
+                `rounded-sm relative w-full h-12 flex flex-col text-body text-sm px-4 font-light tracking-wide ${
+                    disabled ? disabledInput : borderColor
+                } ${className}`,
+            )}
+        >
+            <div className=" flex-1 relative">
                 <Cleave
                     onFocus={() => setLabelIsFloating(true)}
                     onBlur={checkLabelStatus}
@@ -81,25 +88,23 @@ const Input = ({
                     value={value}
                     onChange={handleInputChange}
                     type={type}
-                    className={` ${
-                        disabled ? disabledInput : borderColor
-                    } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide`}
+                    style={{ background: 'rgba(0,0,0,0)' }}
+                    className={`focus:outline-none focus:border-primary  w-full align-middle h-full `}
                 />
 
                 {label && (
                     <label
-                        className={`font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute ${
+                        className={`font-body font-light  text-body  transition-all duration-300 pointer-events-none w-full h-full absolute ${
                             iconSide === 'left' ? 'left-6' : 'left-0'
-                        } top-0 px-2`}
+                        } top-0`}
                     >
                         <span
-                            className={`absolute transform transitional-all duration-300 px-1.5 ${
-                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
+                            className={`absolute transform transitional-all duration-300 px-1.5 -left-1.5 ${
+                                labelIsFloating ? '-top-2 text-xs bg-white ' : 'top-1/2 -translate-y-1/2'
                             } h-auto `}
                         >
-                            {label}
+                            {label} {required && <span className="text-error">*</span>}
                         </span>
-                        {required && <span className="text-red-700">*</span>}
                     </label>
                 )}
 
@@ -107,13 +112,13 @@ const Input = ({
                     <FontAwesomeIcon
                         icon={icon}
                         className={`-translate-y-1/2 absolute ${
-                            iconSide === 'left' ? 'left-4' : 'right-4'
+                            iconSide === 'left' ? 'left-0' : 'right-0'
                         } text-body top-1/2 transform z-10`}
                     />
                 )}
             </div>
 
-            {message?.message && (
+            {/* {message?.message && (
                 <div className="flex gap-1 items-center py-1">
                     <React.Fragment>
                         {message?.type === 'error' && (
@@ -131,8 +136,8 @@ const Input = ({
                         </p>
                     </React.Fragment>
                 </div>
-            )}
-        </fieldset>
+            )} */}
+        </div>
     );
 };
 

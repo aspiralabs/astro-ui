@@ -18,19 +18,18 @@ export const BasicInput = () => {
 
     return (
         <section className="flex flex-col gap-4">
-            <Input icon={faCog} value={inputValue} setter={setInputValue} label="Basic Input" />
-            <Input icon={faCog} iconSide="left" value={inputValue} setter={setInputValue} label="Basic Input" />
             <Input
-                value={numberInput}
-                setter={setNumberInput}
-                cleaveOptions={{ numeral: true }}
-                disabled={true}
-                label="Number Only"
+                className="w-96 px-4 h-12 rounded-full"
+                icon={faCog}
+                value={inputValue}
+                setter={setInputValue}
+                label="Basic Input"
+                required
             />
             To use force the input to be numbers only and also output a javascript number use the cleave option
             numeral=true
             {/* <p>Form</p>
-            <Form defaultValues={formDefaultValues} action={handleFormSubmit}>
+            <Form defaultValues={{}} action={handleFormSubmit}>
                 <Input name="basicInput" label="Basic Input" />
                 <Input
                     name="basicNumber"

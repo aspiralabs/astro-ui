@@ -470,6 +470,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-4 {
   right: 1rem;
 }
+.left-6 {
+  left: 1.5rem;
+}
+.left-4 {
+  left: 1rem;
+}
 .top-full {
   top: 100%;
 }
@@ -506,14 +512,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-full {
   right: 100%;
 }
-.left-4 {
-  left: 1rem;
+.-left-1\.5 {
+  left: -0.375rem;
 }
-.left-3 {
-  left: 0.75rem;
-}
-.left-6 {
-  left: 1.5rem;
+.-left-1 {
+  left: -0.25rem;
 }
 .z-10 {
   z-index: 10;
@@ -630,6 +633,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-2\.5 {
   height: 0.625rem;
 }
+.h-10 {
+  height: 2.5rem;
+}
+.h-20 {
+  height: 5rem;
+}
 .max-h-48 {
   max-height: 12rem;
 }
@@ -668,6 +677,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-32 {
   width: 8rem;
+}
+.w-16 {
+  width: 4rem;
+}
+.w-44 {
+  width: 11rem;
+}
+.w-96 {
+  width: 24rem;
 }
 .max-w-full {
   max-width: 100%;
@@ -1195,6 +1213,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
 }
+.bg-none {
+  background-image: none;
+}
 .fill-surface {
   fill: #f0f3f5;
 }
@@ -1221,6 +1242,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .p-12 {
   padding: 3rem;
+}
+.p-16 {
+  padding: 4rem;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -1278,9 +1302,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 4rem;
   padding-right: 4rem;
 }
-.px-3\.5 {
-  padding-left: 0.875rem;
-  padding-right: 0.875rem;
+.px-48 {
+  padding-left: 12rem;
+  padding-right: 12rem;
+}
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 .pr-1 {
   padding-right: 0.25rem;

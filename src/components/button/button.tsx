@@ -2,21 +2,18 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonProps } from './button.types';
 import { faChevronDown, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { overrideTailwindClasses } from 'tailwind-override';
 
 const Button = ({
     children,
     variant = 'primary',
-    onClick,
     icon,
     className,
     disabled = false,
     size = 'normal',
     outlined = false,
     loading = false,
-    dropdown = false,
-    type,
-    active,
-    id,
+    ...rest
 }: ButtonProps) => {
     // =========================================================================
     // COMPUTATIONS
@@ -42,10 +39,6 @@ const Button = ({
             calcSize = '';
     }
 
-    if (active) {
-        bg = `${variant}-dark`;
-    }
-
     if (outlined) {
         buttonStyles = `border border-${bg} hover:border-${variant}-light hover:text-${variant}-light text-${variant} ${
             disabled && `border-${variant}-disabled hover:border-${variant}-disabled cursor-not-allowed`
@@ -62,11 +55,15 @@ const Button = ({
     // RENDER
     // =========================================================================
     return (
-        <button className={finalClasses} onClick={onClick} disabled={disabled || loading} type={type} id={id}>
+        <button
+            className={overrideTailwindClasses(finalClasses)}
+            disabled={disabled || loading}
+            type={rest.type}
+            {...rest}
+        >
             {!loading && children}
             {loading && <FontAwesomeIcon icon={faCircleNotch} />}
             {icon && <FontAwesomeIcon icon={icon} />}
-            {dropdown && <FontAwesomeIcon icon={faChevronDown} />}
         </button>
     );
 };

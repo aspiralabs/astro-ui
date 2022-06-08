@@ -23,6 +23,10 @@ export const BasicButton = () => {
             <Button variant="primary" disabled>
                 Disabled Button
             </Button>
+
+            <Button type="submit" variant="primary" onClick={handleClick} className="px-48 rounded-full">
+                Primary Button
+            </Button>
         </div>
     );
 };
