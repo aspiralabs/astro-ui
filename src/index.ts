@@ -21,6 +21,7 @@ export { default as Editor } from './components/editor/editor';
 export { default as Menu } from './components/menu/menu';
 export { default as Timeline } from './components/timeline/timeline';
 export { default as TextArea } from './components/textarea/textarea';
+export { default as Radio, RadioGroup } from './components/radio/radio';
 
 // Named Export
 export { Form, FormSection } from './components/form/form';
