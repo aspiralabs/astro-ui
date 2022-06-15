@@ -2,19 +2,14 @@ import { Dispatch, SetStateAction } from 'react';
 import { IFormMessage } from '../form/form.types';
 
 export interface SelectOptionsEntry {
-    [key: string]: string | number;
+    label: string;
+    value: string;
+    render?: JSX.Element;
 }
 export interface SelectProps {
-    label?: string;
-    required?: boolean;
-    name?: string;
-    value?: any;
-    setter?: Dispatch<SetStateAction<any>>;
-    message?: IFormMessage;
-    searchable?: boolean;
     options: SelectOptionsEntry[];
-    optionLabel?: string;
-    optionValue?: string | number;
-    placeholder?: string;
+    label?: string;
+    value?: string;
+    setter?: Dispatch<SetStateAction<string>>;
     className?: string;
 }

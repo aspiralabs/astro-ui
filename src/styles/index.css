@@ -525,11 +525,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-full {
   right: 100%;
 }
+.-left-0\.5 {
+  left: -0.125rem;
+}
+.-left-0 {
+  left: -0px;
+}
 .z-10 {
   z-index: 10;
 }
 .z-50 {
   z-index: 50;
+}
+.z-40 {
+  z-index: 40;
 }
 .col-span-12 {
   grid-column: span 12 / span 12;
@@ -599,6 +608,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mr-1 {
   margin-right: 0.25rem;
 }
+.-ml-0\.5 {
+  margin-left: -0.125rem;
+}
+.-ml-0 {
+  margin-left: -0px;
+}
+.-mt-1 {
+  margin-top: -0.25rem;
+}
+.-ml-1 {
+  margin-left: -0.25rem;
+}
 .block {
   display: block;
 }
@@ -653,6 +674,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-2\.5 {
   height: 0.625rem;
 }
+.h-3\/4 {
+  height: 75%;
+}
+.h-1\/2 {
+  height: 50%;
+}
 .max-h-48 {
   max-height: 12rem;
 }
@@ -698,6 +725,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-32 {
   width: 8rem;
 }
+.w-0\.5 {
+  width: 0.125rem;
+}
+.w-0 {
+  width: 0px;
+}
 .max-w-full {
   max-width: 100%;
 }
@@ -718,6 +751,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .rotate-180 {
   --tw-rotate: 180deg;
+  transform: var(--tw-transform);
+}
+.rotate-0 {
+  --tw-rotate: 0deg;
+  transform: var(--tw-transform);
+}
+.rotate-90 {
+  --tw-rotate: 90deg;
   transform: var(--tw-transform);
 }
 .transform {
@@ -775,11 +816,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .flex-wrap {
   flex-wrap: wrap;
 }
+.items-start {
+  align-items: flex-start;
+}
 .items-end {
   align-items: flex-end;
 }
 .items-center {
   align-items: center;
+}
+.justify-start {
+  justify-content: flex-start;
 }
 .justify-center {
   justify-content: center;

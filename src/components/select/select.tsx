@@ -1,332 +1,271 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { faChevronDown, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useDebounce from '../../hooks/useDebounce';
-import Text from '../text/text';
-import Input from '../input/input';
-import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import React from 'react';
+import { text } from '@fortawesome/fontawesome-svg-core';
+import React, { useEffect, useRef, useState } from 'react';
+import { uid } from 'uid';
 import { SelectOptionsEntry, SelectProps } from './select.types';
 import { overrideTailwindClasses } from 'tailwind-override';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-// =============================================================================
-// CONST
-// =============================================================================
-const SPACEBAR_KEY_CODE = [0, 32];
-const ENTER_KEY_CODE = 13;
-const DOWN_ARROW_KEY_CODE = 40;
-const UP_ARROW_KEY_CODE = 38;
-const ESCAPE_KEY_CODE = 27;
-
-// =============================================================================
-// ANIMATION SETTINGS
-// =============================================================================
-const transition = {
-    type: 'spring',
-    duration: 0.2,
-};
-const animation = {
-    initial: { opacity: 0, height: 0, transition },
-    animate: { opacity: 1, height: 'auto', transition },
-    exit: { opacity: 0, height: 0, transition },
-};
-
-// =============================================================================
-// DROPDOWN
-// =============================================================================
-const Select = ({
-    required = false,
-    label,
-    value = '',
-    setter,
-    message,
-    searchable = false,
-    options,
-    optionLabel = 'label',
-    optionValue = 'value',
-    placeholder,
-    className,
-}: SelectProps) => {
+const Select = ({ className, label, value = null, setter, options }: SelectProps) => {
     // =========================================================================
     // STATES
     // =========================================================================
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ref = useRef<any>(null);
-    const selectRef = useRef<any>(null);
-    const selectULRef = useRef<any>(null);
-    const a11yIndexRef = useRef<number>(-1);
-    const [borderColor, setBorderColor] = useState('');
-    const [open, setOpen] = useState(false);
-    const [defaultOptions] = useState(options);
-    const [results, setResults] = useState(options);
-    const [selectedValue, setSelectedValue] = useState<string | number>(value);
-    const [selectedOptionLabel, setSelectedOptionLabel] = useState(value);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [labelIsFloating, setLabelIsFloating] = useState(false);
-    const [a11ySelectedFieldIndex, setA11ySelectedFieldIndex] = useState(-1);
+    const [filteredOptions, setFilteredOptions] = useState<SelectOptionsEntry[]>(options);
+    const [focusedValue, setFocusedValue] = useState<string | null>(null);
+    const [selectedValue, setSelectedValue] = useState<string | null>(null);
+    const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
+    const [labelFloating, setLabelIsFloating] = useState(false);
+    const [dropwdownOpen, setDropdownOpen] = useState(false);
+    const [searchText, setSearchText] = useState('');
 
     // =========================================================================
-    // DEBOUNCED TERM
+    // REFS
     // =========================================================================
-    const debouncedSearchTerm = useDebounce(searchTerm, 200);
-
-    // =========================================================================
-    // HANDLE OPTION CLICK
-    // =========================================================================
-    const handleOptionClick = (option: SelectOptionsEntry) => {
-        // Update States
-        setSelectedOptionLabel(option[optionLabel]);
-        setSelectedValue(option[optionValue]);
-        setter && setter(option[optionValue]);
-        if (option.value === '') setLabelIsFloating(false);
-        setOpen(false);
-    };
-
-    // =========================================================================
-    // HANDLE CLICKING OUT OF OPTIONS TO CLOSE BOX
-    // =========================================================================
-    const handleClickOutside = (event: any) => {
-        const canClose = event.target.dataset.canClose;
-        console.log(canClose);
-
-        if (canClose === 'true') {
-            setOpen(false);
-        }
-    };
-
-    // =========================================================================
-    // HANDLE INPUT CLICK
-    // =========================================================================
-    const handleBoxClick = (e: any) => {
-        // If the xmark is chosen
-        if (e.target.className?.baseVal?.includes('fa-xmark')) {
-            return;
-        } else {
-            setOpen(!open);
-        }
-    };
-
-    // =========================================================================
-    // USE EFFECT
-    // =========================================================================
-    useEffect(() => {
-        if (message?.message) {
-            let color = 'border ';
-
-            if (message?.type === 'error') color += 'border-error';
-            if (message?.type === 'success') color += 'border-success';
-
-            setBorderColor(color + 'border-surface-dark');
-        } else {
-            setBorderColor('border border-surface-dark');
-        }
-    }, [message]);
-
-    // =========================================================================
-    // FIRST MOUNT
-    // =========================================================================
-    useEffect(() => {
-        // Click Listener
-        document.addEventListener('click', handleClickOutside, true);
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true);
-        };
-    }, []);
-
-    // =========================================================================
-    // WHEN A SEARCH TERM IS UPDATED
-    // =========================================================================
-    useEffect(() => {
-        if (debouncedSearchTerm) {
-            // Filter
-            const filteredResults = defaultOptions.filter((option: any) => {
-                return option[optionLabel].toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-            });
-
-            // Update Filtered Results
-            setResults(filteredResults);
-        } else {
-            setResults(defaultOptions);
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedSearchTerm]);
-
-    useEffect(() => {
-        if (open) {
-            setLabelIsFloating(true);
-            selectULRef.current.focus();
-        } else {
-            if (!selectedValue) {
-                setLabelIsFloating(false);
-            }
-        }
-    }, [open]);
+    const listRef = useRef(null);
+    const buttonRef = useRef(null);
+    const selectId = uid();
 
     // =========================================================================
     // FUNCTIONS
     // =========================================================================
-    const handleListKeyDown = e => {
-        switch (e.key) {
-            case 'Escape':
-                e.preventDefault();
-                setOpen(false);
-                break;
-            case 'ArrowUp':
-                e.preventDefault();
-                setA11ySelectedFieldIndex(
-                    a11ySelectedFieldIndex - 1 >= 0 ? a11ySelectedFieldIndex - 1 : results.length - 1,
-                );
-                break;
-            case 'ArrowDown':
-                e.preventDefault();
-                setA11ySelectedFieldIndex(
-                    a11ySelectedFieldIndex == results.length - 1 ? 0 : a11ySelectedFieldIndex + 1,
-                );
-                break;
-            case 'Enter':
-                if (open) {
-                    handleOptionClick(results[a11ySelectedFieldIndex]);
-                }
-            default:
-                break;
+    const toggleDropdown = () => {
+        if (dropwdownOpen) setSearchText('');
+        setDropdownOpen(dropdown => !dropdown);
+    };
+
+    // Filters through the options based on inputted string
+    const filterOptions = (text: string) => {
+        return options && options.filter(option => option.label.toLowerCase().includes(text.toLowerCase()));
+    };
+
+    // Given a value, find the label or return empty string if not found
+    const returnLabelForValue = value => {
+        return options.find(option => option.value === value).label || '';
+    };
+
+    // =========================================================================
+    // EVENTS
+    // =========================================================================
+    const handleClearValue = () => {
+        setSelectedLabel(null);
+        setSelectedValue(null);
+        setLabelIsFloating(false);
+    };
+
+    const handleButtonClick = () => {
+        toggleDropdown();
+    };
+
+    const handleEntryClick = option => e => {
+        setSelectedValue(option.value);
+        setSelectedLabel(option.label);
+        setSearchText('');
+        setFilteredOptions(options);
+        toggleDropdown();
+        e.stopPropagation();
+    };
+
+    const handleButtonKeypress = e => {
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            toggleDropdown();
         }
     };
 
-    const handleKeyDown = e => {
-        switch (e.key) {
-            case ' ':
-            case 'SpaceBar':
-            case 'Enter':
-                e.preventDefault();
-                handleOptionClick(results[a11ySelectedFieldIndex]);
-                break;
-            default:
-                break;
+    const handleKeypress = e => {
+        e.persist();
+        e.preventDefault();
+
+        const isUpKey = e.key === 'ArrowUp';
+        const isDownKey = e.key === 'ArrowDown';
+        const isEnter = e.key === 'Enter';
+        const isTab = e.key === 'Tab';
+        const isEsc = e.key === 'Escape';
+        const isBackspace = e.key === 'Backspace';
+        const currentIndex = options.findIndex(option => option.value === focusedValue);
+
+        // User Presses Down Arrow
+        if (currentIndex !== options.length - 1 && isDownKey) {
+            setFocusedValue(options[currentIndex + 1].value);
+            return;
+        }
+
+        // User Presses Up Arrow
+        if (currentIndex !== 0 && isUpKey) {
+            setFocusedValue(options[currentIndex - 1].value);
+            return;
+        }
+
+        // User Presses Enter To Select Value
+        if (isEnter) {
+            setSelectedValue(focusedValue);
+            setSelectedLabel(returnLabelForValue(focusedValue));
+            setFilteredOptions(options);
+            toggleDropdown();
+            setSearchText('');
+            return;
+        }
+
+        // User Presses ESC or Tab to close the dropdown
+        if (isTab || isEsc) {
+            toggleDropdown();
+            return;
+        }
+
+        if (isBackspace && searchText.length > 0) {
+            const text = searchText.slice(0, -1);
+            const matchedOptions = filterOptions(text);
+            if (matchedOptions.length) {
+                setFilteredOptions(matchedOptions);
+                setFocusedValue(matchedOptions[0].value);
+            }
+            setSearchText(text);
+        }
+
+        // Key code between 65 and 90 means some type of letter
+        if (e.keyCode >= 65 && e.keyCode <= 90) {
+            const text = searchText + e.key;
+            const matchedOptions = filterOptions(text);
+            if (matchedOptions.length) {
+                setFilteredOptions(matchedOptions);
+                setFocusedValue(matchedOptions[0].value);
+            }
+
+            setSearchText(text);
         }
     };
+
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
+    useEffect(() => {
+        if (dropwdownOpen) {
+            listRef.current.focus();
+            setLabelIsFloating(true);
+        } else {
+            listRef.current.setAttribute('tab-index', '-1');
+            buttonRef.current.focus();
+            if (!selectedValue) setLabelIsFloating(false);
+        }
+
+        // CLICK LISTENER ======================================================
+        const clickListener = e => {
+            if (e.target !== listRef.current && e.target !== buttonRef.current) {
+                toggleDropdown();
+            }
+        };
+
+        if (dropwdownOpen) {
+            window.addEventListener('click', clickListener);
+        } else {
+            window.removeEventListener('click', clickListener);
+        }
+
+        return () => {
+            window.removeEventListener('click', clickListener);
+        };
+    }, [dropwdownOpen]);
+
+    useEffect(() => {
+        // Output Value Here
+        setter(selectedValue);
+    }, [selectedValue]);
+
+    useEffect(() => {
+        if (value) {
+            setSelectedValue(value);
+            setSelectedLabel(returnLabelForValue(value));
+            setLabelIsFloating(true);
+        }
+    }, []);
+
+    // =========================================================================
+    // CLASS CONSTRUCTION
+    // =========================================================================
+    const baseContainerClass = `relative rounded-sm w-full h-12 flex flex text-body text-sm items-start flex-start`;
+    const baseBorderClass = `border border-surface-dark`;
+    const labelBaseClass = `absolute font-body font-light text-body transform transitional-all duration-300 `;
+    const labelFloatingClass = labelFloating ? '-top-2 text-xs bg-white px-1 -ml-1' : 'top-1/2 -translate-y-1/2 ';
 
     // =========================================================================
     // RENDER
     // =========================================================================
     return (
         <div
-            className={overrideTailwindClasses(
-                `relative w-full cursor-pointer rounded-sm font-body text-sm h-12 px-4 ${
-                    open ? 'border border-primary' : borderColor
-                } ${className}`,
-            )}
+            className={overrideTailwindClasses(`astro-ui-select ${baseContainerClass} ${baseBorderClass} ${className}`)}
         >
-            {/* INPUT BOX */}
             <button
-                ref={selectRef}
-                type="button"
-                onClick={handleBoxClick}
-                onKeyDown={handleListKeyDown}
-                className={`flex justify-between main-dropdown-container text-left relative   w-full items-center h-full font-light tracking-wide `}
+                ref={buttonRef}
+                onClick={handleButtonClick}
+                onKeyDown={handleButtonKeypress}
+                aria-haspopup="listbox"
+                aria-labelledby={`${selectId}btn`}
+                id={`${selectId}-btn`}
+                className="w-full h-full px-4 flex items-center flex-1"
             >
-                {/* TEXT AREA */}
-                <div>{selectedOptionLabel && <Text>{selectedOptionLabel}</Text>}</div>
+                {/* LABEL ================================================== */}
+                {label && <span className={`${labelBaseClass} ${labelFloatingClass}`}>{label}</span>}
 
-                {label && (
-                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0">
-                        <span
-                            className={`absolute transform transitional-all duration-300 px-1.5 -left-1.5 ${
-                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
-                            } h-auto `}
-                        >
-                            {label}
-                        </span>
-                        {required && <span className="text-red-700">*</span>}
-                    </label>
-                )}
-
-                {/* ICON AREA */}
-                <div className="flex h-full items-center justify-center  ">
-                    {!selectedValue && (
-                        <FontAwesomeIcon
-                            icon={faChevronDown}
-                            className={`text-body-light transform transition ${open ? 'rotate-180' : ''}`}
-                        />
-                    )}
-                    {selectedValue && (
-                        <FontAwesomeIcon
-                            icon={faXmark}
-                            className="text-body-light "
-                            onClick={() => handleOptionClick({ value: '' })}
-                        />
-                    )}
-                </div>
-            </button>
-
-            {/* DROPDOWN */}
-            <AnimatePresence>
-                {open && (
-                    <motion.div
-                        ref={ref}
-                        initial={animation.initial}
-                        animate={animation.animate}
-                        exit={animation.exit}
-                        className="absolute bg-white shadow-lg w-full z-50 left-0 border-surface top-full mt-2"
-                    >
-                        {searchable && (
-                            <div className="border-b border-surface p-2" data-can-close="false">
-                                <Input
-                                    value={searchTerm}
-                                    setter={setSearchTerm}
-                                    icon={faSearch}
-                                    data-can-close="false"
-                                />
-                            </div>
-                        )}
-                        <ul
-                            className="divide-surface divide-y max-h-48 overflow-y-auto focus:outline-none"
-                            tabIndex={-1}
-                            onKeyDown={handleListKeyDown}
-                            role="listbox"
-                            ref={selectULRef}
-                        >
-                            {results.map((option: SelectOptionsEntry, index: number) => {
-                                const highlighted = index === a11ySelectedFieldIndex;
-
-                                return (
-                                    <li
-                                        onClick={() => handleOptionClick(option)}
-                                        key={index}
-                                        role="option"
-                                        onKeyDown={handleKeyDown}
-                                        className={`cursor-pointer px-4 py-3 hover:bg-surface ${
-                                            highlighted ? 'bg-surface' : 'bg-white'
-                                        }`}
-                                    >
-                                        <Text>{option && option[optionLabel]}</Text>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* MESSAGE BOX */}
-            {/* <div className="flex items-center">
-                {message?.message && (
+                {/* DROPDOWN =============================================== */}
+                {dropwdownOpen && (
                     <React.Fragment>
-                        {message?.type === 'error' && (
-                            <i className="fa-circle-exclamation fa-regular mr-2 text-error" />
-                        )}
-                        {message?.type === 'success' && <i className="fa-circle-check fa-regular mr-2 text-success" />}
-                        <p
-                            className={`text-sm font-body ${
-                                message?.type === 'error' ? 'text-error' : 'text-success'
-                            } `}
-                        >
-                            {message?.message}
-                        </p>
+                        <span>{searchText}</span>
+                        <span className="w-0.5 h-1/2 bg-primary pulse"></span>
                     </React.Fragment>
                 )}
-            </div> */}
+
+                {selectedLabel && !searchText && <span>{selectedLabel}</span>}
+            </button>
+
+            {/* ICON ======================================================= */}
+            <div className="flex items-center justify-center w-8 h-full">
+                {selectedValue && (
+                    <FontAwesomeIcon
+                        icon={faXmark}
+                        className={`text-normal transform transition cursor-pointer`}
+                        onClick={handleClearValue}
+                    />
+                )}
+                {!selectedValue && (
+                    <FontAwesomeIcon
+                        onClick={toggleDropdown}
+                        icon={faChevronDown}
+                        className={`text-normal transform transition cursor-pointer ${
+                            dropwdownOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
+                    />
+                )}
+            </div>
+
+            {/* DROPDOWN =================================================== */}
+            <ul
+                ref={listRef}
+                onKeyDown={handleKeypress}
+                role="listbox"
+                tabIndex={-1}
+                className={`bg-white border border-surface-dark ${
+                    dropwdownOpen ? 'absolute' : 'hidden'
+                } top-full z-40 w-full mt-2 rounded-sm`}
+                aria-labelledby={selectId}
+            >
+                {filteredOptions.map(option => (
+                    <li
+                        onClick={handleEntryClick(option)}
+                        tabIndex={-1}
+                        role="option"
+                        key={option.value}
+                        value={option.value}
+                        aria-label={option.label}
+                        id={`${selectId}_${option.value}`}
+                        className={`${
+                            focusedValue === option.value && 'bg-surface-dark'
+                        } px-4 py-2 hover:bg-surface cursor-pointer`}
+                    >
+                        {!option.render && option.label}
+                        {option.render && option.render}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

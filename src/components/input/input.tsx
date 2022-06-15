@@ -65,13 +65,11 @@ const Input = ({
             setLabelIsFloating(true);
         } else {
             setLabelIsFloating(false);
-            rest.onBlur();
         }
     };
 
     const handleFocus = () => {
         setLabelIsFloating(true);
-        rest.onFocus();
     };
 
     if (!setter) return <p></p>;
@@ -85,7 +83,6 @@ const Input = ({
         >
             <div className=" flex-1 relative">
                 <Cleave
-                    {...rest}
                     onFocus={handleFocus}
                     onBlur={checkLabelStatus}
                     options={cleaveOptions}
@@ -98,6 +95,7 @@ const Input = ({
                     type={type}
                     style={{ background: 'rgba(0,0,0,0)' }}
                     className={`focus:outline-none focus:border-primary  w-full align-middle h-full `}
+                    {...rest}
                 />
 
                 {label && (
