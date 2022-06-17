@@ -32,8 +32,11 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                 >
                     <AnimatePresence>
                         {modals.map((modal, index) => {
+                            console.log(modal.props);
+
                             const props = {
                                 id: modal.id,
+                                closeIcon: true,
                                 ...modal.props,
                             };
 
@@ -55,7 +58,7 @@ export const ModalPlaceholder = ({ modals }: ModalPlaceholderProps) => {
                                     key={index}
                                 >
                                     <div className="relative ">
-                                        {modal.props?.closeIcon && (
+                                        {props.closeIcon && (
                                             <div
                                                 className="absolute top-3 right-3 cursor-pointer"
                                                 style={{ zIndex: 10000 }}

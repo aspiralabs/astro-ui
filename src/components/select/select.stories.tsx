@@ -4,6 +4,8 @@ import SelectRefactor from './select';
 import { SelectOptionsEntry } from './select.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdjust } from '@fortawesome/free-solid-svg-icons';
+import { Form } from '../form/form';
+import Button from '../button/button';
 
 export default {
     title: 'Select',
@@ -39,6 +41,7 @@ export const WithSelect = () => {
 
     return (
         <div className="flex flex-col gap-8">
+            <p>Standalone</p>
             <SelectRefactor
                 options={options}
                 value={selectValue}
@@ -46,6 +49,12 @@ export const WithSelect = () => {
                 label="Select Value"
                 className="my-8"
             />
+
+            <p>In a Form component</p>
+            <Form defaultValues={{}} action={(values: any) => console.log(values)}>
+                <SelectRefactor options={options} name="formValue" label="Select Value" className="my-8" />
+                <Button>Submit</Button>
+            </Form>
         </div>
     );
 };

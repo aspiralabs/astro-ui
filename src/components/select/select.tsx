@@ -6,7 +6,7 @@ import { overrideTailwindClasses } from 'tailwind-override';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Select = ({ className, label, value = null, setter, options }: SelectProps) => {
+const Select = ({ className, label, value = null, setter, options, name }: SelectProps) => {
     // =========================================================================
     // STATES
     // =========================================================================
@@ -195,6 +195,7 @@ const Select = ({ className, label, value = null, setter, options }: SelectProps
             className={overrideTailwindClasses(`astro-ui-select ${baseContainerClass} ${baseBorderClass} ${className}`)}
         >
             <button
+                name={name}
                 ref={buttonRef}
                 onClick={handleButtonClick}
                 onKeyDown={handleButtonKeypress}
@@ -243,7 +244,7 @@ const Select = ({ className, label, value = null, setter, options }: SelectProps
                 onKeyDown={handleKeypress}
                 role="listbox"
                 tabIndex={-1}
-                className={`bg-white border border-surface-dark ${
+                className={`bg-white border border-surface-dark shadow-astro ${
                     dropwdownOpen ? 'absolute' : 'hidden'
                 } top-full z-40 w-full mt-2 rounded-sm`}
                 aria-labelledby={selectId}

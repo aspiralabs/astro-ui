@@ -12,4 +12,5 @@ export interface SelectProps {
     value?: string;
     setter?: Dispatch<SetStateAction<string>>;
     className?: string;
+    name?: string;
 }

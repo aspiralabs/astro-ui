@@ -45,11 +45,9 @@ const Input = ({
     }, [message]);
 
     const handleInputChange = e => {
-        if (cleaveOptions?.numeral === true) {
-            setter(Number(e.target.rawValue) as any);
-        } else {
-            setter(e.target.rawValue);
-        }
+        let rawValue = e.target.rawValue;
+        if (cleaveOptions.prefix) rawValue = rawValue.replace(cleaveOptions.prefix, '');
+        setter(rawValue);
     };
 
     useEffect(() => {

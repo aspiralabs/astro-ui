@@ -4,7 +4,13 @@
 
 const baseConfig = {
     darkMode: 'class',
+
     theme: {
+        extend: {
+            astro: {
+                main: '0px 4px 90px rgba(146, 146, 146, 0.3)',
+            },
+        },
         colors: {
             primary: { DEFAULT: '#4299E1', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED', text: '#fff' },
             secondary: { DEFAULT: '#9381FF', light: '#7a63ff', dark: '#4d38c7', disabled: '#c4bee6', text: '#fff' },
@@ -115,8 +121,6 @@ function wrapper(tailwindConfig) {
         content = tailwindConfig.content;
     }
 
-    // Deep Merge
-    // const merge = deepMerge(, baseConfig, { arrayMerge: arrayMergeFn });
     const final = merge(baseConfig, { ...tailwindConfig, content });
     return final;
 }

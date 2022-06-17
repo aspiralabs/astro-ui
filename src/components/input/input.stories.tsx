@@ -10,7 +10,7 @@ export default {
 
 export const BasicInput = () => {
     const [inputValue, setInputValue] = useState('');
-    const [numberInput, setNumberInput] = useState(3);
+    const [numberInput, setNumberInput] = useState(3.0);
 
     const handleFormSubmit = (values: any) => {
         console.log(values);
@@ -21,13 +21,20 @@ export const BasicInput = () => {
             <Input
                 className="w-96 px-4 h-12 rounded-full"
                 icon={faCog}
-                value={inputValue}
-                setter={setInputValue}
+                value={numberInput}
+                setter={setNumberInput}
                 label="Basic Input"
                 required
+                cleaveOptions={{
+                    prefix: '$',
+                    numeral: true,
+                }}
             />
-            To use force the input to be numbers only and also output a javascript number use the cleave option
-            numeral=true
+            <p>{numberInput}</p>
+            To use force the input to be numbers only. Note this still outputs as a string value. If you need to convert
+            to a javascript number take into consideration the thousands seperator. `,` and `.` are switched around
+            depedening on country. Note: Prefixes are removed from the outputted value. They are simply used for display
+            purposes
             {/* <p>Form</p>
             <Form defaultValues={{}} action={handleFormSubmit}>
                 <Input name="basicInput" label="Basic Input" />
