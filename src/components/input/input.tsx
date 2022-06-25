@@ -1,9 +1,7 @@
 // Generated with util/create-component.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
-import Cleave from 'cleave.js/react';
 import { InputProps } from './input.types';
-import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { overrideTailwindClasses } from 'tailwind-override';
 
 const Input = ({
@@ -19,10 +17,6 @@ const Input = ({
     name,
     message,
     iconSide = 'right',
-    cleaveOptions = {
-        blocks: [99999],
-        delimiter: '',
-    },
     ...rest
 }: InputProps) => {
     const [borderColor, setBorderColor] = useState('');
@@ -45,8 +39,7 @@ const Input = ({
     }, [message]);
 
     const handleInputChange = e => {
-        let rawValue = e.target.rawValue;
-        if (cleaveOptions.prefix) rawValue = rawValue.replace(cleaveOptions.prefix, '');
+        let rawValue = e.target.value;
         setter(rawValue);
     };
 
@@ -80,10 +73,9 @@ const Input = ({
             )}
         >
             <div className=" flex-1 relative">
-                <Cleave
+                <input
                     onFocus={handleFocus}
                     onBlur={checkLabelStatus}
-                    options={cleaveOptions}
                     ref={field}
                     name={name}
                     disabled={disabled}

@@ -16,7 +16,6 @@ export interface InputProps {
     placeholder?: string;
     name?: string;
     message?: IFormMessage;
-    cleaveOptions?: CleaveOptions;
     number?: boolean;
     iconSide?: 'right' | 'left';
     [key: string]: any;

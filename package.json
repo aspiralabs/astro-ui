@@ -1,6 +1,6 @@
 {
     "name": "@aspiralabs/astro-ui",
-    "version": "0.0.23-alpha",
+    "version": "0.0.24-alpha",
     "module": "build/index.js",
     "types": "build/index.d.ts",
     "files": [
@@ -57,7 +57,6 @@
         "@storybook/react": "^6.3.7",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",
-        "@types/cleave.js": "^1.4.6",
         "@types/jest": "^24.9.1",
         "@types/react": "^16.14.14",
         "@types/react-dom": "^16.9.14",
@@ -100,7 +99,6 @@
         "@tiptap/extension-underline": "^2.0.0-beta.23",
         "@tiptap/react": "^2.0.0-beta.108",
         "@tiptap/starter-kit": "^2.0.0-beta.183",
-        "cleave.js": "^1.6.0",
         "deepmerge": "^4.2.2",
         "framer-motion": "^5.5.5",
         "lowlight": "^2.6.1",

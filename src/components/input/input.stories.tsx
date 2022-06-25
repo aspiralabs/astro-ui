@@ -9,32 +9,17 @@ export default {
 };
 
 export const BasicInput = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [numberInput, setNumberInput] = useState(3.0);
+    const [numberInput, setNumberInput] = useState('');
 
-    const handleFormSubmit = (values: any) => {
+    const handleInput = (values: any) => {
         console.log(values);
+        setNumberInput(values);
     };
 
     return (
         <section className="flex flex-col gap-4">
-            <Input
-                className="w-96 px-4 h-12 rounded-full"
-                icon={faCog}
-                value={numberInput}
-                setter={setNumberInput}
-                label="Basic Input"
-                required
-                cleaveOptions={{
-                    prefix: '$',
-                    numeral: true,
-                }}
-            />
-            <p>{numberInput}</p>
-            To use force the input to be numbers only. Note this still outputs as a string value. If you need to convert
-            to a javascript number take into consideration the thousands seperator. `,` and `.` are switched around
-            depedening on country. Note: Prefixes are removed from the outputted value. They are simply used for display
-            purposes
+            <Input value={numberInput} setter={handleInput} label="Basic Input" />
+
             {/* <p>Form</p>
             <Form defaultValues={{}} action={handleFormSubmit}>
                 <Input name="basicInput" label="Basic Input" />
