@@ -1,7 +1,6 @@
 // Generated with util/create-component.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
-import Cleave from 'cleave.js/react';
 import { TextAreaProps } from './textarea.types';
 import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
