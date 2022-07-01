@@ -1,4 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { Dispatch, SetStateAction } from 'react';
 import { IFormMessage } from '../form/form.types';
 import { CleaveOptions } from 'cleave.js/options';
@@ -9,7 +9,7 @@ export interface TextAreaProps {
     setter?: Dispatch<SetStateAction<string>> | Dispatch<SetStateAction<number>>;
     label?: string;
     required?: boolean;
-    icon?: IconProp;
+    icon?: IconDefinition;
     className?: string;
     disabled?: boolean;
     placeholder?: string;

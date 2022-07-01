@@ -1,4 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 export interface ToastWrapperProps {
     children: React.ReactNode;
@@ -33,5 +33,5 @@ export interface ToastContextValue {
 export interface ToastOptions {
     timeout?: number;
     variant?: string;
-    icon?: IconProp;
+    icon?: IconDefinition;
 }

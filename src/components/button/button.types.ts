@@ -1,10 +1,10 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 export type ButtonSize = 'xs' | 'sm' | 'normal' | 'lg';
 export interface ButtonProps {
     children?: React.ReactNode;
     variant?: string;
-    icon?: IconProp;
+    icon?: IconDefinition;
     className?: string;
     disabled?: boolean;
     size?: ButtonSize;

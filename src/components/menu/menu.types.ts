@@ -1,9 +1,9 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 // Generated with util/create-component.js
 export interface DropdownEntry {
     title: string;
-    icon?: IconProp;
+    icon?: IconDefinition;
     action: () => void;
 }
 
