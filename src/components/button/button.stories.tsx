@@ -24,7 +24,7 @@ export const BasicButton = () => {
                 Disabled Button
             </Button>
 
-            <Button type="submit" variant="primary" onClick={handleClick} className="px-48 rounded-full">
+            <Button type="submit" variant="primary" onClick={handleClick} className="px-48 rounded-full" icon={faUser}>
                 Primary Button
             </Button>
         </div>

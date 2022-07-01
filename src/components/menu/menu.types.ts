@@ -1,4 +1,4 @@
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 // Generated with util/create-component.js
 export interface DropdownEntry {

@@ -1,4 +1,4 @@
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export type ButtonSize = 'xs' | 'sm' | 'normal' | 'lg';
 export interface ButtonProps {

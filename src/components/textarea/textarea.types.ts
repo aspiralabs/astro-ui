@@ -1,7 +1,6 @@
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Dispatch, SetStateAction } from 'react';
 import { IFormMessage } from '../form/form.types';
-import { CleaveOptions } from 'cleave.js/options';
 
 // Generated with util/create-component.js
 export interface TextAreaProps {
