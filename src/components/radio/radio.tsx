@@ -30,6 +30,7 @@ const Radio = ({
                     <input
                         onClick={handleClick}
                         checked={value}
+                        readOnly
                         name={name}
                         ref={ref}
                         disabled={disabled}

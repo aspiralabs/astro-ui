@@ -525,6 +525,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-full {
   right: 100%;
 }
+.-top-8 {
+  top: -2rem;
+}
+.bottom-8 {
+  bottom: 2rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -659,6 +665,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-2\.5 {
   height: 0.625rem;
 }
+.h-2\/5 {
+  height: 40%;
+}
+.h-8 {
+  height: 2rem;
+}
 .max-h-48 {
   max-height: 12rem;
 }
@@ -707,6 +719,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-32 {
   width: 8rem;
 }
+.w-96 {
+  width: 24rem;
+}
 .max-w-full {
   max-width: 100%;
 }
@@ -735,6 +750,30 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .transform {
   transform: var(--tw-transform);
+}
+@-webkit-keyframes cursor {
+
+  0%, 40% {
+    opacity: 1;
+  }
+
+  60%, 100% {
+    opacity: 0;
+  }
+}
+@keyframes cursor {
+
+  0%, 40% {
+    opacity: 1;
+  }
+
+  60%, 100% {
+    opacity: 0;
+  }
+}
+.animate-cursor {
+  -webkit-animation: cursor .5s linear infinite alternate;
+          animation: cursor .5s linear infinite alternate;
 }
 @-webkit-keyframes bounce {
 
@@ -820,6 +859,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
+.divide-surface > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(240 243 245 / var(--tw-divide-opacity));
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -842,6 +885,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .rounded-lg {
   border-radius: 0.5rem;
+}
+.rounded-md {
+  border-radius: 0.375rem;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
 }
 .border {
   border-width: 1px;
@@ -1038,6 +1087,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
+.border-cursor {
+  --tw-border-opacity: 1;
+  border-color: rgb(45 55 72 / var(--tw-border-opacity));
+}
 .border-opacity-100 {
   --tw-border-opacity: 1;
 }
@@ -1220,6 +1273,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.bg-cursor {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 55 72 / var(--tw-bg-opacity));
 }
 .bg-opacity-30 {
   --tw-bg-opacity: 0.3;
@@ -1562,6 +1619,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.text-cursor {
+  --tw-text-opacity: 1;
+  color: rgb(45 55 72 / var(--tw-text-opacity));
 }
 .text-opacity-50 {
   --tw-text-opacity: 0.5;
@@ -1917,6 +1978,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
+.checked\:border-cursor:checked {
+  --tw-border-opacity: 1;
+  border-color: rgb(45 55 72 / var(--tw-border-opacity));
+}
 .checked\:bg-primary:checked {
   --tw-bg-opacity: 1;
   background-color: rgb(66 153 225 / var(--tw-bg-opacity));
@@ -2096,6 +2161,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .checked\:bg-black:checked {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.checked\:bg-cursor:checked {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 55 72 / var(--tw-bg-opacity));
 }
 .checked\:text-primary:checked {
   --tw-text-opacity: 1;
@@ -2277,6 +2346,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+.checked\:text-cursor:checked {
+  --tw-text-opacity: 1;
+  color: rgb(45 55 72 / var(--tw-text-opacity));
+}
 .hover\:border-primary:hover {
   --tw-border-opacity: 1;
   border-color: rgb(66 153 225 / var(--tw-border-opacity));
@@ -2456,6 +2529,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:border-black:hover {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+.hover\:border-cursor:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(45 55 72 / var(--tw-border-opacity));
 }
 .hover\:bg-primary:hover {
   --tw-bg-opacity: 1;
@@ -2637,6 +2714,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
+.hover\:bg-cursor:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 55 72 / var(--tw-bg-opacity));
+}
 .hover\:text-primary:hover {
   --tw-text-opacity: 1;
   color: rgb(66 153 225 / var(--tw-text-opacity));
@@ -2816,6 +2897,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:text-black:hover {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.hover\:text-cursor:hover {
+  --tw-text-opacity: 1;
+  color: rgb(45 55 72 / var(--tw-text-opacity));
 }
 .hover\:text-opacity-100:hover {
   --tw-text-opacity: 1;
@@ -3003,6 +3088,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
+.focus\:border-cursor:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(45 55 72 / var(--tw-border-opacity));
+}
 .focus\:bg-primary:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(66 153 225 / var(--tw-bg-opacity));
@@ -3182,6 +3271,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .focus\:bg-black:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.focus\:bg-cursor:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 55 72 / var(--tw-bg-opacity));
 }
 .focus\:text-primary:focus {
   --tw-text-opacity: 1;
@@ -3363,6 +3456,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+.focus\:text-cursor:focus {
+  --tw-text-opacity: 1;
+  color: rgb(45 55 72 / var(--tw-text-opacity));
+}
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -3380,4 +3477,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .group:hover .group-hover\:flex {
   display: flex;
+}
+.group:hover .group-hover\:text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }

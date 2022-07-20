@@ -32,6 +32,7 @@ const Checkbox = ({
                     )}
                     <input
                         onClick={handleClick}
+                        readOnly
                         checked={value}
                         name={name}
                         ref={ref}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SelectRefactor from './select';
 import { SelectOptionsEntry } from './select.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdjust } from '@fortawesome/free-solid-svg-icons';
+import { faAdjust, faArrowDown, faArrowRight, faArrowUp, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Form } from '../form/form';
 import Button from '../button/button';
 
@@ -39,8 +39,26 @@ export const WithSelect = () => {
         },
     ];
 
+    const customOptions: SelectOptionsEntry[] = [
+        {
+            value: '1',
+            label: 'One',
+            render: <CustomEntry value="Right" icon={faArrowRight} />,
+        },
+        {
+            value: '2',
+            label: 'Two',
+            render: <CustomEntry value="Down" icon={faArrowDown} />,
+        },
+        {
+            value: '3',
+            label: 'Three',
+            render: <CustomEntry value="Up" icon={faArrowUp} />,
+        },
+    ];
+
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col">
             <p>Standalone</p>
             <SelectRefactor
                 options={options}
@@ -50,11 +68,30 @@ export const WithSelect = () => {
                 className="my-8"
             />
 
+            <p>Custom Entry</p>
+            <SelectRefactor
+                options={customOptions}
+                value={selectValue}
+                setter={setSelectValue}
+                label="Select Value"
+                className="my-8 rounded-md"
+                dropdownClassName="rounded-md"
+            />
+
             <p>In a Form component</p>
             <Form defaultValues={{}} action={(values: any) => console.log(values)}>
                 <SelectRefactor options={options} name="formValue" label="Select Value" className="my-8" />
                 <Button>Submit</Button>
             </Form>
+        </div>
+    );
+};
+
+const CustomEntry = ({ value, icon }) => {
+    return (
+        <div className="h-8 flex items-center gap-4">
+            <FontAwesomeIcon icon={icon} />
+            <span className="text-success font-bold">{value}</span>
         </div>
     );
 };

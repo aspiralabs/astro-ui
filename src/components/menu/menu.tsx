@@ -5,8 +5,9 @@ import { DropdownMenuProps, DropdownEntry } from './menu.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Text from '../text/text';
 import { onClickOutside } from '../../hooks/onClickOutside';
+import { overrideTailwindClasses } from 'tailwind-override';
 
-const Menu = ({ children, open, setter, schema, right = false }: DropdownMenuProps) => {
+const Menu = ({ children, open, setter, schema, right = false, className }: DropdownMenuProps) => {
     const ref = useRef(null);
     onClickOutside(ref, () => setter(false));
 
@@ -30,19 +31,23 @@ const Menu = ({ children, open, setter, schema, right = false }: DropdownMenuPro
                         initial={animation.initial}
                         animate={animation.animate}
                         exit={animation.exit}
-                        className={`absolute top-full ${
-                            right ? 'right-0' : 'left-0'
-                        } bg-white shadow-lg mt-1 w-48 text-left font-proxima text-sm z-50`}
+                        className={overrideTailwindClasses(
+                            `absolute top-full ${
+                                right ? 'right-0' : 'left-0'
+                            } bg-white shadow-lg mt-1 w-48 text-left font-body text-sm z-50 ${className}`,
+                        )}
                     >
                         {schema.map((entry: DropdownEntry) => {
                             return (
                                 <li
-                                    className="bg-white flex gap-2 items-center p-3 text-body transition hover:bg-surface"
+                                    className={`flex gap-2 items-center  text-body transition ${
+                                        !entry.render && 'hover:bg-surface'
+                                    }`}
                                     onClick={entry.action}
                                     key={entry.title}
                                 >
-                                    {entry?.icon && <FontAwesomeIcon icon={entry.icon} />}
-                                    <Text>{entry.title}</Text>
+                                    {entry.render && entry.render}
+                                    {!entry.render && <Text className="p-4 cursor-pointer">{entry.title}</Text>}
                                 </li>
                             );
                         })}

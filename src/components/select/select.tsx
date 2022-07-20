@@ -6,7 +6,7 @@ import { overrideTailwindClasses } from 'tailwind-override';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Select = ({ className, label, value = null, setter, options, name }: SelectProps) => {
+const Select = ({ className, dropdownClassName, label, value = null, setter, options, name }: SelectProps) => {
     // =========================================================================
     // STATES
     // =========================================================================
@@ -211,7 +211,7 @@ const Select = ({ className, label, value = null, setter, options, name }: Selec
                 {dropwdownOpen && (
                     <React.Fragment>
                         <span>{searchText}</span>
-                        <span className="w-0.5 h-1/2 bg-primary pulse"></span>
+                        <span className="w-px h-2/5 bg-cursor animate-cursor"></span>
                     </React.Fragment>
                 )}
 
@@ -244,17 +244,20 @@ const Select = ({ className, label, value = null, setter, options, name }: Selec
                 onKeyDown={handleKeypress}
                 role="listbox"
                 tabIndex={-1}
-                className={`bg-white border border-surface-dark shadow-astro ${
-                    dropwdownOpen ? 'absolute' : 'hidden'
-                } top-full z-40 w-full mt-2 rounded-sm`}
+                className={overrideTailwindClasses(
+                    `bg-white border border-surface-dark shadow-astro overflow-y-auto ${
+                        dropwdownOpen ? 'absolute' : 'hidden'
+                    } top-full z-40 w-full mt-2 rounded-sm ${dropdownClassName}`,
+                )}
                 aria-labelledby={selectId}
+                style={{ maxHeight: 200 }}
             >
-                {filteredOptions.map(option => (
+                {filteredOptions.map((option, index) => (
                     <li
                         onClick={handleEntryClick(option)}
                         tabIndex={-1}
                         role="option"
-                        key={option.value}
+                        key={option.value + index}
                         value={option.value}
                         aria-label={option.label}
                         id={`${selectId}_${option.value}`}

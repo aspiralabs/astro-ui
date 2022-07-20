@@ -4,10 +4,18 @@
 
 const baseConfig = {
     darkMode: 'class',
-
     theme: {
         extend: {
-            astro: {
+            animation: {
+                cursor: 'cursor .5s linear infinite alternate',
+            },
+            keyframes: {
+                cursor: {
+                    '0%, 40%': { opacity: 1 },
+                    '60%, 100%': { opacity: 0 },
+                },
+            },
+            shadow: {
                 main: '0px 4px 90px rgba(146, 146, 146, 0.3)',
             },
         },
@@ -23,6 +31,7 @@ const baseConfig = {
             body: { DEFAULT: '#646C7D', light: '#767e91', dark: '#646C7D', disabled: '#63B3ED' },
             white: '#fff',
             black: '#000',
+            cursor: '#2d3748',
         },
     },
     variants: {

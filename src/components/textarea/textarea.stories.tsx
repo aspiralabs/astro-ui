@@ -19,7 +19,6 @@ export const BasicTextArea = () => {
     return (
         <section className="flex flex-col gap-4">
             <Form defaultValues={{}} action={handleSubmit} className="grid grid-cols-2 gap-8">
-                <Input name="input" label="Input Text" />
                 <TextArea name="textarea" label="Basic Text Area" />
             </Form>
         </section>
