@@ -3,7 +3,7 @@
 // =============================================================================
 
 const baseConfig = {
-    darkMode: 'class',
+    darkMode: 'media',
     theme: {
         extend: {
             animation: {
@@ -20,17 +20,19 @@ const baseConfig = {
             },
         },
         colors: {
-            primary: { DEFAULT: '#4299E1', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED', text: '#fff' },
-            secondary: { DEFAULT: '#9381FF', light: '#7a63ff', dark: '#4d38c7', disabled: '#c4bee6', text: '#fff' },
-            error: { DEFAULT: '#FE4A49', light: '#db2a2a', dark: '#a12727', disabled: '#FE7171', text: '#fff' },
-            warning: { DEFAULT: '#f5aa31', light: '#ffa617', dark: '#804f00', disabled: '#fac878', text: '#fff' },
-            success: { DEFAULT: '#26bf82', light: '#05ad6a', dark: '#00693f', disabled: '#71bfa0', text: '#fff' },
-            info: { DEFAULT: '#d2d6d9', light: '#aaafb3', dark: '#60666b', disabled: '#ebf2f7', text: '#fff' },
-            surface: { DEFAULT: '#f0f3f5', light: '#dce2e6', dark: '#d5dee3', disabled: '#fafbfc', text: '#2d3748' },
-            heading: { DEFAULT: '#2d3748', light: '#3182CE', dark: '#2B6CB0', disabled: '#63B3ED' },
-            body: { DEFAULT: '#646C7D', light: '#767e91', dark: '#646C7D', disabled: '#63B3ED' },
+            primary: { DEFAULT: '#4299E1', hover: '#3182CE', dark: '#23242a', disabled: '#63B3ED', text: '#fff' },
+            secondary: { DEFAULT: '#9381FF', hover: '#7a63ff', dark: '#4d38c7', disabled: '#c4bee6', text: '#fff' },
+            error: { DEFAULT: '#FE4A49', hover: '#db2a2a', dark: '#a12727', disabled: '#FE7171', text: '#fff' },
+            warning: { DEFAULT: '#f5aa31', hover: '#ffa617', dark: '#804f00', disabled: '#fac878', text: '#fff' },
+            success: { DEFAULT: '#26bf82', hover: '#05ad6a', dark: '#00693f', disabled: '#71bfa0', text: '#fff' },
+            info: { DEFAULT: '#d2d6d9', hover: '#aaafb3', dark: '#60666b', disabled: '#ebf2f7', text: '#fff' },
+            surface: { DEFAULT: '#f2f3f5', hover: '#dadee4', dark: '#d5dee3', disabled: '#fafbfc', text: '#2d3748' },
+            heading: { DEFAULT: '#2d3748', hover: '#3182CE', dark: '#ffffff', disabled: '#63B3ED' },
+            body: { DEFAULT: '#646C7D', hover: '#767e91', dark: '#898b93', disabled: '#63B3ED' },
+            card: { DEFAULT: '#fff', dark: '#2b2c32' },
             white: '#fff',
-            black: '#000',
+            black: '#23242a',
+            gray: { DEFAULT: '#d5dee3', dark: '#454752' },
             cursor: '#2d3748',
         },
     },
@@ -106,8 +108,20 @@ function wrapper(tailwindConfig) {
         ...new Set([...Object.keys(tailwindConfig.theme.colors), ...Object.keys(baseConfig.theme.colors)]),
     ];
 
+    // Get all Color variants of each color
+    const colorKeyOptions = [];
+    colorKeys.forEach(key => {
+        Object.keys(baseConfig.theme.colors[key]).forEach(subkey => {
+            if (subkey === 'DEFAULT') {
+                colorKeyOptions.push(key);
+            } else {
+                colorKeyOptions.push(`${key}-${subkey}`);
+            }
+        });
+    });
+
     // Create Safelist
-    let safelist = colorKeys.map(key => {
+    let safelist = colorKeyOptions.map(key => {
         return {
             pattern: new RegExp(`(bg|text|border)-${key}`),
             variants: ['hover', 'focus', 'checked'],

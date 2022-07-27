@@ -1,5 +1,5 @@
 // Generated with util/create-component.js
-import React, { useState } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
 import { Input } from '../..';
 import { Form, FormSection } from './form';
 import Button from '../button/button';
@@ -39,11 +39,11 @@ export const BasicForm = () => {
         address: '',
         city: '',
         zip: '',
-        date: null,
+        date: '',
     };
 
     return (
-        <section className="bg-gray p-8">
+        <section className=" p-8">
             <Form defaultValues={defaultValues} action={handleSubmit} className="flex flex-col gap-4">
                 <Input name="firstName" label="First Name" disabled={true} />
                 <Input name="lastName" label="Last Name" />

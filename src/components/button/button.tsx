@@ -24,13 +24,13 @@ const Button = ({
 
     switch (size) {
         case 'lg':
-            calcSize = 'px-6 py-3';
+            calcSize = 'px-12 py-4 text-lg';
             break;
         case 'normal':
-            calcSize = 'px-4 py-3 text-sm';
+            calcSize = 'px-8 py-3 text-sm';
             break;
         case 'sm':
-            calcSize = 'px-3 py-2 text-sm';
+            calcSize = 'px-4 py-2 text-sm';
             break;
         case 'xs':
             calcSize = 'px-2 py-1 text-xs';
@@ -40,16 +40,16 @@ const Button = ({
     }
 
     if (outlined) {
-        buttonStyles = `border border-${bg} hover:border-${variant}-light hover:text-${variant}-light text-${variant} ${
+        buttonStyles = `border-2 border-${bg} hover:border-${variant}-hover hover:text-${variant}-hover text-${variant} ${
             disabled && `border-${variant}-disabled hover:border-${variant}-disabled cursor-not-allowed`
         }`;
     } else {
-        buttonStyles = `bg-${bg} hover:bg-${variant}-light active:bg-${variant}-dark text-${variant}-text ${
+        buttonStyles = `bg-${bg} hover:bg-${variant}-hover  text-${variant}-text ${
             disabled && `bg-${variant}-disabled hover:bg-${variant}-disabled cursor-not-allowed`
         }`;
     }
 
-    const finalClasses = `${calcSize} ${buttonStyles} font-body relative transition font-light capitalize  rounded-sm cursor-pointer flex gap-2 items-center  justify-center ${className}`;
+    const finalClasses = `${calcSize} ${buttonStyles}  font-semibold relative transition  capitalize  rounded-md cursor-pointer flex gap-2 items-center  justify-center ${className}`;
 
     // =========================================================================
     // RENDER

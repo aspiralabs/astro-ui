@@ -149,13 +149,13 @@ export const ButtonPalette = () => {
                 </div>
             </div>
             <div>
-                <h2 className="text-xl font-semibold my-4">Gray</h2>
+                <h2 className="text-xl font-semibold my-4">Surface</h2>
                 <div className="flex gap-4">
-                    <Button variant="gray">Button</Button>
-                    <Button variant="gray" outlined>
+                    <Button variant="surface">Button</Button>
+                    <Button variant="surface" outlined>
                         Outlined
                     </Button>
-                    <Button variant="gray" disabled>
+                    <Button variant="surface" disabled>
                         Disabled
                     </Button>
                 </div>

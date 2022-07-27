@@ -17,24 +17,25 @@ const Input = ({
     name,
     message,
     iconSide = 'right',
+    borderWidth = 1,
     ...rest
 }: InputProps) => {
     const [borderColor, setBorderColor] = useState('');
-    const disabledInput = `border border-surface-dark bg-surface-disabled`;
     const field = useRef(null);
     const [labelIsFloating, setLabelIsFloating] = useState(false);
+    const borderWidthString = borderWidth > 1 ? `-${borderWidth}` : '';
 
     useEffect(() => {
         if (message?.message) {
-            let color = 'border ';
+            let color = 'border-2 ';
 
             if (message?.type === 'error') color += 'border-error';
             else if (message?.type === 'success') color += 'border-success';
-            else color += 'border-surface-dark';
+            else color += 'border-gray dark:border-gray-dark';
 
             setBorderColor(color);
         } else {
-            setBorderColor('border border-surface-dark');
+            setBorderColor('border-2 border-gray dark:border-gray-dark');
         }
     }, [message]);
 
@@ -65,75 +66,82 @@ const Input = ({
 
     if (!setter) return <p></p>;
     return (
-        <div
-            className={overrideTailwindClasses(
-                `rounded-sm relative w-full h-12 flex flex-col text-body text-sm px-4 font-light tracking-wide ${
-                    disabled ? disabledInput : borderColor
-                } ${className}`,
-            )}
-        >
-            <div className=" flex-1 relative">
-                <input
-                    onFocus={handleFocus}
-                    onBlur={checkLabelStatus}
-                    ref={field}
-                    name={name}
-                    disabled={disabled}
-                    required={required}
-                    value={value}
-                    onChange={handleInputChange}
-                    type={type}
-                    style={{ background: 'rgba(0,0,0,0)' }}
-                    className={`focus:outline-none focus:border-primary  w-full align-middle h-full `}
-                    {...rest}
+        <React.Fragment>
+            <div
+                className={overrideTailwindClasses(
+                    `rounded-md relative w-full h-12 flex  border-gray dark:border-gray-dark text-body dark:text-body text-sm font-light tracking-wide  ${className} px-0`,
+                )}
+            >
+                {/* START: OUTLINE CONTAINER ===================================== */}
+                <div
+                    style={{
+                        borderRadius: 'inherit',
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0,
+                        borderColor: 'inherit',
+                    }}
+                    className={`w-4 border${borderWidthString} border-r-0 h-full rounded-inherit`}
                 />
 
-                {label && (
-                    <label
-                        className={`font-body font-light  text-body  transition-all duration-300 pointer-events-none w-full h-full absolute ${
-                            iconSide === 'left' ? 'left-6' : 'left-0'
-                        } top-0`}
+                <div
+                    style={{
+                        borderRadius: 0,
+                        borderColor: 'inherit',
+                    }}
+                    className={`h-full border${borderWidthString} ${
+                        labelIsFloating ? 'border-t-0' : `border-t${borderWidthString}`
+                    } border-r-0 border-l-0 w-auto px-1 relative  transition-all duration-100`}
+                >
+                    <span className="opacity-0">{label}</span>
+                    <span
+                        className={`transform   transition-all duration-300 absolute left-0  ${
+                            labelIsFloating
+                                ? '-top-2 text-xs text-center w-full '
+                                : '-translate-y-1/2 top-1/2 text-center w-full'
+                        }`}
                     >
-                        <span
-                            className={`absolute transform transitional-all duration-300 px-1.5 -left-1.5 ${
-                                labelIsFloating ? '-top-2 text-xs bg-white ' : 'top-1/2 -translate-y-1/2'
-                            } h-auto `}
-                        >
-                            {label} {required && <span className="text-error">*</span>}
-                        </span>
-                    </label>
-                )}
-
-                {icon && (
-                    <FontAwesomeIcon
-                        icon={icon}
-                        className={`-translate-y-1/2 absolute ${
-                            iconSide === 'left' ? 'left-0' : 'right-0'
-                        } text-body top-1/2 transform z-10`}
-                    />
-                )}
-            </div>
-
-            {/* {message?.message && (
-                <div className="flex gap-1 items-center py-1">
-                    <React.Fragment>
-                        {message?.type === 'error' && (
-                            <FontAwesomeIcon icon={faExclamation} className="mr-2 text-error" />
-                        )}
-                        {message?.type === 'success' && (
-                            <FontAwesomeIcon icon={faCheck} className="mr-2 text-success" />
-                        )}
-                        <p
-                            className={`text-sm font-body ${
-                                message?.type === 'error' ? 'text-error' : 'text-success'
-                            } `}
-                        >
-                            {message?.message}
-                        </p>
-                    </React.Fragment>
+                        {label}
+                    </span>
                 </div>
-            )} */}
-        </div>
+
+                <div
+                    style={{
+                        borderRadius: 'inherit',
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                        borderColor: 'inherit',
+                    }}
+                    className={`w-8  border${borderWidthString} border-l-0 h-full rounded-inherit flex-1`}
+                />
+                {/* END: OUTLINE CONTAINER ===================================== */}
+
+                <div className=" flex-1 absolute top-0 left-0  w-full h-full px-6">
+                    <input
+                        onFocus={handleFocus}
+                        onBlur={checkLabelStatus}
+                        ref={field}
+                        name={name}
+                        disabled={disabled}
+                        required={required}
+                        value={value}
+                        onChange={handleInputChange}
+                        type={type}
+                        style={{ background: 'rgba(0,0,0,0)' }}
+                        className={`w-full align-middle h-full outline-none `}
+                        {...rest}
+                    />
+
+                    {icon && (
+                        <FontAwesomeIcon
+                            icon={icon}
+                            className={`-translate-y-1/2 absolute text-base ${
+                                iconSide === 'left' ? 'left-4' : 'right-4'
+                            } text-body top-1/2 transform z-10`}
+                        />
+                    )}
+                </div>
+            </div>
+        </React.Fragment>
     );
 };
 

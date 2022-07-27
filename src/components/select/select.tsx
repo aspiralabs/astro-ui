@@ -6,7 +6,16 @@ import { overrideTailwindClasses } from 'tailwind-override';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Select = ({ className, dropdownClassName, label, value = null, setter, options, name }: SelectProps) => {
+const Select = ({
+    className,
+    dropdownClassName,
+    label,
+    value = null,
+    setter,
+    options,
+    name,
+    borderWidth = 1,
+}: SelectProps) => {
     // =========================================================================
     // STATES
     // =========================================================================
@@ -17,6 +26,7 @@ const Select = ({ className, dropdownClassName, label, value = null, setter, opt
     const [labelFloating, setLabelIsFloating] = useState(false);
     const [dropwdownOpen, setDropdownOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
+    const borderWidthString = borderWidth > 1 ? `-${borderWidth}` : '';
 
     // =========================================================================
     // REFS
@@ -182,18 +192,58 @@ const Select = ({ className, dropdownClassName, label, value = null, setter, opt
     // =========================================================================
     // CLASS CONSTRUCTION
     // =========================================================================
-    const baseContainerClass = `relative rounded-sm w-full h-12 flex flex text-body text-sm items-start flex-start`;
-    const baseBorderClass = `border border-surface-dark`;
-    const labelBaseClass = `absolute font-body font-light text-body transform transitional-all duration-300 `;
-    const labelFloatingClass = labelFloating ? '-top-2 text-xs bg-white px-1 -ml-1' : 'top-1/2 -translate-y-1/2 ';
+    const baseContainerClass = `relative rounded-md w-full h-12 flex flex text-body dark:text-body-dark text-sm items-start flex-start`;
+    const baseBorderColors = 'border-gray dark:border-gray-dark';
+    const labelFloatingClass = labelFloating
+        ? '-top-2 text-xs text-center w-full '
+        : '-translate-y-1/2 top-1/2 text-center w-full';
 
     // =========================================================================
     // RENDER
     // =========================================================================
     return (
         <div
-            className={overrideTailwindClasses(`astro-ui-select ${baseContainerClass} ${baseBorderClass} ${className}`)}
+            className={overrideTailwindClasses(
+                `astro-ui-select ${baseBorderColors} ${baseContainerClass} ${className}`,
+            )}
         >
+            {/* START: OUTLINE CONTAINER ===================================== */}
+            <div
+                style={{
+                    borderRadius: 'inherit',
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`w-4 border${borderWidthString} border-r-0 h-full rounded-inherit`}
+            />
+
+            <div
+                style={{
+                    borderRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`h-full border${borderWidthString} ${
+                    labelFloating ? 'border-t-0' : `border-t${borderWidthString}`
+                } border-r-0 border-l-0 w-auto px-1 relative  transition-all duration-100`}
+            >
+                <span className="opacity-0">{label}</span>
+                <span className={`transform   transition-all duration-300 absolute left-0  ${labelFloatingClass}`}>
+                    {label}
+                </span>
+            </div>
+
+            <div
+                style={{
+                    borderRadius: 'inherit',
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`w-8  border${borderWidthString} border-l-0 h-full rounded-inherit flex-1`}
+            />
+            {/* END: OUTLINE CONTAINER ===================================== */}
+
             <button
                 name={name}
                 ref={buttonRef}
@@ -202,10 +252,10 @@ const Select = ({ className, dropdownClassName, label, value = null, setter, opt
                 aria-haspopup="listbox"
                 aria-labelledby={`${selectId}btn`}
                 id={`${selectId}-btn`}
-                className="w-full h-full px-4 flex items-center flex-1"
+                className="w-full h-full px-4 flex items-center flex-1 absolute top-0 left-0 outline-none"
             >
                 {/* LABEL ================================================== */}
-                {label && <span className={`${labelBaseClass} ${labelFloatingClass}`}>{label}</span>}
+                {/* {label && <span className={`${labelBaseClass} ${labelFloatingClass}`}>{label}</span>} */}
 
                 {/* DROPDOWN =============================================== */}
                 {dropwdownOpen && (
@@ -219,7 +269,7 @@ const Select = ({ className, dropdownClassName, label, value = null, setter, opt
             </button>
 
             {/* ICON ======================================================= */}
-            <div className="flex items-center justify-center w-8 h-full">
+            <div className="flex items-center justify-center w-8 h-full absolute right-2">
                 {selectedValue && (
                     <FontAwesomeIcon
                         icon={faXmark}
@@ -245,9 +295,9 @@ const Select = ({ className, dropdownClassName, label, value = null, setter, opt
                 role="listbox"
                 tabIndex={-1}
                 className={overrideTailwindClasses(
-                    `bg-white border border-surface-dark shadow-astro overflow-y-auto ${
+                    `bg-card dark:bg-card-dark border-2 rounded-md ${baseBorderColors} outline-none shadow-astro overflow-y-auto ${
                         dropwdownOpen ? 'absolute' : 'hidden'
-                    } top-full z-40 w-full mt-2 rounded-sm ${dropdownClassName}`,
+                    } top-full z-40 w-full mt-2  ${dropdownClassName}`,
                 )}
                 aria-labelledby={selectId}
                 style={{ maxHeight: 200 }}

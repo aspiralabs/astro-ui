@@ -57,7 +57,7 @@
 }
 
 .ProseMirror blockquote {
-    @apply pl-4 border-l-4 bg-surface-light py-1;
+    @apply pl-4 border-l-4 bg-surface py-1;
 }
 
 .ProseMirror ul[data-type='taskList'] {

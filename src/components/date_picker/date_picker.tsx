@@ -11,6 +11,9 @@ import { useEffect, useRef, useState } from 'react';
 import { DatePickerProps } from './date_picker.types';
 import { onClickOutside } from '../../hooks/onClickOutside';
 import moment from 'moment';
+import { overrideTailwindClasses } from 'tailwind-override';
+import CalendarDropdown from './date_picker_dropdown';
+import { render } from 'react-dom';
 
 const DatePicker = ({
     value,
@@ -22,6 +25,9 @@ const DatePicker = ({
     datetime = false,
     format,
     local = false,
+    minYear = 1945,
+    maxYear = 2045,
+    borderWidth = 1,
 }: DatePickerProps) => {
     // =========================================================================
     // STATES
@@ -32,17 +38,19 @@ const DatePicker = ({
     const [outputDate, setOutputDate] = useState('');
     const [renderDate, setRenderDate] = useState('');
     const [isInvalid, setIsInvalid] = useState(false);
-
     const [isTyping, setIsTyping] = useState(false);
+
+    const borderWidthString = borderWidth > 1 ? `-${borderWidth}` : '';
 
     // =========================================================================
     // FUNCTIONS
     // =========================================================================
     const toggleCalendar = () => {
         if (menuOpen) {
-            setMenuOpen(!menuOpen);
+            closeDatePicker();
         } else {
-            setMenuOpen(!menuOpen);
+            setLabelIsFloating(true);
+            setMenuOpen(true);
         }
     };
 
@@ -53,63 +61,98 @@ const DatePicker = ({
         // Attemp to parse date
         // const date = new Date(e.target.value);
         let decidedFormat = format ? format : datetime ? 'MM/DD/YYYY - h:mm A' : 'MM/DD/YYYY';
-        const date = moment(e.target.value, decidedFormat).toDate();
+        const date = moment(e.target.value, decidedFormat, true);
 
-        console.log(date);
+        // Field is just nulls
+        if (e.target.value === '') {
+            setIsInvalid(false);
+            setOutputDate('');
+            setter(null);
+        }
 
         // Valid Date
-        if (date.getTime()) {
+        else if (date.isValid()) {
             setIsInvalid(false);
-            setInnerValue(date);
+            handleSettingOutput(date.toDate());
+            setInnerValue(date.toDate());
         }
 
         // Invalid Date
         else {
             setIsInvalid(true);
+            setOutputDate('');
+            setter(null);
         }
     };
 
     const handleSettingOutput = (date: Date) => {
+        let decidedFormat = format ? format : datetime ? 'MM/DD/YYYY - h:mm A' : 'MM/DD/YYYY';
+
         if (date) {
-            if (!datetime) {
-                setOutputDate(
-                    moment(date)
-                        .utcOffset(0, true)
-                        .toISOString()
-                        .replace('Z', local ? '' : 'Z'),
-                );
+            let output = null;
+            if (datetime) {
+                output = moment(date)
+                    .toISOString()
+                    .replace('Z', local ? '' : 'Z');
             } else {
-                setOutputDate(
-                    moment(date)
-                        .toISOString()
-                        .replace('Z', local ? '' : 'Z'),
-                );
+                output = moment(date)
+                    .utcOffset(0, true)
+                    .toISOString()
+                    .replace('Z', local ? '' : 'Z');
             }
+
+            // Update the rendered date in the input field
+            setRenderDate(moment(date).format(decidedFormat));
+            setOutputDate(output);
+            setter(output);
         }
     };
 
-    const handleSelectDate = (date: Date) => {
-        console.log('Selected Date', date);
+    const handleSelectDate = (date: Date, closePicker: boolean) => {
+        setInnerValue(date);
+        handleSettingOutput(date);
 
-        // Valid Date
-        if (date.getTime()) {
-            setInnerValue(date);
+        // If we want to close the date picker
+        if (closePicker) {
+            setLabelIsFloating(true);
+            setMenuOpen(false);
+        }
+    };
+
+    /**
+     * Start Closing logic when clicking off or date picker being toggled
+     */
+    const closeDatePicker = () => {
+        // Valid date
+        if (!isInvalid && value) {
+            setMenuOpen(false);
+            setLabelIsFloating(true);
+            return;
         }
 
-        // Invalid Date
-        else {
-            setOutputDate('');
+        // Null Field
+        if (!value) {
+            setMenuOpen(false);
+            setLabelIsFloating(false);
+            return;
         }
+
+        // // Invalid Date
+        if (isInvalid) {
+            setLabelIsFloating(false);
+            setMenuOpen(false);
+            return;
+        }
+    };
+
+    const handlePickerFocus = () => {
+        setMenuOpen(true);
+        setLabelIsFloating(true);
     };
 
     // =========================================================================
     // NEW EFFECTS
     // =========================================================================
-
-    // Call back setter when the output date changes
-    useEffect(() => {
-        outputDate && setter(outputDate);
-    }, [outputDate]);
 
     // On Mount
     useEffect(() => {
@@ -117,57 +160,71 @@ const DatePicker = ({
             setLabelIsFloating(true);
             setInnerValue(new Date(value));
         }
-
-        // Debugging
-        setMenuOpen(true);
     }, []);
-
-    // =========================================================================
-    // EFFECT
-    // =========================================================================
-
-    useEffect(() => {
-        if (innerValue && !isTyping) {
-            let decidedFormat = format ? format : datetime ? 'MM/DD/YYYY - h:mm A' : 'MM/DD/YYYY';
-            handleSettingOutput(innerValue);
-            setRenderDate(moment(innerValue).format(decidedFormat));
-        }
-    }, [innerValue]);
-
-    const handlePickerFocus = () => {
-        setMenuOpen(true);
-    };
 
     // =========================================================================
     // RENDER
     // =========================================================================
     return (
-        <div className="relative w-full h-12">
-            {/* <label className="block font-body font-light mb-2 text-body text-sm">{label}</label> */}
+        <div
+            className={overrideTailwindClasses(
+                `rounded-md relative w-full h-12 flex  border-gray dark:border-gray-dark text-body dark:text-body text-sm font-light tracking-wide  ${className} px-0`,
+            )}
+        >
+            {/* START: OUTLINE CONTAINER ===================================== */}
+            <div
+                style={{
+                    borderRadius: 'inherit',
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`w-4 border${borderWidthString} border-r-0 h-full rounded-inherit`}
+            />
 
-            <div className="relative">
+            <div
+                style={{
+                    borderRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`h-full border${borderWidthString} ${
+                    labelIsFloating ? 'border-t-0' : `border-t${borderWidthString}`
+                } border-r-0 border-l-0 w-auto px-1 relative  transition-all duration-200`}
+            >
+                <span className="opacity-0">{label}</span>
+                <span
+                    className={`transform   transition-all duration-300 absolute left-0  ${
+                        labelIsFloating
+                            ? '-top-2 text-xs text-center w-full '
+                            : '-translate-y-1/2 top-1/2 text-center w-full'
+                    }`}
+                >
+                    {label}
+                </span>
+            </div>
+
+            <div
+                style={{
+                    borderRadius: 'inherit',
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`w-8  border${borderWidthString} border-l-0 h-full rounded-inherit flex-1`}
+            />
+            {/* END: OUTLINE CONTAINER ===================================== */}
+            <div className="absolute  top-0 left-0 w-full h-full px-4">
                 <input
-                    value={labelIsFloating && renderDate}
+                    value={labelIsFloating ? renderDate : ''}
                     onChange={handleInputValue}
                     name={name}
                     placeholder={placeholder}
                     onFocus={handlePickerFocus}
                     onBlur={() => setIsTyping(false)}
-                    className={`astro_date_picker appearance-none border relative rounded-sm text-body border-surface-dark text-sm px-4 pr-12 focus:outline-none focus:border-primary  w-full align-middle h-12 font-light tracking-wide ${className}`}
+                    style={{ background: 'rgba(0,0,0,0)' }}
+                    className={`w-full align-middle h-full  outline-none text-body dark:text-body-dark`}
                 />
 
-                {label && (
-                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
-                        <span
-                            className={`absolute transform transitional-all duration-300 px-1.5 h-auto ${
-                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-1/2 -translate-y-1/2'
-                            }`}
-                        >
-                            {label}
-                            {/* {labelIsFloating ? 'true' : 'false'} */}
-                        </span>
-                    </label>
-                )}
                 <FontAwesomeIcon
                     icon={faCalendar}
                     onClick={toggleCalendar}
@@ -183,306 +240,10 @@ const DatePicker = ({
                     datetime={datetime}
                     format={format}
                     isInvalid={isInvalid}
+                    closeDatePicker={closeDatePicker}
+                    setInnerValue={setInnerValue}
                 />
             )}
-        </div>
-    );
-};
-
-const CalendarDropdown = ({
-    innerValue,
-    handleSelectDate,
-    datetime,
-    format,
-    isInvalid,
-}: {
-    innerValue: Date | null;
-    handleSelectDate: any;
-    datetime: boolean;
-    format: string;
-    isInvalid: boolean;
-}) => {
-    const [currentMonth, setCurrentMonth] = useState(1);
-    const [currentYear, setCurrentYear] = useState(2022);
-    const [currentHour, setCurrentHour] = useState(0);
-    const [currentMinute, setCurrentMinute] = useState(30);
-    const [blankdays, setBlankDays] = useState<number[]>([]);
-    const [days, setDays] = useState<number[]>([]);
-    const [mounted, setMounted] = useState(false);
-
-    // =========================================================================
-    // CONSTS
-    // =========================================================================
-    const MONTH_NAMES = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ];
-    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-    // =========================================================================
-    // FUNCTIONS
-    // =========================================================================
-
-    const getDays = () => {
-        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-        // find where to start calendar day of week
-        const dayOfWeek = new Date(currentYear, currentMonth).getDay();
-        const blankdaysArray = [];
-        for (let i = 1; i <= dayOfWeek; i++) {
-            blankdaysArray.push(i);
-        }
-
-        const daysArray = [];
-        for (let i = 1; i <= daysInMonth; i++) {
-            daysArray.push(i);
-        }
-
-        setBlankDays(blankdaysArray);
-        setDays(daysArray);
-    };
-
-    const determineDayColor = (day: number) => {
-        const today = new Date();
-        const compareDate = new Date(currentYear, currentMonth, day);
-
-        // If date has been a selected date
-        if (innerValue && innerValue.toDateString() === compareDate.toDateString()) {
-            return 'bg-primary text-white';
-        }
-
-        // if date is today
-        if (today.toDateString() === compareDate.toDateString()) {
-            return 'bg-surface text-body hover:bg-primary hover:text-white';
-        }
-
-        // Past Date
-        if (today.getTime() > compareDate.getTime()) {
-            return 'text-body-light hover:bg-primary hover:text-white';
-        }
-
-        return 'text-body hover:bg-primary hover:text-white';
-    };
-
-    const initCalendar = () => {
-        if (innerValue) {
-            setCurrentMonth(innerValue.getMonth());
-            setCurrentYear(innerValue.getFullYear());
-            setCurrentHour(innerValue.getHours());
-            setCurrentMinute(innerValue.getMinutes());
-        } else {
-            const today = new Date();
-            setCurrentMonth(today.getMonth());
-            setCurrentYear(today.getFullYear());
-            setCurrentHour(today.getHours());
-            setCurrentMinute(today.getMinutes());
-
-            let output = moment(today).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
-            handleSelectDate(output);
-        }
-
-        setMounted(true);
-        getDays();
-    };
-
-    // =========================================================================
-    // EVENT HANDLERS
-    // =========================================================================
-    const handleMoveBackOneMonth = () => {
-        const newMonth = currentMonth - 1;
-
-        if (newMonth === -1) {
-            setCurrentMonth(11);
-            setCurrentYear(currentYear - 1);
-        } else {
-            setCurrentMonth(newMonth);
-        }
-    };
-
-    const handleMoveForwardOneMonth = () => {
-        const newMonth = currentMonth + 1;
-
-        if (newMonth === 12) {
-            setCurrentMonth(0);
-            setCurrentYear(currentYear + 1);
-        } else {
-            setCurrentMonth(newMonth);
-        }
-    };
-
-    const handleDateClick = (day: number) => {
-        const selectedDate = new Date(currentYear, currentMonth, day);
-        handleSelectDate(selectedDate);
-    };
-
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    useEffect(() => {
-        getDays();
-    }, [currentMonth, currentYear]);
-
-    useEffect(() => {
-        if (mounted) {
-            const date = moment(innerValue).set({ hour: currentHour, minute: currentMinute }).toDate();
-            handleSelectDate(date);
-        }
-    }, [currentHour, currentMinute]);
-
-    useEffect(() => {
-        initCalendar();
-    }, []);
-
-    useEffect(() => {
-        if (mounted && innerValue) {
-            console.log('date...', innerValue);
-            setCurrentMonth(innerValue.getMonth());
-            setCurrentYear(innerValue.getFullYear());
-            setCurrentHour(innerValue.getHours());
-            setCurrentMinute(innerValue.getMinutes());
-        }
-    }, [innerValue]);
-
-    return (
-        <div className="absolute bg-white mt-2 p-4 rounded shadow-xl w-72 z-50">
-            {/* TOP PART OF CALENDAR PICKER */}
-            <div className="flex items-center justify-between mb-2">
-                <div>
-                    <span className="font-bold text-heading text-lg">{MONTH_NAMES[currentMonth]}</span>
-                    <span className="font-normal ml-1 text-heading text-lg">{currentYear}</span>
-                </div>
-                <div className="flex gap-2">
-                    <button
-                        type="button"
-                        className="cursor-pointer duration-100 ease-in-out flex h-6 items-center justify-center p-1 rounded-full text-body text-sm transition w-6 hover:bg-surface"
-                        onClick={handleMoveBackOneMonth}
-                    >
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                    </button>
-                    <button
-                        type="button"
-                        className="cursor-pointer duration-100 ease-in-out flex h-6 items-center justify-center p-1 rounded-full text-body text-sm transition w-6 hover:bg-surface"
-                        onClick={handleMoveForwardOneMonth}
-                    >
-                        <FontAwesomeIcon icon={faChevronRight} />
-                    </button>
-                </div>
-            </div>
-
-            {/* DAY SECTION */}
-            <div className="-mx-1 flex flex-wrap mb-3">
-                {DAYS.map(day => {
-                    return (
-                        <div style={{ width: ' 14.26%' }} className="px-1" key={day}>
-                            <div className="font-medium text-center text-heading text-xs">{day}</div>
-                        </div>
-                    );
-                })}
-            </div>
-
-            {/*  DATE NUMBER SECTION */}
-            <div className="-mx-1 flex flex-wrap">
-                {blankdays.map(day => (
-                    <div key={day} style={{ width: ' 14.28%' }} className="p-1 text-center text-sm" />
-                ))}
-
-                {days.map(day => {
-                    return (
-                        <div
-                            key={day}
-                            style={{ width: ' 14.28%' }}
-                            className="flex items-center justify-center mb-1 px-1"
-                        >
-                            <div
-                                onClick={() => handleDateClick(day)}
-                                className={`cursor-pointer duration-100 ease-in-out rounded-full w-6 h-6 text-center text-sm transition flex items-center justify-center ${determineDayColor(
-                                    day,
-                                )}`}
-                            >
-                                {day}
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-
-            {datetime && (
-                <React.Fragment>
-                    <div className="w-full h-px my-4 bg-surface" />
-                    <section className="mt-2">
-                        <div className="flex justify-center items-center">
-                            <NumberPicker min={0} max={24} number={currentHour} setNumber={setCurrentHour} />
-                            <span className="font-bold mx-2 text-xl">:</span>
-                            <NumberPicker min={0} max={60} number={currentMinute} setNumber={setCurrentMinute} />
-                        </div>
-                    </section>
-                </React.Fragment>
-            )}
-
-            {isInvalid && (
-                <div
-                    className="absolute w-full h-full top-0 left-0 flex items-center backdrop-blur-sm justify-center"
-                    style={{ background: 'rgba(240,240,240,0.7)' }}
-                >
-                    <p className=" text-lg tracking-wide text-body">Invalid Date</p>
-                </div>
-            )}
-        </div>
-    );
-};
-
-const NumberPicker = ({
-    min,
-    max,
-    number,
-    setNumber,
-}: {
-    min: number;
-    max: number;
-    number: number;
-    setNumber: any;
-}) => {
-    const handleInputChange = e => {
-        setNumber(e.target.value);
-    };
-
-    const handleTimeUp = () => {
-        const newValue = number + 1;
-        setNumber(newValue > max ? min : newValue);
-    };
-
-    const handleTimeDown = () => {
-        const newValue = number - 1;
-        setNumber(newValue < min ? max : newValue);
-    };
-
-    const pad = (number: number) => {
-        var s = String(number);
-        while (s.length < 2) {
-            s = '0' + s;
-        }
-        return s;
-    };
-
-    return (
-        <div className="flex flex-col flex-0">
-            <FontAwesomeIcon icon={faChevronUp} onClick={handleTimeUp} className="cursor-pointer text-body" />
-            <input
-                className="border border-surface p-2 rounded w-12 text-center text-body"
-                value={pad(number)}
-                onChange={handleInputChange}
-            />
-            <FontAwesomeIcon icon={faChevronDown} onClick={handleTimeDown} className="cursor-pointer text-body" />
         </div>
     );
 };

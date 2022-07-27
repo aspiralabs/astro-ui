@@ -8,7 +8,7 @@ export default {
 
 export const BasicCard = () => (
     <section className="bg-surface p-8">
-        <Card>
+        <Card className="rounded-md">
             <p>This is a card</p>
         </Card>
     </section>

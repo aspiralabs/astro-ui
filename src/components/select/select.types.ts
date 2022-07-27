@@ -14,4 +14,5 @@ export interface SelectProps {
     className?: string;
     dropdownClassName?: string;
     name?: string;
+    borderWidth?: number;
 }

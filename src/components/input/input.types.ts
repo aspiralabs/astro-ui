@@ -17,5 +17,6 @@ export interface InputProps {
     message?: IFormMessage;
     number?: boolean;
     iconSide?: 'right' | 'left';
+    borderWidth?: number;
     [key: string]: any;
 }

@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 export interface DatePickerProps {
     value?: Date | number | string | null;
-    setter?: Dispatch<SetStateAction<string>>;
+    setter?: Dispatch<SetStateAction<string | null>>;
     label?: string;
     className?: string;
     disabled?: boolean;
@@ -13,4 +13,7 @@ export interface DatePickerProps {
     datetime?: boolean;
     format?: string;
     local?: boolean;
+    minYear?: number;
+    maxYear?: number;
+    borderWidth?: number;
 }

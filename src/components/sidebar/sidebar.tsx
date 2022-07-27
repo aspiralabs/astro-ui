@@ -45,7 +45,7 @@ const Sidebar = ({ open, setter, children, width = '360px' }: SidebarProps) => {
                         initial={menuStates.initial}
                         animate={menuStates.open}
                         exit={menuStates.exit}
-                        className="absolute bg-white h-screen overflow-y-auto p-8 right-0"
+                        className="absolute bg-card dark:bg-card-dark h-screen overflow-y-auto p-8 right-0"
                     >
                         <button
                             className="absolute bg-surface w-6 h-6 rounded-full flex items-center justify-center right-4 top-4 opacity-50 hover:opacity-100 transition"

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import { TextAreaProps } from './textarea.types';
 import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { overrideTailwindClasses } from 'tailwind-override';
 
 const TextArea = ({
     value,
@@ -35,7 +36,10 @@ const TextArea = ({
         }
     }, [message]);
 
-    const handleInputChange = e => setter(e.target.value);
+    const handleInputChange = e => {
+        console.log(field);
+        setter(e.target.value);
+    };
 
     useEffect(() => {
         if (value) {
@@ -53,26 +57,70 @@ const TextArea = ({
         }
     };
 
+    const borderWidthString = '-2';
+
     if (!setter) return <p></p>;
     return (
-        <fieldset className={`relative w-full ${className}`}>
-            <div className="relative ">
-                <textarea
-                    onFocus={() => setLabelIsFloating(true)}
-                    onBlur={checkLabelStatus}
-                    ref={field}
-                    name={name}
-                    disabled={disabled}
-                    required={required}
-                    value={value}
-                    rows={rows}
-                    style={{ minHeight: '3rem' }}
-                    onChange={handleInputChange}
-                    className={` ${
-                        disabled ? disabledInput : borderColor
-                    } relative  rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none  focus:border-primary  w-full align-middle  font-light tracking-wide py-3`}
-                />
+        <div className={overrideTailwindClasses(`relative w-full flex ${className} bg-primary h-full p-8`)}>
+            {/* START: OUTLINE CONTAINER ===================================== */}
+            <div
+                style={{
+                    borderRadius: 'inherit',
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`w-4 border${borderWidthString} border-r-0 h-full rounded-inherit`}
+            />
 
+            <div
+                style={{
+                    borderRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`h-full border${borderWidthString} ${
+                    labelIsFloating ? 'border-t-0' : `border-t${borderWidthString}`
+                } border-r-0 border-l-0 w-auto px-1 relative  transition-all duration-100`}
+            >
+                <span className="opacity-0">{label}</span>
+                <span
+                    className={`transform   transition-all duration-300 absolute left-0  ${
+                        labelIsFloating
+                            ? '-top-2 text-xs text-center w-full '
+                            : '-translate-y-1/2 top-1/2 text-center w-full'
+                    }`}
+                >
+                    {label}
+                </span>
+            </div>
+
+            <div
+                style={{
+                    borderRadius: 'inherit',
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                    borderColor: 'inherit',
+                }}
+                className={`w-8  border${borderWidthString} border-l-0 h-full rounded-inherit flex-1`}
+            />
+            {/* END: OUTLINE CONTAINER ===================================== */}
+
+            <textarea
+                onFocus={() => setLabelIsFloating(true)}
+                onBlur={checkLabelStatus}
+                ref={field}
+                name={name}
+                disabled={disabled}
+                required={required}
+                value={value}
+                rows={rows}
+                style={{ minHeight: '3rem', background: 'rgba(0,0,0,0)' }}
+                onChange={handleInputChange}
+                className={` ${
+                    disabled ? disabledInput : borderColor
+                } absolute top-0 left-0 rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none    w-full align-middle  font-light tracking-wide py-3`}
+            />
+            {/* 
                 {label && (
                     <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
                         <span
@@ -84,36 +132,8 @@ const TextArea = ({
                         </span>
                         {required && <span className="text-red-700">*</span>}
                     </label>
-                )}
-
-                {icon && (
-                    <FontAwesomeIcon
-                        icon={icon}
-                        className="-translate-y-1/2 absolute right-4 text-body top-1/2 transform z-10"
-                    />
-                )}
-            </div>
-
-            {message?.message && (
-                <div className="flex gap-1 items-center py-1">
-                    <React.Fragment>
-                        {message?.type === 'error' && (
-                            <FontAwesomeIcon icon={faExclamation} className="mr-2 text-error" />
-                        )}
-                        {message?.type === 'success' && (
-                            <FontAwesomeIcon icon={faCheck} className="mr-2 text-success" />
-                        )}
-                        <p
-                            className={`text-sm font-body ${
-                                message?.type === 'error' ? 'text-error' : 'text-success'
-                            } `}
-                        >
-                            {message?.message}
-                        </p>
-                    </React.Fragment>
-                </div>
-            )}
-        </fieldset>
+                )} */}
+        </div>
     );
 };
 

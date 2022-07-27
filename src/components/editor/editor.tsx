@@ -42,7 +42,7 @@ const MenuBar = ({ editor }: EditorMenuBarProps) => {
     }
 
     return (
-        <nav className="bg-surface flex gap-1 p-2 rounded-lg">
+        <nav className="bg-surface flex gap-1 px-2 rounded-lg">
             <Button
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 size="sm"
@@ -193,7 +193,7 @@ const AstroEditor = ({ className, content, name, onChange, minHeight = 100, maxH
 
     return (
         <React.Fragment>
-            <div className={`bg-surface-light  flex flex-col p-3 rounded shadow-sm ${className}`}>
+            <div className={`bg-surface  flex flex-col p-3 rounded shadow-sm ${className}`}>
                 {mainEditor && <MenuBar editor={mainEditor} />}
                 <EditorContent
                     name={name}

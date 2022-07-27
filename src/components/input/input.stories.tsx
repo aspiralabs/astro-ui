@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Input from './input';
 import { Form } from '../form/form';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faUmbrella } from '@fortawesome/free-solid-svg-icons';
 
 export default {
     title: 'Input',
@@ -17,21 +17,16 @@ export const BasicInput = () => {
     };
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4 bg-card dark:bg-card-dark p-8">
             <Input value={numberInput} setter={handleInput} label="Basic Input" />
-
-            {/* <p>Form</p>
-            <Form defaultValues={{}} action={handleFormSubmit}>
-                <Input name="basicInput" label="Basic Input" />
-                <Input
-                    name="basicNumber"
-                    label="Basic Number"
-                    cleaveOptions={{
-                        prefix: '$',
-                        numeral: true,
-                    }}
-                />
-            </Form> */}
+            <Input value={numberInput} setter={handleInput} label="Basic Input" borderWidth={2} />
+            <Input
+                value={numberInput}
+                setter={handleInput}
+                label="Basic Input"
+                className="text-lg h-16"
+                borderWidth={4}
+            />
         </section>
     );
 };

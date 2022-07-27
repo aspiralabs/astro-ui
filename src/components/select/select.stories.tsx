@@ -58,7 +58,7 @@ export const WithSelect = () => {
     ];
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col bg-card dark:bg-card-dark p-8">
             <p>Standalone</p>
             <SelectRefactor
                 options={options}
@@ -75,7 +75,7 @@ export const WithSelect = () => {
                 setter={setSelectValue}
                 label="Select Value"
                 className="my-8 rounded-md"
-                dropdownClassName="rounded-md"
+                dropdownClassName="rounded-3xl"
             />
 
             <p>In a Form component</p>
