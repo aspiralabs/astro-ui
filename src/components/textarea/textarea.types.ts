@@ -15,4 +15,5 @@ export interface TextAreaProps {
     name?: string;
     message?: IFormMessage;
     rows?: number;
+    borderWidth?: number;
 }

@@ -16,11 +16,13 @@ const TextArea = ({
     name,
     message,
     rows = 6,
+    borderWidth = 1,
 }: TextAreaProps) => {
     const [borderColor, setBorderColor] = useState('');
     const disabledInput = `border border-surface-dark bg-surface-disabled`;
     const field = useRef(null);
     const [labelIsFloating, setLabelIsFloating] = useState(false);
+    const borderWidthString = borderWidth > 1 ? `-${borderWidth}` : '';
 
     useEffect(() => {
         if (message?.message) {
@@ -57,52 +59,60 @@ const TextArea = ({
         }
     };
 
-    const borderWidthString = '-2';
-
     if (!setter) return <p></p>;
     return (
-        <div className={overrideTailwindClasses(`relative w-full flex ${className} bg-primary h-full p-8`)}>
+        <div
+            className={overrideTailwindClasses(
+                `relative w-full flex ${className} rounded-md border-gray dark:border-gray-dark text-body dark:text-body text-sm`,
+            )}
+        >
             {/* START: OUTLINE CONTAINER ===================================== */}
             <div
+                className=" w-full h-full absolute top-0 left-0 pointer-events-none flex "
                 style={{
                     borderRadius: 'inherit',
-                    borderTopRightRadius: 0,
-                    borderBottomRightRadius: 0,
                     borderColor: 'inherit',
                 }}
-                className={`w-4 border${borderWidthString} border-r-0 h-full rounded-inherit`}
-            />
-
-            <div
-                style={{
-                    borderRadius: 0,
-                    borderColor: 'inherit',
-                }}
-                className={`h-full border${borderWidthString} ${
-                    labelIsFloating ? 'border-t-0' : `border-t${borderWidthString}`
-                } border-r-0 border-l-0 w-auto px-1 relative  transition-all duration-100`}
             >
-                <span className="opacity-0">{label}</span>
-                <span
-                    className={`transform   transition-all duration-300 absolute left-0  ${
-                        labelIsFloating
-                            ? '-top-2 text-xs text-center w-full '
-                            : '-translate-y-1/2 top-1/2 text-center w-full'
-                    }`}
+                <div
+                    style={{
+                        borderRadius: 'inherit',
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0,
+                        borderColor: 'inherit',
+                    }}
+                    className={`w-4 border${borderWidthString} border-r-0 h-full rounded-inherit`}
+                />
+                <div
+                    style={{
+                        borderRadius: 0,
+                        borderColor: 'inherit',
+                    }}
+                    className={`h-full border${borderWidthString} ${
+                        labelIsFloating ? 'border-t-0' : `border-t${borderWidthString}`
+                    } border-r-0 border-l-0 w-auto px-1 relative  transition-all duration-100`}
                 >
-                    {label}
-                </span>
+                    <span className="opacity-0">{label}</span>
+                    <span
+                        className={`transform   transition-all duration-300 absolute left-0  ${
+                            labelIsFloating ? '-top-2 text-xs text-center w-full ' : 'top-2 text-center w-full'
+                        }`}
+                    >
+                        {label}
+                    </span>
+                </div>
+
+                <div
+                    style={{
+                        borderRadius: 'inherit',
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                        borderColor: 'inherit',
+                    }}
+                    className={`w-8  border${borderWidthString} border-l-0 h-full rounded-inherit flex-1`}
+                />
             </div>
 
-            <div
-                style={{
-                    borderRadius: 'inherit',
-                    borderTopLeftRadius: 0,
-                    borderBottomLeftRadius: 0,
-                    borderColor: 'inherit',
-                }}
-                className={`w-8  border${borderWidthString} border-l-0 h-full rounded-inherit flex-1`}
-            />
             {/* END: OUTLINE CONTAINER ===================================== */}
 
             <textarea
@@ -116,23 +126,8 @@ const TextArea = ({
                 rows={rows}
                 style={{ minHeight: '3rem', background: 'rgba(0,0,0,0)' }}
                 onChange={handleInputChange}
-                className={` ${
-                    disabled ? disabledInput : borderColor
-                } absolute top-0 left-0 rounded-sm  text-body text-sm px-4 pr-12 focus:outline-none    w-full align-middle  font-light tracking-wide py-3`}
+                className={`text-body dark:text-body text-sm px-4 focus:outline-none w-full align-middle font-light tracking-wide py-3`}
             />
-            {/* 
-                {label && (
-                    <label className="font-body font-light  text-body text-sm  transition-all duration-300 pointer-events-none w-full h-full absolute left-0 top-0 px-2">
-                        <span
-                            className={`absolute transform transitional-all duration-300 px-1.5 ${
-                                labelIsFloating ? '-top-2 text-xs bg-white' : 'top-6 -translate-y-1/2'
-                            } h-auto `}
-                        >
-                            {label}
-                        </span>
-                        {required && <span className="text-red-700">*</span>}
-                    </label>
-                )} */}
         </div>
     );
 };
