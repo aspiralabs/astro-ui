@@ -104,14 +104,14 @@ function wrapper(tailwindConfig) {
     console.log('Setting Up Tailwinds Config');
 
     // Get All Colors from user and base
-    let colorKeys = [
-        ...new Set([...Object.keys(tailwindConfig.theme.colors), ...Object.keys(baseConfig.theme.colors)]),
-    ];
+    const colorsMerged = merge(tailwindConfig.theme.colors, baseConfig.colors);
+    let colorKeys = [...new Set([...Object.keys(colorsMerged)])];
 
     // Get all Color variants of each color
     const colorKeyOptions = [];
     colorKeys.forEach(key => {
-        Object.keys(baseConfig.theme.colors[key]).forEach(subkey => {
+        Object.keys(colorsMerged[key]).forEach(subkey => {
+            console.log('subkey', subkey);
             if (subkey === 'DEFAULT') {
                 colorKeyOptions.push(key);
             } else {
